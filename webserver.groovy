@@ -7,14 +7,17 @@ def server = vertx.createHttpServer()
 def router = Router.router(vertx)
 router.route().handler(BodyHandler.create())
 
+
 router.route("/static/*").handler(StaticHandler.create())
 
 router.post("/some").handler { routingContext ->
   println routingContext.properties
+  def a= routingContext.bodyAsJson
   routingContext.response()
     .setStatusCode(201)
     .putHeader("content-type", "application/json; charset=utf-8")
-    .end(Json.encodePrettily(routingContext.bodyAsJson))
+    .end("ok!"+a)
+    //.end(Json.encodePrettily(routingContext.bodyAsJson))
 }
 
 
