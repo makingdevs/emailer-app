@@ -12,7 +12,10 @@ router.route("/static/*").handler(StaticHandler.create())
 
 router.post("/some").handler { routingContext ->
   println routingContext.properties
-  def a= routingContext.bodyAsJson
+	println "\n ------------------------------\n\n-"
+  def a= Json.encodePrettily(routingContext.request().getParam("ememail_1"))
+	println a
+	
   routingContext.response()
     .setStatusCode(201)
     .putHeader("content-type", "application/json; charset=utf-8")
