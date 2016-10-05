@@ -72,39 +72,40 @@
       default, static and fixed to top navbar work. It includes the responsive
       CSS and HTML, so it also adapts to your viewport and device.</p>
 
-      <form class="form-horizontal" role="form" method="post">
+      <form class="form-horizontal" role="form" method="post" enctype='application/json'>
+
         <div class="form-group">
           <label for="email_1" class="col-lg-2 control-label">Destinatario: </label>
           <div class="col-lg-5">
-            <input type="email" class="form-control" id="email_1"/>
+            <input type="email" class="form-control" name="email_1"/>
           </div>
           </div>
 
         <div class="form-group">
           <label for="email_2" class="col-lg-2 control-label">Remitente: </label>
           <div class="col-lg-5">
-          <input type="email" class="form-control" id="email_2"/>
+          <input type="email" class="form-control" name="email_2"/>
           </div>
           </div>
 
         <div class="form-group">
           <label for="asunto" class="col-lg-2 control-label">Asunto: </label>
           <div class="col-lg-5">
-           <input type="text" class="form-control" id="asunto"/>
+           <input type="text" class="form-control" name="asunto"/>
         </div>
         </div>
 
         <div class="form-group">
           <label for="title" class="col-lg-2 control-label">Título: </label>
           <div class="col-lg-5">
-            <input type="text" class="form-control" id="title"/>
+            <input type="text" class="form-control" name="title"/>
         </div>
         </div>
 
         <div class="form-group">
           <label for="body_mail" class="col-lg-2 control-label">Contenido: </label>
           <div class="col-lg-10">
-            <textarea class="form-control"></textarea>
+            <textarea class="form-control" name=contenido></textarea>
         </div>
         </div>
 
