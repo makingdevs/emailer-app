@@ -9,8 +9,7 @@
   <script src="static/content/tinymce/tinymce.min.js"></script>
   <script>
   tinymce.init({
-
-  selector: '.area',
+  selector: 'textarea',
   height: 500,
   toolbar: 'mybutton | mybutton2 | mybutton3',
   menubar: false,
@@ -104,12 +103,12 @@
 
         <div class="form-group">
           <label for="body_mail" class="col-lg-2 control-label">Contenido: </label>
-          <div class="col-lg-7">
-            <textarea class="form-control" rows="7"></textarea>
+          <div class="col-lg-10">
+            <textarea class="form-control"></textarea>
         </div>
         </div>
 
-        <button type="submit" class="btn btn-default">Enviar</button>
+        <button type="submit" class="btn btn-default  col-md-offset-2">Enviar</button>
       </form>
 
     </div>
