@@ -61,32 +61,8 @@ router.post("/some").handler { routingContext ->
   def f
 
   mongoClient.save("email_storage", email, { id ->
-//    println("Inserted id: ${id.result()}")
     f=id.result()
-    //println "Id here:"+f
-    /*
-    mongoClient.find("email_storage",[
-    _id:"$f"
-    ],{ res ->
-      println "Lectura: ${res.result()[0].sender}"
-    })
-
-    mongoClient.find("products", [
-    itemId:"12346"
-    ], { res ->
-    println("Name is ${res.result()[0].name}")
-
-    mongoClient.remove("products", [
-    itemId:"12345"
-    ], { rs ->
-    if (rs.succeeded()) {
-    println("Product removed ")
-    }
-    })
-
-    })
-     */
-  })
+      })
 
   //response
   routingContext.response()
