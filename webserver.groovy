@@ -28,8 +28,8 @@ def mongoClient = MongoClient.createShared(vertx, mongoconfig)
 //create Server and Router
 def server = vertx.createHttpServer()
 def router = Router.router(vertx)
-router.route().handler(BodyHandler.create())
 
+router.route().handler(BodyHandler.create())
 
 router.route("/static/*").handler(StaticHandler.create())
 
@@ -57,9 +57,20 @@ router.post("/some").handler { routingContext ->
   content:e
   ]
 
+  //catch mongo reader
+  def f
+
   mongoClient.save("email_storage", email, { id ->
-    println("Inserted id: ${id.result()}")
+//    println("Inserted id: ${id.result()}")
+    f=id.result()
+    //println "Id here:"+f
     /*
+    mongoClient.find("email_storage",[
+    _id:"$f"
+    ],{ res ->
+      println "Lectura: ${res.result()[0].sender}"
+    })
+
     mongoClient.find("products", [
     itemId:"12346"
     ], { res ->
@@ -76,12 +87,21 @@ router.post("/some").handler { routingContext ->
     })
      */
   })
+
   //response
   routingContext.response()
   .setStatusCode(201)
   .putHeader("content-type", "text/html; charset=utf-8")
   .end("ok!"+e)
 }
+
+//router by show new things
+router.route("/show").handler({ routingContext ->
+    def response = routingContext.response()
+      response.putHeader("content-type", "text/plain")
+        response.end("Holi World from Vert.x-Web!")
+})
+
 //port
 server.requestHandler(router.&accept).listen(8000)
 
