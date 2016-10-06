@@ -58,7 +58,6 @@ tinymce.init({
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="/show">Show Email</a></li>
-            <li><a href="/show/list">Show List</a></li>
           </ul>
         </div>
       </div>
@@ -69,12 +68,23 @@ tinymce.init({
 
         <form class="form-inline" method="post" action="/one">
           <div class="form-group">
-            <label for="idEmail" class="col-lg-7 control-label">Id de Email</label>
+            <label for="idEmail" class="col-lg-7 control-label">Id de Email Para Buscar</label>
               <div class="col-lg-5">
                <input type="text" class="form-control" name="idEmail" placeholder="57f690eee3bce5ea31375d40">
               </div>
           </div>
           <button type="submit" class="btn btn-default col-md-offset-3">Ver Json</button>
+        </form>
+        <br><br>
+
+        <form class="form-inline" method="post" action="/remove">
+          <div class="form-group">
+            <label for="idEmailRemove" class="col-lg-7 control-label">Id de Email Para Eliminar</label>
+              <div class="col-lg-5">
+               <input type="text" class="form-control" name="idEmailRemove" placeholder="57f690eee3bce5ea31375d40">
+              </div>
+          </div>
+          <button type="submit" class="btn btn-default col-md-offset-3">Eliminar de MongoDB</button>
         </form>
         <br>
 
