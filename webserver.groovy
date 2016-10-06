@@ -13,7 +13,7 @@ router.route("/static/*").handler(StaticHandler.create())
 router.post("/some").handler { routingContext ->
   println routingContext.properties
 	println "\n ------------------------------\n\n-"
-  def a= Json.encodePrettily(routingContext.request().getParam("email_1"))
+  def a= (routingContext.request().getParam("email_1"))
 	println a
 	
   routingContext.response()
