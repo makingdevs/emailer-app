@@ -91,7 +91,7 @@ router.post("/some").handler { routingContext ->
     })
   })
 
-
+//router for show only one json file--------------------------------------------------------------------------
 router.post("/one").handler { routingContext ->
   // println routingContext.properties
   //recuperando los datos del formulario
@@ -117,6 +117,34 @@ router.post("/one").handler { routingContext ->
     })
 
 }
+
+//router for remove a json file on Mongo----------------------------------------------------------------------
+router.post("/remove").handler { routingContext ->
+  // println routingContext.properties
+  //recuperando los datos del formulario
+  def r= routingContext.request().getParam("idEmailRemove")
+  println r
+
+  def query = ["_id":r]
+
+    mongoClient.remove("email_storage", query, { res ->
+      if (res.succeeded()) {
+        //res.result().each { json ->
+         // def b =groovy.json.JsonOutput.toJson(json)
+          //response
+          routingContext.response()
+          .setStatusCode(201)
+          .putHeader("content-type", "text/html; charset=utf-8")
+          .end("Eliminado!")
+
+        //}
+     } else {
+        res.cause().printStackTrace()
+      }
+    })
+
+}
+
 
 //router by show new things
   router.route("/show").handler({ routingContext ->
