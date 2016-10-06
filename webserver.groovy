@@ -115,6 +115,56 @@ router.post("/some").handler { routingContext ->
     })
   })
 
+
+router.post("/one").handler { routingContext ->
+  // println routingContext.properties
+  //recuperando los datos del formulario
+  def a= routingContext.request().getParam("idEmail")
+  println a
+
+  def query = ["_id":a]
+
+    mongoClient.find("email_storage", query, { res ->
+      if (res.succeeded()) {
+        res.result().each { json ->
+          def b =groovy.json.JsonOutput.toJson(json)
+          //response
+          routingContext.response()
+          .setStatusCode(201)
+          .putHeader("content-type", "text/html; charset=utf-8")
+          .end("ok!"+b)
+
+        }
+     } else {
+        res.cause().printStackTrace()
+      }
+    })
+
+}
+
+//router by show new things
+  router.route("/show").handler({ routingContext ->
+    List reader=[]
+    def query = [:]
+    mongoClient.find("email_storage", query, { res ->
+      if (res.succeeded()) {
+        res.result().each { json ->
+          //println(groovy.json.JsonOutput.toJson(json))
+          reader.add(groovy.json.JsonOutput.toJson(json))
+        }
+         def response = routingContext.response()
+        response.putHeader("content-type", "text/plain")
+        response.end("Holi World from Vert.x-Web!"+reader)
+
+     } else {
+        res.cause().printStackTrace()
+      }
+    })
+  })
+
+
+
+
 //port
 server.requestHandler(router.&accept).listen(8080)
 
