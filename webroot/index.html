@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Emailer Web App</title>
-  <link href="static/content/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-  <link href="static/content/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="static/content/tinymce/tinymce.min.js"></script>
-  <script>
-  tinymce.init({
+  <head>
+    <meta charset="UTF-8">
+    <title>Emailer Web App</title>
+    <link href="static/content/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="static/content/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="static/content/tinymce/tinymce.min.js"></script>
+    <script>
+tinymce.init({
   selector: 'textarea',
   height: 500,
   toolbar: 'mybutton | mybutton2 | mybutton3',
@@ -37,88 +37,90 @@
     });
   }
 });
-  </script>
+    </script>
 
-</head>
+  </head>
 
-<body>
+  <body>
 
-  <div class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Emailer</a>
+        </div>
+
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Default</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
     <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">Emailer</a>
-      </div>
+      <div class="jumbotron">
+        <h1>Issue 3</h1>
+        <p>This example is a quick exercise to illustrate how the
+        default, static and fixed to top navbar work. It includes the responsive
+        CSS and HTML, so it also adapts to your viewport and device.</p>
 
-      <div class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Home</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="#">Default</a></li>
-        </ul>
+        <form class="form-horizontal" action="/some" role="form" method="post" enctype='application/json'>
+
+          <div class="form-group">
+            <label for="email_1" class="col-lg-2 control-label">Destinatario: </label>
+            <div class="col-lg-5">
+              <input type="email" class="form-control" name="email_1" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email_2" class="col-lg-2 control-label">Remitente: </label>
+            <div class="col-lg-5">
+              <input type="email" class="form-control" name="email_2"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="asunto" class="col-lg-2 control-label">Asunto: </label>
+            <div class="col-lg-5">
+              <input type="text" class="form-control" name="asunto"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="title" class="col-lg-2 control-label">Título: </label>
+            <div class="col-lg-5">
+              <input type="text" class="form-control" name="title"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="body_mail" class="col-lg-2 control-label">Contenido: </label>
+            <div class="col-lg-10">
+              <textarea class="form-control" name="contenido"></textarea>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-default  col-md-offset-2">Enviar</button>
+        </form>
+
       </div>
     </div>
-  </div>
-  <div class="container">
-    <div class="jumbotron">
-      <h1>Issue 3</h1>
-      <p>This example is a quick exercise to illustrate how the
-      default, static and fixed to top navbar work. It includes the responsive
-      CSS and HTML, so it also adapts to your viewport and device.</p>
 
-      <form class="form-horizontal" role="form" method="post">
-        <div class="form-group">
-          <label for="email_1" class="col-lg-2 control-label">Destinatario: </label>
-          <div class="col-lg-5">
-            <input type="email" class="form-control" id="email_1"/>
-          </div>
-          </div>
+    <script src="static/content/jquery/dist/jquery.js"></script>
+    <script src="static/content/handlebars/handlebars.js"></script>
+    <script src="static/content/bootstrap/dist/js/bootstrap.js"></script>
 
-        <div class="form-group">
-          <label for="email_2" class="col-lg-2 control-label">Remitente: </label>
-          <div class="col-lg-5">
-          <input type="email" class="form-control" id="email_2"/>
-          </div>
-          </div>
-
-        <div class="form-group">
-          <label for="asunto" class="col-lg-2 control-label">Asunto: </label>
-          <div class="col-lg-5">
-           <input type="text" class="form-control" id="asunto"/>
-        </div>
-        </div>
-
-        <div class="form-group">
-          <label for="title" class="col-lg-2 control-label">Título: </label>
-          <div class="col-lg-5">
-            <input type="text" class="form-control" id="title"/>
-        </div>
-        </div>
-
-        <div class="form-group">
-          <label for="body_mail" class="col-lg-2 control-label">Contenido: </label>
-          <div class="col-lg-10">
-            <textarea class="form-control"></textarea>
-        </div>
-        </div>
-
-        <button type="submit" class="btn btn-default  col-md-offset-2">Enviar</button>
-      </form>
-
-    </div>
-  </div>
-
-  <script src="static/content/jquery/dist/jquery.js"></script>
-  <script src="static/content/handlebars/handlebars.js"></script>
-  <script src="static/content/bootstrap/dist/js/bootstrap.js"></script>
-
-</body>
+  </body>
 
 
 </html>
+
