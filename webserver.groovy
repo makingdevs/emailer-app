@@ -96,12 +96,25 @@ router.post("/some").handler { routingContext ->
 }
 
 //router by show new things
-router.route("/show").handler({ routingContext ->
-    def response = routingContext.response()
-      response.putHeader("content-type", "text/plain")
-        response.end("Holi World from Vert.x-Web!")
-})
+  router.route("/show").handler({ routingContext ->
+    List reader=[]
+    def query = [:]
+    mongoClient.find("email_storage", query, { res ->
+      if (res.succeeded()) {
+        res.result().each { json ->
+          //println(groovy.json.JsonOutput.toJson(json))
+          reader.add(groovy.json.JsonOutput.toJson(json))
+        }
+         def response = routingContext.response()
+        response.putHeader("content-type", "text/plain")
+        response.end("Holi World from Vert.x-Web!"+reader)
+
+     } else {
+        res.cause().printStackTrace()
+      }
+    })
+  })
 
 //port
-server.requestHandler(router.&accept).listen(8000)
+server.requestHandler(router.&accept).listen(8080)
 
