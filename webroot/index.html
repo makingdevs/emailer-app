@@ -6,42 +6,19 @@
     <link href="static/content/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
     <link href="static/content/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="static/content/tinymce/tinymce.min.js"></script>
-    <script>
-tinymce.init({
-  selector: 'textarea',
-  height: 500,
-  toolbar: 'mybutton | mybutton2 | mybutton3',
-  menubar: false,
-  setup: function (editor) {
-    editor.addButton('mybutton', {
-      text: 'Add Client Name',
-      icon: false,
-      onclick: function () {
-        editor.insertContent('&nbsp;<b> \{\{nombre_cliente\}\} </b>&nbsp;');
-      }
-    });
-    editor.addButton('mybutton2', {
-      text: 'Add Company',
-      icon: false,
-      onclick: function () {
-        editor.insertContent('&nbsp;<b> \{\{nombre_empresa\}\} </b>&nbsp;');
-      }
-    });
-    editor.addButton('mybutton3', {
-      text: 'Add Sender',
-      icon: false,
-      onclick: function () {
-        editor.insertContent('&nbsp;<b> \{\{sender\}\} </b>&nbsp;');
-      }
-    });
-  }
-});
-    </script>
 
   </head>
 
   <body>
+
+    <script id="entry-template" type="text/x-handlebars-template">
+      <div class="entry">
+        <h1>{{title}}</h1>
+        <div class="body">
+          {{body}}
+        </div>
+      </div>
+    </script>
 
     <div class="navbar navbar-default navbar-inverse" role="navigation">
       <div class="container">
@@ -182,6 +159,9 @@ tinymce.init({
     <script src="static/content/jquery/dist/jquery.js"></script>
     <script src="static/content/handlebars/handlebars.js"></script>
     <script src="static/content/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="static/content/tinymce/tinymce.min.js"></script>
+    <script src="static/js/init_tiny.js"></script>
+    <script src="static/js/app.js"></script>
 
   </body>
 
