@@ -13,11 +13,21 @@
 
     <script id="entry-template" type="text/x-handlebars-template">
       <div class="entry">
-        <h1>{{title}}</h1>
+        <h2>Lectura de Emails</h2>
         <div class="body">
-          {{body}}
-        </div>
+        <hr>
+
+      <ul>
+        <li><b>Destinatario:</b> {{receiver}}</li>
+        <li><b>Remitente:</b>  {{sender}}</li>
+        <li><b>Titulo:</b> {{title}}</li>
+        <li><b>Asunto:</b> {{subject}}</li>
+        <li><b>Contenido:</b> {{content}}</li>
+     </ul>
+<hr>
       </div>
+    </div>
+
     </script>
 
     <div class="navbar navbar-default navbar-inverse" role="navigation">
