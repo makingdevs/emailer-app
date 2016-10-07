@@ -16,14 +16,16 @@
         <h2>Lectura de Emails</h2>
         <div class="body">
         <hr>
-
       <ul>
+      {{#each emails}}
         <li><b>Destinatario:</b> {{receiver}}</li>
         <li><b>Remitente:</b>  {{sender}}</li>
         <li><b>Titulo:</b> {{title}}</li>
         <li><b>Asunto:</b> {{subject}}</li>
         <li><b>Contenido:</b> {{content}}</li>
+      {{/each}}
      </ul>
+
 <hr>
       </div>
     </div>
