@@ -43,7 +43,7 @@ tinymce.init({
 
   <body>
 
-    <div class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="navbar navbar-default navbar-inverse" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -52,41 +52,82 @@ tinymce.init({
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Emailer</a>
+          <a class="navbar-brand" href="#">Emailer App</a>
         </div>
 
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="/show">Show Email</a></li>
+            <li><a href="/show">.</a></li>
           </ul>
         </div>
       </div>
     </div>
+
+
     <div class="container">
+        <div class="row">
+                      <div class="col-lg-3 col-md-6">
+                          <div class="panel panel-primary">
+                              <div class="panel-heading">
+                                  <div class="row">
+                                      <div class="text-center">
+                                          <div>Buscar Json</div>
+                                      </div>
+                                  </div>
+                              </div>
+                                  <div class="panel-footer text-center">
+                                      <form  method="post" action="/one">
+                                             <input type="text" class="form-control" name="idEmail" placeholder="Id Json">
+                                          <br>
+                                        <button type="submit" class="btn btn-default btn-block">Ver Json</button>
+                                      </form>
+                                      <div class="clearfix"></div>
+                                  </div>
+                          </div>
+                      </div>
+
+                      <div class="col-lg-3 col-md-6">
+                          <div class="panel panel-primary">
+                              <div class="panel-heading">
+                                  <div class="row">
+                                      <div class="text-center">
+                                          <div>Eliminar Json de Mongo</div>
+                                      </div>
+                                  </div>
+                              </div>
+                                  <div class="panel-footer text-center">
+                                      <form  method="post" action="/remove">
+                                             <input type="text" class="form-control" name="idEmailRemove" placeholder="Id Json">
+                                          <br>
+                                        <button type="submit" class="btn btn-default btn-block">Eliminar Registro</button>
+                                      </form>
+                                      <div class="clearfix"></div>
+                                  </div>
+                          </div>
+                      </div>
+
+                      <div class="col-lg-3 col-md-6">
+                          <div class="panel panel-primary">
+                              <div class="panel-heading">
+                                  <div class="row">
+                                      <div class="text-center">
+                                          <div>Mostrar info de Mongo</div>
+                                      </div>
+                                  </div>
+                              </div>
+                                  <div class="panel-footer text-center">
+                                      <a href="/show" class="btn btn-default btn-block">Ver Emails Guardados</a>
+                                      <div class="clearfix"></div>
+                                  </div>
+                          </div>
+                      </div>
+      </div>
+
+
+
+
       <div class="jumbotron">
-        <h1>Issue 6</h1>
-
-        <form class="form-inline" method="post" action="/one">
-          <div class="form-group">
-            <label for="idEmail" class="col-lg-7 control-label">Id de Email Para Buscar</label>
-              <div class="col-lg-5">
-               <input type="text" class="form-control" name="idEmail" placeholder="57f690eee3bce5ea31375d40">
-              </div>
-          </div>
-          <button type="submit" class="btn btn-default col-md-offset-3">Ver Json</button>
-        </form>
-        <br><br>
-
-        <form class="form-inline" method="post" action="/remove">
-          <div class="form-group">
-            <label for="idEmailRemove" class="col-lg-7 control-label">Id de Email Para Eliminar</label>
-              <div class="col-lg-5">
-               <input type="text" class="form-control" name="idEmailRemove" placeholder="57f690eee3bce5ea31375d40">
-              </div>
-          </div>
-          <button type="submit" class="btn btn-default col-md-offset-3">Eliminar de MongoDB</button>
-        </form>
-        <br>
+        <h2>Issue 6</h2>
 
         <form class="form-horizontal" action="/some" role="form" method="post" enctype='application/json'>
 
@@ -120,16 +161,23 @@ tinymce.init({
 
           <div class="form-group">
             <label for="body_mail" class="col-lg-2 control-label">Contenido: </label>
-            <div class="col-lg-10">
+            <div class="col-lg-8">
               <textarea class="form-control" name="contenido"></textarea>
             </div>
           </div>
 
-          <button type="submit" class="btn btn-default  col-md-offset-2">Enviar</button>
+          <button type="submit" class="btn btn-default  col-md-offset-2 btn-primary">Enviar</button>
         </form>
 
       </div>
     </div>
+
+
+    <footer style="height: 75px; background-color:#151515;">
+      <div class="container">
+        <p><h3 class="text-center">Emailer App</h3></p>
+      </div>
+    </footer>
 
     <script src="static/content/jquery/dist/jquery.js"></script>
     <script src="static/content/handlebars/handlebars.js"></script>
