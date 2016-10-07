@@ -12,23 +12,27 @@
   <body>
 
     <script id="entry-template" type="text/x-handlebars-template">
-      <div class="entry">
-        <h2>Lectura de Emails</h2>
-        <div class="body">
-        <hr>
-      <ul>
-      {{#each emails}}
-        <li><b>Destinatario:</b> {{receiver}}</li>
-        <li><b>Remitente:</b>  {{sender}}</li>
-        <li><b>Titulo:</b> {{title}}</li>
-        <li><b>Asunto:</b> {{subject}}</li>
-        <li><b>Contenido:</b> {{content}}</li>
-      {{/each}}
-     </ul>
+            <div class="panel panel-default panel-primary">
+        <div class="panel-heading panel-primary text-center">Lectura de Correos </div>
+        <div class="panel-body">
 
-<hr>
+        <table id="table" class="table table-striped table-bordered table-condensed table-hover">
+        <tr><th>Destinatario</th><th>Remitente</th><th>Titulo</th><th>Asunto</th><th>Contenido</th></tr>
+       {{#each emails}}
+        <tr>
+        <td>{{receiver}}</td>
+        <td>{{sender}}</td>
+        <td>{{title}}</td>
+        <td>{{subject}}</td>
+        <td>{{content}}</td>
+        </tr>
+      {{/each}}
+
+  </table>
+
       </div>
-    </div>
+      </div>
+
 
     </script>
 
