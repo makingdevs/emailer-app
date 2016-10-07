@@ -1,7 +1,8 @@
 tinymce.init({
   selector: 'textarea',
   height: 500,
-  toolbar: 'mybutton | mybutton2 | mybutton3',
+  toolbar: 'mybutton | mybutton2 | mybutton3 | insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify',
+
   menubar: false,
   setup: function (editor) {
     editor.addButton('mybutton', {
