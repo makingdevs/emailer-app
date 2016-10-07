@@ -5,6 +5,7 @@ import io.vertx.core.json.Json
 import io.vertx.groovy.core.Vertx
 import io.vertx.groovy.ext.mongo.MongoClient
 
+System.setProperty("vertx.disableFileCaching", "true")
 //mongodb config
     def config = Vertx.currentContext().config()
     def uri = config.mongo_uri
@@ -32,7 +33,9 @@ def router = Router.router(vertx)
 router.route().handler(BodyHandler.create())
 
 //router por defecto, al index---------------------------------------------------------------------------------
-router.route("/static/*").handler(StaticHandler.create())
+router.route("/static/*").handler(
+  StaticHandler.create().setMaxAgeSeconds(0).setFilesReadOnly(false).setCachingEnabled(false)
+)
 
 //router para tomar el formulario principal y salvarlo en mongoDB----------------------------------------------
 router.post("/some").handler { routingContext ->
