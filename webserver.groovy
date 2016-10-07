@@ -5,26 +5,25 @@ import io.vertx.core.json.Json
 import io.vertx.groovy.core.Vertx
 import io.vertx.groovy.ext.mongo.MongoClient
 
-System.setProperty("vertx.disableFileCaching", "true")
 //mongodb config
-    def config = Vertx.currentContext().config()
-    def uri = config.mongo_uri
+def config = Vertx.currentContext().config()
+def uri = config.mongo_uri
 
-    if (uri == null) {
-      uri = "mongodb://localhost:27017"
-    }
+if (uri == null) {
+  uri = "mongodb://localhost:27017"
+}
 
-    def db = config.mongo_db
-    if (db == null) {
-      db = "emailer1"
-    }
+def db = config.mongo_db
+if (db == null) {
+  db = "emailer1"
+}
 
-    def mongoconfig = [
-    connection_string:uri,
-    db_name:db
-    ]
+def mongoconfig = [
+connection_string:uri,
+db_name:db
+]
 
-    def mongoClient = MongoClient.createShared(vertx, mongoconfig)
+def mongoClient = MongoClient.createShared(vertx, mongoconfig)
 
 //create Server and Router
 def server = vertx.createHttpServer()
@@ -34,7 +33,7 @@ router.route().handler(BodyHandler.create())
 
 //router por defecto, al index---------------------------------------------------------------------------------
 router.route("/static/*").handler(
-  StaticHandler.create().setMaxAgeSeconds(0).setFilesReadOnly(false).setCachingEnabled(false)
+  StaticHandler.create().setCachingEnabled(false)
 )
 
 //router para tomar el formulario principal y salvarlo en mongoDB----------------------------------------------
@@ -72,12 +71,9 @@ router.post("/some").handler { routingContext ->
     def query = [:]
     mongoClient.find("email_storage", query, { res ->
       if (res.succeeded()) {
-        res.result().each { json ->
-          reader.add(groovy.json.JsonOutput.toJson(json))
-        }
-         def response = routingContext.response()
-        response.putHeader("content-type", "text/plain")
-        response.end("Holi World from Vert.x-Web!"+reader)
+        routingContext.response()
+          .putHeader("content-type", "application/json; charset=utf-8")
+          .end(Json.encodePrettily(res.result()))
 
      } else {
         res.cause().printStackTrace()
