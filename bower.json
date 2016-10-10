@@ -14,10 +14,10 @@
     "test",
     "tests"
   ],
-
   "dependencies": {
     "bootstrap": "~3.3.2",
     "handlebars": "~2.0.0",
-    "tinymce": "~4.0.0"
+    "tinymce": "~4.0.0",
+    "director_cr": "^1.2.11"
   }
 }
