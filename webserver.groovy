@@ -5,6 +5,9 @@ import io.vertx.core.json.Json
 import io.vertx.groovy.core.Vertx
 import io.vertx.groovy.ext.mongo.MongoClient
 
+//Example with Mongo-UsingAJAX,update 7-Oct/2016
+
+
 //mongodb config
 def config = Vertx.currentContext().config()
 def uri = config.mongo_uri
