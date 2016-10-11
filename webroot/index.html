@@ -46,7 +46,7 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="/show">Lectura JSON Mongo</a></li>
-            <li><a href="/">Correo Nuevo</a></li>
+            <li><a href="#/new">Correo Nuevo</a></li>
           </ul>
         </div>
       </div>
@@ -60,9 +60,12 @@
         <a href="#/">Start</a>
         <form class="form-horizontal" action="/some" role="form" method="post" enctype='application/json'>
 
-          <div class="form-group">
-            <label for="email_1" class="col-lg-2 control-label">Destinatario: </label>
+
+        <div class="form-group">
+
+          <label for="email_1" class="col-lg-2 control-label">Destinatario: </label>
             <div class="col-lg-5">
+              <input type="hidden" class="form-control" name="email_id"/>
               <input type="email" class="form-control" name="email_1" />
             </div>
           </div>
