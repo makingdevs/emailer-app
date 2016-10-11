@@ -1,4 +1,3 @@
-//------------------------------------------------------------------------funcion que recupera todos los registros y pinta la tabla
 var findAll = function(){
   $.ajax({
       url:"http://localhost:8080/show",
@@ -23,10 +22,28 @@ var newEmail = function(){
   $(".jumbotron").show()
   $('input').each(function(){ $(this).val(''); })
   $("textarea").val("");
-  $("form").attr("action","/newEmail");
+//  $("form").attr("action","/newEmail");
   $(".jumbotron").css("background","#b0bec5");
+//--------------------------------------------mandando datos del formulario
+  $("#sendData").click(function(){
+    alert("Agregando Email");
+    $.ajax({
+      data: $("#data").serialize(),
+      type: 'post',
+      url: 'http://localhost:8080/newEmail',
+      success: function(){
+        alert("Email agregado");
+      },
+      complete: function(){
+        alert("Proceso completado");
+      }
+    });
 
-}
+//  window.location.href = "http://localhost:8080/static/#/";
+
+  })
+
+}//end
 
 //-------------------------------------------------------Show Email
 var showOne = function(id){
@@ -47,8 +64,27 @@ var showOne = function(id){
           $('textarea').val(json.content);
           //change the form action
           $(".jumbotron").css("background","#eceff1");
-          $("form").attr("action","/update")
-      }
+          //$("form").attr("action","/update")
+
+          //---------------------------ajax request
+            $("#sendData").click(function(){
+              alert("Actualizando");
+              $.ajax({
+                data: $("#data").serialize(),
+                type: 'post',
+                url: 'http://localhost:8080/update',
+                success: function(){
+                  alert("Email Actualizado");
+                 //window.location.href = "http://localhost:8080/static/#/";
+                },
+                complete: function(){
+                  alert("Email actualizado");
+                }
+
+              });
+
+      })
+    }
   });
 
 }
