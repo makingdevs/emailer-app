@@ -1,3 +1,7 @@
+$( document ).ready(function() {
+   $(".jumbotron").hide()
+});
+
 var findAll = function(){
   $.ajax({
       url:"http://localhost:8080/show",
@@ -5,7 +9,8 @@ var findAll = function(){
       dataType: 'json',
       success:
         function(response){
-          $(".jumbotron").hide()
+          $(".jumbotron").hide();
+          $("#start").hide();
           var source = $("#entry-template").html();
           var template = Handlebars.compile(source);
           var wrapper={emails:response};
@@ -19,6 +24,7 @@ var findAll = function(){
 var newEmail = function(){
   //limpiando los input
   $("#reader").hide()
+  $("#start").hide();
   $(".jumbotron").show()
   $('input').each(function(){ $(this).val(''); })
   $("textarea").val("");
@@ -26,22 +32,18 @@ var newEmail = function(){
   $(".jumbotron").css("background","#b0bec5");
 //--------------------------------------------mandando datos del formulario
   $("#sendData").click(function(){
-    alert("Agregando Email");
-    $.ajax({
+       $.ajax({
       data: $("#data").serialize(),
       type: 'post',
       url: 'http://localhost:8080/newEmail',
       success: function(){
         alert("Email agregado");
-      },
-      complete: function(){
-        alert("Proceso completado");
+        window.location.href = "http://localhost:8080/static/#/";
       }
     });
 
-//  window.location.href = "http://localhost:8080/static/#/";
 
-  })
+  });
 
 }//end
 
@@ -67,7 +69,7 @@ var showOne = function(id){
           //$("form").attr("action","/update")
 
           //---------------------------ajax request
-            $("#sendData").click(function(){
+            $("#sendData").on('click',function(){
               alert("Actualizando");
               $.ajax({
                 data: $("#data").serialize(),
@@ -75,14 +77,9 @@ var showOne = function(id){
                 url: 'http://localhost:8080/update',
                 success: function(){
                   alert("Email Actualizado");
-                 //window.location.href = "http://localhost:8080/static/#/";
-                },
-                complete: function(){
-                  alert("Email actualizado");
+                  window.location.href = "http://localhost:8080/static/#/";
                 }
-
               });
-
       })
     }
   });
