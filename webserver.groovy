@@ -40,41 +40,36 @@ router.route("/static/*").handler(
 router.post("/some").handler { routingContext ->
   // println routingContext.properties
   //recuperando los datos del formulario
-  def a= routingContext.request().getParam("email_1")
-  def b= routingContext.request().getParam("email_2")
-  def c= routingContext.request().getParam("asunto")
-  def d= routingContext.request().getParam("title")
-  def e= routingContext.request().getParam("contenido")
-  //json for insert into Mongo
+  def receiverEmail= routingContext.request().getParam("email_1")
+  def senderEmail= routingContext.request().getParam("email_2")
+  def submitInput= routingContext.request().getParam("asunto")
+  def titleInput= routingContext.request().getParam("title")
+  def contentText= routingContext.request().getParam("contenido")
+
   def email=[
-  receiver:a,
-  sender:b,
-  submit:c,
-  title:d,
-  content:e
+  receiver:receiverEmail,
+  sender:senderEmail,
+  submit:submitInput,
+  title:titleInput,
+  content:contentText
   ]
-  //catch mongo reader
-  def f
-  mongoClient.save("email_storage", email, { id ->
-    f=id.result()
-      })
+
+  mongoClient.save("email_storage", email, {id -> })
   //response
   routingContext.response()
   .setStatusCode(201)
   .putHeader("content-type", "text/html; charset=utf-8")
-  .end("ok!"+e)
+  .end("ok! Email Agregado")
 }
 
 //router by show all things
   router.route("/show").handler({ routingContext ->
-    List reader=[]
     def query = [:]
     mongoClient.find("email_storage", query, { res ->
       if (res.succeeded()) {
         routingContext.response()
           .putHeader("content-type", "application/json; charset=utf-8")
           .end(Json.encodePrettily(res.result()))
-
      } else {
         res.cause().printStackTrace()
       }
@@ -83,16 +78,16 @@ router.post("/some").handler { routingContext ->
 
 //router for show only one json file--------------------------------------------------------------------------
 router.post("/one").handler { routingContext ->
-  def a= routingContext.request().getParam("idEmail")
-  def query = ["_id":a]
+  def idEmail= routingContext.request().getParam("idEmail")
+  def query = ["_id":idEmail]
     mongoClient.find("email_storage", query, { res ->
       if (res.succeeded()) {
         res.result().each { json ->
-          def b =groovy.json.JsonOutput.toJson(json)
+          def jsonEmail =groovy.json.JsonOutput.toJson(json)
           routingContext.response()
           .setStatusCode(201)
           .putHeader("content-type", "text/html; charset=utf-8")
-          .end("ok!"+b)
+          .end(jsonEmail)
         }
      } else {
         res.cause().printStackTrace()
@@ -102,8 +97,8 @@ router.post("/one").handler { routingContext ->
 
 //router for remove a json file on Mongo----------------------------------------------------------------------
 router.post("/remove").handler { routingContext ->
-  def r= routingContext.request().getParam("idEmailRemove")
-  def query = ["_id":r]
+  def emailRemove= routingContext.request().getParam("idEmailRemove")
+  def query = ["_id":emailRemove]
     mongoClient.remove("email_storage", query, { res ->
       if (res.succeeded()) {
           routingContext.response()

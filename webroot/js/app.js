@@ -1,6 +1,6 @@
 //------------------------------------------------------------------------funcion que recupera todos los registros y pinta la tabla
 var findAll = function(){
-  var a=  $.ajax({
+  $.ajax({
       url:"http://localhost:8080/show",
       type:'GET',
       dataType: 'json',
@@ -15,30 +15,41 @@ var findAll = function(){
     });
 }
 
-//-------------------------------------------------------------------------------------------New Email
+//-------------------------------------------------------New Email
 var newEmail = function(){ console.log("new email"); }
 
-//-------------------------------------------------------------------------------------------Show Email
+//-------------------------------------------------------Show Email
 var showOne = function(id){
-  console.log("show email"+ id);
-  $('input[name="email_1"]').val(id);
-
-//----------------------------------------------------ajax
-  var a = $.ajax({
+  $.ajax({
     data: "idEmail="+id,
     url: 'http://localhost:8080/one',
     type: 'post',
-    beforeSend: function () {
-      console.log("Procesando, aguanta");
-    },
     success: function (response) {
-      console.log("Ya estuvo:D"+response);
-    }
+          //parseando JSON
+          var json=$.parseJSON(response);
+          //inputs 1by1
+          $('input[name="email_1"]').val(json.receiver);
+          $('input[name="email_2"]').val(json.sender);
+          $('input[name="asunto"]').val(json.submit);
+          $('input[name="title"]').val(json.title);
+          $('textarea').val(json.content);
+        }
   });
 
 }
 
-var deleteEmail = function(id){ console.log("delete email " + id); }
+//------------------------------------------------Delete Email
+var deleteEmail = function(id){
+  $.ajax({
+    data: "idEmailRemove="+id,
+    url: 'http://localhost:8080/remove',
+    type: 'post',
+    success: function (response) {
+    }
+  });
+
+
+}
 
 //------------------------------------------------------------------------routes DirectorJS
 var routes = {
