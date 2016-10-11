@@ -16,7 +16,9 @@ var findAll = function(){
 }
 
 //-------------------------------------------------------New Email
-var newEmail = function(){ console.log("new email"); }
+var newEmail = function(){
+  console.log("new email");
+}
 
 //-------------------------------------------------------Show Email
 var showOne = function(id){
@@ -28,12 +30,15 @@ var showOne = function(id){
           //parseando JSON
           var json=$.parseJSON(response);
           //inputs 1by1
+          $('input[name="email_id"]').val(json._id);
           $('input[name="email_1"]').val(json.receiver);
           $('input[name="email_2"]').val(json.sender);
           $('input[name="asunto"]').val(json.submit);
           $('input[name="title"]').val(json.title);
           $('textarea').val(json.content);
-        }
+          //change the form action
+          $("form").attr("action","/update")
+      }
   });
 
 }
