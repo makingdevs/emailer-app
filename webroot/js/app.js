@@ -18,6 +18,9 @@ var findAll = function(){
 //-------------------------------------------------------New Email
 var newEmail = function(){
   console.log("new email");
+  //limpiando los input
+  $('input').each(function(){ $(this).val(''); })
+  $("form").attr("action","/newEmail")
 }
 
 //-------------------------------------------------------Show Email
