@@ -111,6 +111,40 @@ router.post("/remove").handler { routingContext ->
     })
 }
 
+//router for update a json file on MongoDB
+router.post("/update").handler { routingContext ->
+
+  //recuperando los datos del formulario
+  def emailToUpdate= routingContext.request().getParam("email_id")
+  def receiverEmail= routingContext.request().getParam("email_1")
+  def senderEmail= routingContext.request().getParam("email_2")
+  def submitInput= routingContext.request().getParam("asunto")
+  def titleInput= routingContext.request().getParam("title")
+  def contentText= routingContext.request().getParam("contenido")
+
+
+ def query = ["_id":emailToUpdate]
+  def update = [
+    $set:[
+      receiver:receiverEmail,
+      sender:senderEmail,
+      submit:submitInput,
+      title:titleInput,
+      content:contentText
+    ]
+  ]
+  mongoClient.update("email_storage", query, update, { res ->
+    if (res.succeeded()) {
+      routingContext.response()
+      .setStatusCode(201)
+      .putHeader("content-type", "text/html; charset=utf-8")
+      .end("Update!")
+    } else {
+      res.cause().printStackTrace()
+    }
+  })
+}
+
 //port
 server.requestHandler(router.&accept).listen(8080)
 
