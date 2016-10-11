@@ -37,7 +37,7 @@ router.route("/static/*").handler(
 )
 
 //router para tomar el formulario principal y salvarlo en mongoDB----------------------------------------------
-router.post("/some").handler { routingContext ->
+router.post("/newEmail").handler { routingContext ->
   // println routingContext.properties
   //recuperando los datos del formulario
   def receiverEmail= routingContext.request().getParam("email_1")
