@@ -35,12 +35,25 @@ var findAll = function(){
    readerEmails();
 }
 
+var saveEmail=function(){
+      $.ajax({
+      data: $("#mail_form").serialize(),
+      type: 'post',
+      url: 'http://localhost:8080/newEmail',
+      success: function(){
+        alert("Email agregado exitosamente");
+      }
+      });
+      window.location.href = "http://localhost:8080/static/#/";
+}
+
+
 var newEmail = function(){
   readerForms();
+  $("#sendForm").attr("href","#/save");
   $(".jumbotron").css("background","#b0bec5");
-  $( "#mail_form" ).submit(function( event ) {
-    event.preventDefault();
-     $.ajax({
+ /* $("form").attr("onsubmit","newEmail");
+      $.ajax({
       data: $("#mail_form").serialize(),
       type: 'post',
       url: 'http://localhost:8080/newEmail',
@@ -48,11 +61,25 @@ var newEmail = function(){
         alert("Email agregado exitosamente");
       }
     });
-  });
+*/
+  //$( "#mail_form" ).submit(function( event ) {
+  /*   $.ajax({
+      data: $("#mail_form").serialize(),
+      type: 'post',
+      url: 'http://localhost:8080/newEmail',
+      success: function(){
+        alert("Email agregado exitosamente");
+      }
+    });*/
+   // console.log("Antes del prevent default: "+$("#mail_form").serialize());
+   // event.preventDefault();
+   // console.log("Despues del prevent default---: "+ $("#mail_form").serialize());
+ // });
 }
 
 var showOne = function(id){
   $("#reader").hide();
+  $("#sendForm").attr("href","#/updateEmail");
   $.ajax({
     data: "idEmail="+id,
     url: 'http://localhost:8080/one',
@@ -69,9 +96,8 @@ var showOne = function(id){
       $(".jumbotron").css("background","#eceff1");
     }
   });
-
+  /*
   $( "#mail_form" ).submit(function( event ) {
-    event.preventDefault();
     $.ajax({
       data: $("#mail_form").serialize(),
       type: 'post',
@@ -80,8 +106,23 @@ var showOne = function(id){
         alert("Email Actualizado");
       }
     });
+    event.preventDefault();
   });
+*/
 }
+
+var updateEmail=function(){
+  $.ajax({
+    data: $("#mail_form").serialize(),
+    type: 'post',
+    url: 'http://localhost:8080/update',
+    success: function(){
+      alert("Email Actualizado");
+    }
+  });
+  window.location.href = "http://localhost:8080/static/#/";
+}
+
 
 var deleteEmail = function(id){
   $.ajax({
@@ -99,6 +140,8 @@ var deleteEmail = function(id){
 var routes = {
   '/': findAll,
   '/new': newEmail,
+  '/save': saveEmail,
+  '/updateEmail': updateEmail,
   '/showOne/:mailId': showOne,
   '/delete/:mailId': deleteEmail
 };
