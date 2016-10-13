@@ -3,9 +3,7 @@ $( document ).ready(function() {
   $("#reader").hide();
 });
 
-//---------------------------------------------MyFunctions
 function readerForms(){
-  $("#reader").hide();
   $("#start").hide();
   $(".jumbotron").show();
   $('input').each(function(){ $(this).val(''); });
@@ -25,12 +23,11 @@ function readerEmails(){
         var template = Handlebars.compile(source);
         var wrapper={emails:response};
         var html = template(wrapper);
-        $("div.row:first").prepend(html);
+        $("div.row:first").html(html);
       }
   });
 }
 
-//-------------------------------------------Routes
 var findAll = function(){
    readerEmails();
 }
@@ -49,6 +46,7 @@ var saveEmail=function(){
 
 
 var newEmail = function(){
+  $("#reader").hide();
   readerForms();
   $("#sendForm").attr("href","#/save");
   $(".jumbotron").css("background","#b0bec5");
@@ -120,7 +118,6 @@ var updateEmail=function(){
       alert("Email Actualizado");
     }
   });
-  window.location.href = "http://localhost:8080/static/#/";
 }
 
 
@@ -133,7 +130,6 @@ var deleteEmail = function(id){
     alert("Se elimino registro");
     }
   });
-  $("#reader").hide()
   readerEmails();
 }
 
