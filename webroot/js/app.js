@@ -78,6 +78,25 @@ var updateEmail=function(){
   readerEmails();
 }
 
+var previewEmail=function(id){
+  $("#start").hide();
+  $("#reader").hide();
+  //ajax request
+  $.ajax({
+    data: "idEmail="+id,
+    url: 'http://localhost:8080/one',
+    type: 'post',
+    success: function (response) {
+     var json=$.parseJSON(response);
+     var source=$("#preview-template").html();
+     var template=Handlebars.compile(source);
+     var html = template(json);
+     $("div.row:first").html(html);
+    $("#previewBody").append(json.content);
+    }
+  });
+}
+
 function readerEmails(){
   $.ajax({
     url:"http://localhost:8080/show",
@@ -113,6 +132,7 @@ var routes = {
   '/': findAll,
   '/new': newEmail,
   '/save': saveEmail,
+  '/preview/:mailId': previewEmail,
   '/updateEmail': updateEmail,
   '/showOne/:mailId': showOne,
   '/delete/:mailId': deleteEmail
