@@ -50,6 +50,7 @@ var deleteEmail = function(id){
 }
 
 var saveEmail=function(){
+/*
   tinymce.remove();
   $.ajax({
     data: $("#mail_form").serialize(),
@@ -59,9 +60,10 @@ var saveEmail=function(){
       console.log("Email agregado exitosamente");
     }
   });
-
+*/
   alert("Email Agregado");
-  readerEmails();
+  //readerEmails();
+
 }
 
 var updateEmail=function(){
