@@ -50,29 +50,31 @@ var deleteEmail = function(id){
 }
 
 var saveEmail=function(){
-  var tiny= tinyMCE.activeEditor.getContent();
+  tinymce.remove();
   $.ajax({
-    data: $("#mail_form").serialize() + " &content ="+tiny,
+    data: $("#mail_form").serialize(),
     type: 'post',
     url: 'http://localhost:8080/newEmail',
     success: function(){
-      alert("Email agregado exitosamente");
+      console.log("Email agregado exitosamente");
     }
   });
+
+  alert("Email Agregado");
   readerEmails();
 }
 
 var updateEmail=function(){
-  console.log("UpdateEmail: "+ $("#mail_form").serialize());
-  var tiny= tinyMCE.activeEditor.getContent();
+  tinymce.remove();
   $.ajax({
-    data: $("#mail_form").serialize() + " &content ="+tiny,
+    data: $("#mail_form").serialize(),
     type: 'post',
     url: 'http://localhost:8080/update',
     success: function(){
-      alert("Email Actualizado: "+tiny);
+      console.log(" Email Actualizado ");
     }
   });
+  alert("Email Actualizado");
   readerEmails();
 }
 
@@ -92,6 +94,8 @@ function readerEmails(){
         $("div.row:first").html(html);
       }
   });
+
+
 }
 
 function readerForms(){
