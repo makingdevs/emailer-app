@@ -11,29 +11,28 @@ var newEmail = function(){
   readerForms();
   $("#toAdd").show();
   $(".jumbotron").css("background","#b0bec5");
+  tinymce.init({'selector':'textarea'});
 }
 
 var showOne = function(id){
   readerForms();
-
- // $("#reader").hide();
   $("#toUpdate").show();
- // $("#toAdd").hide();
-
   $.ajax({
     data: "idEmail="+id,
     url: 'http://localhost:8080/one',
     type: 'post',
     success: function (response) {
+      tinyMCE.remove();
       var json=$.parseJSON(response);
       $(".jumbotron").show()
-        $('input[name="email_id"]').val(json._id);
+      $('input[name="email_id"]').val(json._id);
       $('input[name="email_1"]').val(json.receiver);
       $('input[name="email_2"]').val(json.sender);
       $('input[name="asunto"]').val(json.submit);
       $('input[name="title"]').val(json.title);
       $('textarea').val(json.content);
       $(".jumbotron").css("background","#eceff1");
+      tinymce.init({'selector':'textarea'});
     }
   });
 }
@@ -51,8 +50,9 @@ var deleteEmail = function(id){
 }
 
 var saveEmail=function(){
+  var tiny= tinyMCE.activeEditor.getContent();
   $.ajax({
-    data: $("#mail_form").serialize(),
+    data: $("#mail_form").serialize() + " &content ="+tiny,
     type: 'post',
     url: 'http://localhost:8080/newEmail',
     success: function(){
@@ -63,12 +63,14 @@ var saveEmail=function(){
 }
 
 var updateEmail=function(){
+  console.log("UpdateEmail: "+ $("#mail_form").serialize());
+  var tiny= tinyMCE.activeEditor.getContent();
   $.ajax({
-    data: $("#mail_form").serialize(),
+    data: $("#mail_form").serialize() + " &content ="+tiny,
     type: 'post',
     url: 'http://localhost:8080/update',
     success: function(){
-      alert("Email Actualizado");
+      alert("Email Actualizado: "+tiny);
     }
   });
   readerEmails();
@@ -96,6 +98,7 @@ function readerForms(){
   $("#reader").hide();
   $("#start").hide();
   $(".jumbotron").show();
+  tinymce.remove();
   $('input').each(function(){ $(this).val(''); });
   $("textarea").val("");
   $("#toUpdate").hide();

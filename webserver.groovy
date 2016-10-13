@@ -44,7 +44,7 @@ router.post("/newEmail").handler { routingContext ->
   def senderEmail= routingContext.request().getParam("email_2")
   def submitInput= routingContext.request().getParam("asunto")
   def titleInput= routingContext.request().getParam("title")
-  def contentText= routingContext.request().getParam("contenido")
+  def contentText= routingContext.request().getParam("content")
 
   def email=[
   receiver:receiverEmail,
@@ -120,7 +120,7 @@ router.post("/update").handler { routingContext ->
   def senderEmail= routingContext.request().getParam("email_2")
   def submitInput= routingContext.request().getParam("asunto")
   def titleInput= routingContext.request().getParam("title")
-  def contentText= routingContext.request().getParam("contenido")
+  def contentText= routingContext.request().getParam("content")
 
 
  def query = ["_id":emailToUpdate]
