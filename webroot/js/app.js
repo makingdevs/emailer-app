@@ -4,8 +4,8 @@ $( document ).ready(function() {
 });
 
 var findAll = function(){
-  countEmails();
   readerEmails();
+  countEmails();
 }
 
 var newEmail = function(){
@@ -39,14 +39,12 @@ var showOne = function(id){
 }
 
 var showNext=function(skip){
-  alert("Skip number: "+skip);
   $.ajax({
     data: "setValue="+skip,
     url:"http://localhost:8080/showNext",
     type:'post',
     success:
       function(response){
-        alert(response);
         $(".jumbotron").hide();
         $("#start").hide();
         var source = $("#entry-template").html();
@@ -60,6 +58,7 @@ var showNext=function(skip){
       alert("error al procesar");
       }
   });
+  countEmails();
 }
 
 var deleteEmail = function(id){
@@ -130,9 +129,17 @@ function countEmails(){
     success:
       function(response){
         count=response;
-        alert("El total es de: "+response);
         var pages=parseInt((response/5)+1);
-        alert("El números de páginas es "+pages);
+        var html="<ul><li><a href='#/'>1</a></li>";
+        var i;
+        var skip=5;
+        for(i=2; i<=pages; i++){
+            html=html.concat("<li><a href='#/showNext/"+skip+"'>"+i+"</a></li>");
+            skip=skip+5;
+        }
+        html=html.concat("</ul>");
+        $("#table_div").append(html);
+        $("ul").addClass("pagination");
       }
   });
 }
