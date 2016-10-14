@@ -4,6 +4,7 @@ $( document ).ready(function() {
 });
 
 var findAll = function(){
+  countEmails();
   readerEmails();
 }
 
@@ -37,6 +38,30 @@ var showOne = function(id){
   });
 }
 
+var showNext=function(skip){
+  alert("Skip number: "+skip);
+  $.ajax({
+    data: "setValue="+skip,
+    url:"http://localhost:8080/showNext",
+    type:'post',
+    success:
+      function(response){
+        alert(response);
+        $(".jumbotron").hide();
+        $("#start").hide();
+        var source = $("#entry-template").html();
+        var template = Handlebars.compile(source);
+        var wrapper={emails:response};
+        var html = template(wrapper);
+        $("div.row:first").html(html);
+      },
+    error:
+      function(){
+      alert("error al procesar");
+      }
+  });
+}
+
 var deleteEmail = function(id){
   $.ajax({
     data: "idEmailRemove="+id,
@@ -50,7 +75,6 @@ var deleteEmail = function(id){
 }
 
 var saveEmail=function(){
-/*
   tinymce.remove();
   $.ajax({
     data: $("#mail_form").serialize(),
@@ -60,9 +84,8 @@ var saveEmail=function(){
       console.log("Email agregado exitosamente");
     }
   });
-*/
   alert("Email Agregado");
-  //readerEmails();
+  readerEmails();
 
 }
 
@@ -99,9 +122,24 @@ var previewEmail=function(id){
   });
 }
 
+function countEmails(){
+  $.ajax({
+    url:"http://localhost:8080/countTotal",
+    type:'GET',
+    dataType: 'json',
+    success:
+      function(response){
+        count=response;
+        alert("El total es de: "+response);
+        var pages=parseInt((response/5)+1);
+        alert("El números de páginas es "+pages);
+      }
+  });
+}
+
 function readerEmails(){
   $.ajax({
-    url:"http://localhost:8080/show",
+    url:"http://localhost:8080/showFirst",
     type:'GET',
     dataType: 'json',
     success:
@@ -115,10 +153,7 @@ function readerEmails(){
         $("div.row:first").html(html);
       }
   });
-
-
 }
-
 function readerForms(){
   $("#reader").hide();
   $("#start").hide();
@@ -137,6 +172,7 @@ var routes = {
   '/preview/:mailId': previewEmail,
   '/updateEmail': updateEmail,
   '/showOne/:mailId': showOne,
+  '/showNext/:skipMail': showNext,
   '/delete/:mailId': deleteEmail
 };
 
