@@ -38,8 +38,6 @@ router.route("/static/*").handler(
 
 //router para tomar el formulario principal y salvarlo en mongoDB----------------------------------------------
 router.post("/newEmail").handler { routingContext ->
-  // println routingContext.properties
-  //recuperando los datos del formulario
   def receiverEmail= routingContext.request().getParam("email_1")
   def senderEmail= routingContext.request().getParam("email_2")
   def submitInput= routingContext.request().getParam("asunto")
@@ -62,19 +60,57 @@ router.post("/newEmail").handler { routingContext ->
   .end("ok! Email Agregado")
 }
 
-//router by show all things
-  router.route("/show").handler({ routingContext ->
+//router by send the total of documents
+  router.route("/countTotal").handler({ routingContext ->
     def query = [:]
-    mongoClient.find("email_storage", query, { res ->
+    //conteo de numeros
+    mongoClient.count("email_storage",query,{res ->
+      if(res.succeeded()){
+        routingContext.response()
+        .putHeader("content-type", "application/json; charset=utf-8")
+        .end(Json.encodePrettily(res.result()))
+      }
+    })
+ })
+
+//router by send the first set  of documents
+ router.route("/showFirst").handler({ routingContext ->
+    def query = [:]
+    def options=[
+    limit:5,
+    ]
+    mongoClient.findWithOptions("email_storage", query, options, { res ->
       if (res.succeeded()) {
         routingContext.response()
-          .putHeader("content-type", "application/json; charset=utf-8")
-          .end(Json.encodePrettily(res.result()))
-     } else {
+        .putHeader("content-type", "application/json; charset=utf-8")
+        .end(Json.encodePrettily(res.result()))
+      } else {
         res.cause().printStackTrace()
       }
     })
   })
+
+//router for show the next set of emails
+router.post("/showNext").handler { routingContext ->
+  def setValue=0
+  setValue= routingContext.request().getParam("setValue")
+  println "El valor del set value es"+setValue
+  def query = [:]
+  def options=[
+  limit:5,
+  skip:setValue.toInteger()
+  ]
+  mongoClient.findWithOptions("email_storage", query, options, { res ->
+    if (res.succeeded()) {
+      routingContext.response()
+      .putHeader("content-type", "application/json; charset=utf-8")
+      .end(Json.encodePrettily(res.result()))
+    } else {
+      res.cause().printStackTrace()
+    }
+  })
+}
+
 
 //router for show only one json file--------------------------------------------------------------------------
 router.post("/one").handler { routingContext ->
@@ -101,7 +137,7 @@ router.post("/remove").handler { routingContext ->
   def query = ["_id":emailRemove]
     mongoClient.remove("email_storage", query, { res ->
       if (res.succeeded()) {
-          routingContext.response()
+           routingContext.response()
           .setStatusCode(201)
           .putHeader("content-type", "text/html; charset=utf-8")
           .end("Eliminado!")
