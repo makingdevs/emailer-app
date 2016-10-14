@@ -94,7 +94,7 @@ router.post("/newEmail").handler { routingContext ->
 router.post("/showNext").handler { routingContext ->
   def setValue=0
   setValue= routingContext.request().getParam("setValue")
-  println "El valor del set value es"+setValue
+//  println "El valor del set value es"+setValue
   def query = [:]
   def options=[
   limit:5,
