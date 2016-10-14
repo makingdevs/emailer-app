@@ -67,9 +67,14 @@ router.post("/newEmail").handler { routingContext ->
     def query = [:]
     mongoClient.find("email_storage", query, { res ->
       if (res.succeeded()) {
+        def jsonRequest=res.result()
+        def countJson=[counter:+res.result().size()]
+        jsonRequest.add(countJson)
+        println (jsonRequest)
+
         routingContext.response()
           .putHeader("content-type", "application/json; charset=utf-8")
-          .end(Json.encodePrettily(res.result()))
+          .end(Json.encodePrettily(jsonRequest))
      } else {
         res.cause().printStackTrace()
       }
