@@ -17,6 +17,7 @@ var newEmail = function(){
 var showOne = function(id){
   readerForms();
   $("#toUpdate").show();
+  validate();
   $.ajax({
     data: "idEmail="+id,
     url: 'http://localhost:8080/one',
@@ -49,8 +50,53 @@ var deleteEmail = function(id){
   readerEmails();
 }
 
+function validate(){
+  alert("validando");
+  $('#mail_form').formValidation({
+    message: 'This value is not valid',
+    icon: {
+      valid: 'glyphicon glyphicon-ok',
+      invalid: 'glyphicon glyphicon-remove',
+      validating: 'glyphicon glyphicon-refresh'
+    },
+    fields: {
+      email_1: {
+        err: '#email_1Message',
+        validators: {
+          notEmpty: {
+            message: 'Debe haber un email destinatario.'
+          }
+        }
+      },
+      email_2: {
+        err: '#email_2Message',
+        validators: {
+          notEmpty: {
+            message: 'Debe haber un email remitente.'
+          }
+        }
+      },
+      asunto: {
+        err: '#asuntoMessage',
+        validators: {
+          notEmpty: {
+            message: 'Colocar un asunto.'
+          }
+        }
+      },
+      title: {
+        err: '#titleMessage',
+        validators: {
+          notEmpty: {
+            message:'Colocar un título.'
+          }
+        }
+      }
+    }
+  });
+};
+
 var saveEmail=function(){
-/*
   tinymce.remove();
   $.ajax({
     data: $("#mail_form").serialize(),
@@ -60,10 +106,8 @@ var saveEmail=function(){
       console.log("Email agregado exitosamente");
     }
   });
-*/
   alert("Email Agregado");
-  //readerEmails();
-
+  readerEmails();
 }
 
 var updateEmail=function(){
@@ -128,6 +172,7 @@ function readerForms(){
   $("textarea").val("");
   $("#toUpdate").hide();
   $("#toAdd").hide();
+  validate();
 }
 
 var routes = {

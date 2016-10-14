@@ -12,7 +12,7 @@
   <body>
 
     <script id="entry-template" type="text/x-handlebars-template">
-      <div class="panel panel-default panel-primary" id="reader">
+<div class="panel panel-default panel-primary" id="reader">
         <div class="panel-heading panel-primary text-center">Lectura de Correos </div>
         <div class="panel-body">
         <table id="table" class="table table-striped table-bordered table-condensed table-hover">
@@ -32,7 +32,7 @@
     </script>
 
     <script id="preview-template" type="text/x-handlebars-template">
-       <div class="panel panel-default panel-primary" id="Preview">
+<div class="panel panel-default panel-primary" id="Preview">
         <div class="panel-heading panel-primary text-center">Preview Email {{_id}}</div>
         <div class="panel-body" id="previewBody" >
             <strong> To:  {{receiver}}</strong><br>
@@ -72,7 +72,7 @@
 
     <div class="container">
       <div class="row">
-   </div>
+      </div>
 
       <div class="text-center" id="start">
         <h1>Inicio</h1>
@@ -83,49 +83,56 @@
         <br>
       </div>
 
+
+
       <div class="jumbotron">
         <h2>:.:Emailer App:.:</h2>
+        <div class="col-lg-8 col-lg-offset-2">
+          <form id="mail_form" method="post" class="form-horizontal">
+            <input type="hidden" class="form-control" name="email_id" id="email_id"/>
 
-        <form class="form-horizontal" method="post" role="form" id="mail_form">
-        <div class="form-group">
+            <div class="form-group">
 
-          <label for="email_1" class="col-lg-2 control-label">Destinatario: </label>
-            <div class="col-lg-5">
-              <input type="hidden" class="form-control" name="email_id" id="email_id"/>
-              <input type="email" class="form-control" name="email_1" id="email_1" />
+              <label class="col-lg-3 control-label">Destinatario</label>
+              <div class="col-lg-4">
+                <input type="text" class="form-control" id="email_1" name="email_1" placeholder="emailer@app.com" />
+                <span class="help-block" id="email_1Message" />
+              </div>
+
+              <label class="col-lg-3 control-label">Remitente</label>
+              <div class="col-lg-4">
+                <input type="text" class="form-control" id="email_2" name="email_2" placeholder="emailer2@app.com" />
+                <span class="help-block" id="email_2Message" />
+              </div>
+
+              <label class="col-lg-3 control-label">Asunto</label>
+              <div class="col-lg-4">
+                <input type="text" class="form-control" id="asunto" name="asunto" placeholder="Asunto aquí" />
+                <span class="help-block" id="asuntoMessage" />
+              </div>
+
+              <label class="col-lg-3 control-label">Título</label>
+              <div class="col-lg-4">
+                <input type="text" class="form-control" id="title" name="title" placeholder="Agrega un título" />
+                <span class="help-block" id="titleMessage" />
+              </div>
+
+              <label for="body_mail" class="col-lg-2 control-label">Contenido: </label>
+              <div class="col-lg-8" id="tinyReader">
+                <textarea class="form-control" name="content" id="content"></textarea>
+              </div>
+
             </div>
-          </div>
 
-          <div class="form-group">
-            <label for="email_2" class="col-lg-2 control-label">Remitente: </label>
-            <div class="col-lg-5">
-              <input type="email" class="form-control" name="email_2" id="email_2" />
+            <div class="form-group">
+              <div class="col-lg-9 col-lg-offset-3">
+                <a href="#/updateEmail" id="toUpdate"><button type="submit" class="btn btn-primary"> Actualizar Email</button></a>
+                <a href="#/save" id="toAdd"><button type="submit" class="btn btn-primary"> Agregar Email</button></a>
+                <a href="#/save" id="toAdd" class="btn btn-primary submit">Save Email</a>
+              </div>
             </div>
-          </div>
-
-          <div class="form-group">
-            <label for="asunto" class="col-lg-2 control-label">Asunto: </label>
-            <div class="col-lg-5">
-              <input type="text" class="form-control" name="asunto" id="asunto" />
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="title" class="col-lg-2 control-label">Título: </label>
-            <div class="col-lg-5">
-              <input type="text" class="form-control" name="title" id="title"/>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="body_mail" class="col-lg-2 control-label">Contenido: </label>
-            <div class="col-lg-8" id="tinyReader">
-              <textarea class="form-control" name="content" id="content"></textarea>
-            </div>
-          </div>
-          <a href="#/save" id="toAdd">Agregar Email</a>
-          <a href="#/updateEmail" id="toUpdate">Actualizar Email</a>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
 
@@ -138,6 +145,8 @@
 
     <script src="content/jquery/dist/jquery.js"></script>
     <script src="content/form.validation/dist/js/formValidation.min.js"></script>
+    <script src="content/form.validation/dist/js/formValidation.js"></script>
+    <script src="content/form.validation/dist/js/framework/bootstrap.js"></script>
     <script src="content/handlebars/handlebars.js"></script>
     <script src="content/bootstrap/dist/js/bootstrap.js"></script>
     <script src="content/tinymce/tinymce.min.js"></script>
