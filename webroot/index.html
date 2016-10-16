@@ -1,186 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>Emailer Web App</title>
-    <link href="static/content/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-    <link href="static/content/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  </head>
+<head>
+		<meta charset="UTF-8">
+		<title>Emailer Web App</title>
+				<link href="third-party/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+				<link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet"> 
+				<link href="third-party/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet">
+				<link href="third-party/form.validation/dist/css/formValidation.css" rel="stylesheet">
 
-  <body>
+				<meta name="viewport" content="width=device-width, initial-scale=1">
+				<style>    
+				footer {
+					background-color: black;
+				color: white;
+				padding: 15px;
+				}
+				p.custom{
+				font-family: 'Pacifico', cursive;
+				font-size: 300%;
+				}
+				
+				p.customButton{
+				font-family: 'Pacifico', cursive;
+				font-size: 150%;
+				}
 
-    <script id="entry-template" type="text/x-handlebars-template">
-            <div class="panel panel-default panel-primary">
-        <div class="panel-heading panel-primary text-center">Lectura de Correos </div>
-        <div class="panel-body">
+				</style>
+</head>
 
-        <table id="table" class="table table-striped table-bordered table-condensed table-hover">
-        <tr><th>Destinatario</th><th>Remitente</th><th>Titulo</th><th>Asunto</th><th>Contenido</th></tr>
-       {{#each emails}}
-        <tr>
-        <td>{{receiver}}</td>
-        <td>{{sender}}</td>
-        <td>{{title}}</td>
-        <td>{{submit}}</td>
-        <td>{{content}}</td>
-        </tr>
-      {{/each}}
-
-  </table>
-
-      </div>
-      </div>
-
-
-    </script>
-
-    <div class="navbar navbar-default navbar-inverse" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Emailer App</a>
-        </div>
-
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="/show">.</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
+<body>
+   <script id="entry-template" type="text/x-handlebars-template">
+			<div class="col-sm-12">
+					<div class="well">
+							<p class="customButton">Archivo</p>
+							<div class="thumbnail">	
+							<table class="table table-hover">
+							<tr>
+							<th class="text-center">ID</th>
+							<th class="text-center">Subject</th>
+							<th class="text-center">Opciones</th>
+							</tr>
+							<tbody>
+						  {{#each emails}}
+							<tr>
+							<td>{{_id}}</td>
+							<td>{{submit}}</td>
+							<td>Editar Preview Eliminar</td>
+							</tr>
+							{{/each}}
+							</tbody>
+							</table>
+							</div>
+					</div>
+			</div>
+	</script>
 
 
-    <div class="container">
-        <div class="row">
-                      <div class="col-lg-3 col-md-6">
-                          <div class="panel panel-primary">
-                              <div class="panel-heading">
-                                  <div class="row">
-                                      <div class="text-center">
-                                          <div>Buscar Json</div>
-                                      </div>
-                                  </div>
-                              </div>
-                                  <div class="panel-footer text-center">
-                                      <form  method="post" action="/one">
-                                             <input type="text" class="form-control" name="idEmail" placeholder="Id Json">
-                                          <br>
-                                        <button type="submit" class="btn btn-default btn-block">Ver Json</button>
-                                      </form>
-                                      <div class="clearfix"></div>
-                                  </div>
-                          </div>
-                      </div>
+<nav class="navbar navbar-default">
+		<div class="container-fluid">
+				<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						</button>
+				</div>
+						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+								<ul class="nav navbar-nav">
+								<li class="active">
+								<a href="#">
+							  <span class="glyphicon glyphicon-home" aria-hidden="true">&nbsp;Inicio</span>
+								</a>
+								</li>
+								</ul>
+								<ul class="nav navbar-nav navbar-right">
+								<li><a href="#">Link</a></li>
+								</ul>
+						</div>
+		</div>
+</nav>
 
-                      <div class="col-lg-3 col-md-6">
-                          <div class="panel panel-primary">
-                              <div class="panel-heading">
-                                  <div class="row">
-                                      <div class="text-center">
-                                          <div>Eliminar Json de Mongo</div>
-                                      </div>
-                                  </div>
-                              </div>
-                                  <div class="panel-footer text-center">
-                                      <form  method="post" action="/remove">
-                                             <input type="text" class="form-control" name="idEmailRemove" placeholder="Id Json">
-                                          <br>
-                                        <button type="submit" class="btn btn-default btn-block">Eliminar Registro</button>
-                                      </form>
-                                      <div class="clearfix"></div>
-                                  </div>
-                          </div>
-                      </div>
+<div class="container text-center">    
 
-                      <div class="col-lg-3 col-md-6">
-                          <div class="panel panel-primary">
-                              <div class="panel-heading">
-                                  <div class="row">
-                                      <div class="text-center">
-                                          <div>Mostrar info de Mongo</div>
-                                      </div>
-                                  </div>
-                              </div>
-                                  <div class="panel-footer text-center">
-                                      <a href="/show" class="btn btn-default btn-block">Ver Emails Guardados</a>
-                                      <div class="clearfix"></div>
-                                  </div>
-                          </div>
-                      </div>
-      </div>
+		<div class="row">
+				<div class="alert alert-success fade in col-sm-10 col-md-offset-1">
+					<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+					<p><strong>Ey!</strong></p>
+					People are looking at your profile. Find out who.
+				</div>
+		</div>
+
+
+		<div class="row">
+				<div class="col-sm-3 well">
+								<div class="thumbnail">
+										<p class="custom">Emailer App</p>
+										<img src="resources/buzon.png" width="70%"/>
+								</div>
+
+								<div class="thumbnail">
+										<a href="#/">
+										<p class="customButton">Almacén de Correos 
+										</p></a>
+								</div>
+
+								<div class="thumbnail">
+										<a href="#/newEmail">
+										<p class="customButton">Agregar Correo Nuevo
+										</p></a>
+								</div>
+
+				</div>
 
 
 
+<div class="col-sm-9">
 
-      <div class="jumbotron">
-        <h2>Issue 6</h2>
+<div class="row" id="readEmails">
 
-        <form class="form-horizontal" action="/some" role="form" method="post" enctype='application/json'>
+</div>
 
-          <div class="form-group">
-            <label for="email_1" class="col-lg-2 control-label">Destinatario: </label>
-            <div class="col-lg-5">
-              <input type="email" class="form-control" name="email_1" />
-            </div>
-          </div>
+<div class="row">
+		<div class="col-sm-12">
+				<div class="well">
+						<form method="post" role="form" id="emailForm" action="#/newEmail">
+						<p class="customButton">Email</p>
+						<div class="input-group">
+									<span class="input-group-addon" id="basic-addon1">Sender&nbsp;&nbsp;&nbsp;</span>
+									<input type="text" class="form-control" 
+									placeholder="sender@emailer.com" aria-describedby="basic-addon1" name="senderEmail" id="senderEmail">
+						</div>
+						<br>
+						<div class="input-group">
+									<span class="input-group-addon" id="basic-addon1">Receiver</span>
+									<input type="text" class="form-control" 
+									placeholder="receiver@emailer.com" aria-describedby="basic-addon1" id="receiverEmail" name="receiverEmail">
+						</div>
+						<br>
+						<div class="input-group">
+									<span class="input-group-addon" id="basic-addon1">Subject&nbsp;&nbsp;</span>
+									<input type="text" class="form-control" 
+									placeholder=" Subject Here " aria-describedby="basic-addon1" id="subjectEmail" name="subjectEmail">
+						</div>
+						<br>
+						<div class="input-group">
+									<textarea class="form-control" rows="3" placeholder="Contenido" id="contentEmail" name="contentEmail"></textarea>
+						</div>
+						<span class="input-group-btn">
+						        <button class="btn btn-default" type="submit">Go!</button>
+						</span>
+						</form>
+			  </div>
+		</div>
+</div>
 
-          <div class="form-group">
-            <label for="email_2" class="col-lg-2 control-label">Remitente: </label>
-            <div class="col-lg-5">
-              <input type="email" class="form-control" name="email_2"/>
-            </div>
-          </div>
+<div class="row">
+		<div class="col-sm-12">
+				<div class="well">
+					<p class="custom">Hi</p>
+				</div>
+		</div>
+</div>
 
-          <div class="form-group">
-            <label for="asunto" class="col-lg-2 control-label">Asunto: </label>
-            <div class="col-lg-5">
-              <input type="text" class="form-control" name="asunto"/>
-            </div>
-          </div>
+</div>
+</div>
+	
+		<div class="row">
+				<div class="col-sm-12">
+							<div class="thumbnail">
+								<p>Hi</p>	
+						</div>
+				</div>
+		</div>
 
-          <div class="form-group">
-            <label for="title" class="col-lg-2 control-label">Título: </label>
-            <div class="col-lg-5">
-              <input type="text" class="form-control" name="title"/>
-            </div>
-          </div>
+		</div>
 
-          <div class="form-group">
-            <label for="body_mail" class="col-lg-2 control-label">Contenido: </label>
-            <div class="col-lg-8">
-              <textarea class="form-control" name="contenido"></textarea>
-            </div>
-          </div>
+		<footer class="container-fluid text-center">
+		<p class="customButton">Making Devs</p>
+		</footer>
 
-          <button type="submit" class="btn btn-default  col-md-offset-2 btn-primary">Enviar</button>
-        </form>
+<script type="text/javascript" src="third-party/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="third-party/handlebars/handlebars.js"></script>
+<script type="text/javascript" src="third-party/bootstrap/dist/js/bootstrap.js"></script>
+<script type="text/javascript" src="third-party/tinymce/tinymce.js"></script>
+<script type="text/javascript" src="third-party/form.validation/dist/js/formValidation.js"></script>
+<script src="https://rawgit.com/flatiron/director/master/build/director.min.js"></script>
+<script type="text/javascript" src="third-party/form.validation/dist/js/framework/bootstrap.js"></script>
+<script type="text/javascript" src="js/validation.js"></script>
+<script type="text/javascript" src="js/request.js"></script>
+<script type="text/javascript" src="js/routes.js"></script>
 
-      </div>
-    </div>
-
-
-    <footer style="height: 75px; background-color:#151515;">
-      <div class="container">
-        <p><h3 class="text-center">Emailer App</h3></p>
-      </div>
-    </footer>
-
-    <script src="static/content/jquery/dist/jquery.js"></script>
-    <script src="static/content/handlebars/handlebars.js"></script>
-    <script src="static/content/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="static/content/tinymce/tinymce.min.js"></script>
-    <script src="static/js/init_tiny.js"></script>
-    <script src="static/js/app.js"></script>
-
-  </body>
-
-
+</body>
 </html>
-
