@@ -38,7 +38,8 @@ var editEmail=function(id){
 //route for save updatedEmail
 var saveEmail=function(){
 	alert("Salvando Email Actualizado");
-	sendRefreshEmail();
+  tinymce.remove();
+  sendRefreshEmail();
 	$("#start").hide();
 	$("#formEmails").hide();
 	$("#readEmails").show();
