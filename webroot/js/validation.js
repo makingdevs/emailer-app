@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-		alert("Validando");
+	//	alert("Validando");
 		 //show and hide divs
 			$("#start").show();
 			$("#preview").hide();
@@ -79,9 +79,10 @@ $(document).ready(function() {
 	.on('success.form.fv', function(e) {
 				// Prevent submit form
 				e.preventDefault();
-				alert("Vamos a hacer la petición Ajax");
-				sendNewEmail();
-        alert("refrescando la tabla");
+		//		alert("Vamos a hacer la petición Ajax");
+        tinymce.remove();
+        sendNewEmail();
+    //    alert("refrescando la tabla");
         sendReadEmails();
         $("#readEmails").show();
         $("#formEmails").hide();

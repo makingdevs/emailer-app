@@ -2,7 +2,7 @@
 
 // static route-->read Emails
 var readEmails=function(){
-	alert("Leyendo Emails");
+//	alert("Leyendo Emails");
 	//show and hide divs
 	$("#start").hide();
 	$("#formEmails").hide();
@@ -13,7 +13,7 @@ var readEmails=function(){
 
 // route for new Email
 var newAdd=function(){
-	alert("Mostrando Forma para Agregar un correo nuevo");
+//	alert("Mostrando Forma para Agregar un correo nuevo");
 	//show and hide divs
 	$("#start").hide();
 	$("#formEmails").show();
@@ -27,7 +27,7 @@ var newAdd=function(){
 
 //route for edit Email
 var editEmail=function(id){
-	alert("Update email: "+id);
+//	alert("Update email: "+id);
 	sendUpdateEmail(id);
 	$("#start").hide();
 	$("#formEmails").hide();
@@ -37,7 +37,7 @@ var editEmail=function(id){
 
 //route for save updatedEmail
 var saveEmail=function(){
-	alert("Salvando Email Actualizado");
+//	alert("Salvando Email Actualizado");
   tinymce.remove();
   sendRefreshEmail();
 	$("#start").hide();
@@ -51,16 +51,16 @@ var saveEmail=function(){
 
 //route for preview Email
 var viewEmail=function(id){
-	alert("Preview email: "+id);
+//	alert("Preview email: "+id);
 	sendPreviewEmail(id);
-	alert("Consulta hecha, pintando divs");
+//	alert("Consulta hecha, pintando divs");
 	$("#readEmails").hide();
 	$("#showEmails").show();
 }
 
 //route for delete Email
 var removeEmail=function(id){
-	alert("Remove email: "+id);
+//	alert("Remove email: "+id);
 	sendRemoveEmail(id);
 	$("#start").hide();
 	$("#formEmails").hide();

@@ -2,7 +2,7 @@
 
 //New Add Email
 function sendNewEmail(){
-	alert("Agregando Nuevo Email...Espera siguiente mensaje");
+//	alert("Agregando Nuevo Email...Espera siguiente mensaje");
   //limpiando inputs
   $.ajax({
 			data: $("#emailForm").serialize(),
@@ -10,7 +10,7 @@ function sendNewEmail(){
 			url: 'http://localhost:8080/newEmail',
 			success: function(){
 			alert("Email agregado exitosamente");
-			alert($("#emailForm").serialize());
+	//		alert($("#emailForm").serialize());
       }
 	});
 
@@ -18,7 +18,7 @@ function sendNewEmail(){
 
 //ajax function for show all emails
 function sendReadEmails(){
-	alert("Send Read Emails");
+//	alert("Send Read Emails");
 	$.ajax({
 				url:"http://localhost:8080/show",
 				type:'GET',
@@ -48,13 +48,13 @@ function sendRemoveEmail(id){
 
 //ajax function for show one email
 function sendUpdateEmail(id){
-	alert("Ajax submit");
+//	alert("Ajax submit");
 	$.ajax({
 			data: "idEmail="+id,
 			url: 'http://localhost:8080/showEmail',
 			type: 'post',
 			success: function (response) {
-						alert("populate");
+//						alert("populate");
 						//show divs
 						$("#formEmails").show();
 						$("#readEmails").hide();
@@ -74,7 +74,7 @@ function sendUpdateEmail(id){
 //Ajax request for update the form at vertx
 function sendRefreshEmail(){
 //	var tiny= tinyMCE.activeEditor.getContent();
-	alert("Esto se va a guardar:"+ $("#emailForm").serialize()); //+ " &contentEmail="+tiny,
+//	alert("Esto se va a guardar:"+ $("#emailForm").serialize()); //+ " &contentEmail="+tiny,
 	$.ajax({
 		data: $("#emailForm").serialize(), //+ " &contentEmail="+tiny,
 		type: 'post',
@@ -86,13 +86,13 @@ function sendRefreshEmail(){
 }
 
 function sendPreviewEmail(id){
-	alert("Previsualizando Enviando AJAX request");
+//	alert("Previsualizando Enviando AJAX request");
 	$.ajax({
 			data: "idEmail="+id,
 			url: 'http://localhost:8080/showEmail',
 			type: 'post',
 			success: function (response) {
-					alert("ok recuperando y visualizando");
+	//				alert("ok recuperando y visualizando");
 					var json=$.parseJSON(response);
 					var source=$("#previewTemplate").html();
 					var template=Handlebars.compile(source);
