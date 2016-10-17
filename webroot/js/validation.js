@@ -1,12 +1,12 @@
 $(document).ready(function() {
-		
+
 		alert("Validando");
 		 //show and hide divs
 			$("#start").show();
 			$("#preview").hide();
 			$("#formEmails").hide();
 			$("#readEmails").hide();
-			 
+
 		tinymce.init({
         selector: 'textarea',
         setup: function(editor) {
@@ -27,7 +27,7 @@ $(document).ready(function() {
                 validating: 'glyphicon glyphicon-refresh'
             },
             fields: {
-                
+
 								senderEmail: {
 								validators: {
 								notEmpty: {
@@ -55,10 +55,10 @@ $(document).ready(function() {
 						 		notEmpty: {
 						 		message: 'The email address is required and can\'t be empty'
 						 							}
-						 		
+
 						 			}
 						  },
-								
+
                 contentEmail: {
                     validators: {
                         callback: {
@@ -81,7 +81,11 @@ $(document).ready(function() {
 				e.preventDefault();
 				alert("Vamos a hacer la petición Ajax");
 				sendNewEmail();
-				});
+        alert("refrescando la tabla");
+        sendReadEmails();
+        $("#readEmails").show();
+        $("#formEmails").hide();
+         });
 	});
 
 
