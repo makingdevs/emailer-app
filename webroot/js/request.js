@@ -18,7 +18,7 @@ function sendNewEmail(){
 
 //ajax function for show all emails
 function sendReadEmails(){
-//	alert("Send Read Emails");
+  //	alert("Send Read Emails");
 	$.ajax({
 				url:"http://localhost:8080/show",
 				type:'GET',
@@ -32,6 +32,7 @@ function sendReadEmails(){
 						$("#readEmails").html(html);
 				}
 		});
+  paginate();
 }
 
 //ajax function for remove email
@@ -101,4 +102,29 @@ function sendPreviewEmail(id){
 					$("#previewBody").append(json.content);
       }
 			});
+}
+
+function paginate(){
+  $.ajax({
+    url:"http://localhost:8080/countTotal",
+    type:'GET',
+    dataType: 'json',
+    success:
+      function(response){
+        alert(response);
+        count=response;
+        var pages= (count%10==0)? parseInt(count/10) : parseInt((count/10)+1);
+//        alert(pages);
+        var html="<ul><li><a href='#/'>1</a></li>";
+        var i;
+        var skip=10;
+        for(i=2; i<=pages; i++){
+          html=html.concat("<li><a href='#/showNext/"+skip+"'>"+i+"</a></li>");
+          skip=skip+10;
+        }
+        html=html.concat("</ul>");
+        $("#reader").append(html);
+        $("ul").addClass("pagination");
+      }
+  });
 }
