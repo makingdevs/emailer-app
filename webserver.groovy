@@ -74,5 +74,21 @@ router.route("/show").handler({ routingContext ->
 				})
 	})
 
+//route for remove one Email
+router.post("/remove").handler { routingContext ->
+	def emailRemove= routingContext.request().getParam("idEmail")
+		def query = ["_id":emailRemove]
+		mongoClient.remove("email_storage", query, { res ->
+				if (res.succeeded()) {
+				routingContext.response()
+				.setStatusCode(201)
+				.putHeader("content-type", "text/html; charset=utf-8")
+				.end("Eliminado!")
+				} else {
+				res.cause().printStackTrace()
+				}
+				})
+}
+
 server.requestHandler(router.&accept).listen(8080)
 
