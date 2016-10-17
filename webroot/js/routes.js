@@ -22,6 +22,7 @@ var newAdd=function(){
 //route for update Email
 var updateEmail=function(id){
 	alert("Update email: "+id);
+	sendUpdateEmail(id);
 }
 
 //route for preview Email

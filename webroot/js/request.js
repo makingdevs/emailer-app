@@ -42,5 +42,28 @@ function sendRemoveEmail(id){
 				alert("Se elimino registro");
 			}
 	});
+}
 
+//ajax function for show one email
+function sendUpdateEmail(id){
+	alert("Ajax submit");
+	$.ajax({
+			data: "idEmail="+id,
+			url: 'http://localhost:8080/showEmail',
+			type: 'post',
+			success: function (response) {
+						alert("populate");
+						//show divs
+						$("#formEmails").show();
+						//populate inputs
+						tinyMCE.remove();
+						var json=$.parseJSON(response);
+						$('input[name="email_id"]').val(json._id);
+						$('input[name="receiverEmail"]').val(json.receiver);
+						$('input[name="senderEmail"]').val(json.sender);
+						$('input[name="subjectEmail"]').val(json.submit);
+						$('textarea').val(json.content);
+						tinymce.init({'selector':'textarea'});
+					}
+			});
 }
