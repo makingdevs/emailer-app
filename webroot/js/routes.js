@@ -8,7 +8,9 @@ var readEmails=function(){
 	$("#formEmails").hide();
 	$("#showEmails").hide();
 	$("#readEmails").show();
-	sendReadEmails();
+
+  sendSetEmails(0);
+  //sendReadEmails();
 }
 
 // route for new Email
