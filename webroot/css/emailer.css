@@ -1,0 +1,15 @@
+footer {
+  background-color: black;
+  color: white;
+  padding: 15px;
+}
+p.custom{
+  font-family: 'Pacifico', cursive;
+  font-size: 300%;
+}
+
+p.customButton{
+  font-family: 'Pacifico', cursive;
+  font-size: 150%;
+}
+
