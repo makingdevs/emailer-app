@@ -31,6 +31,12 @@ var editEmail=function(id){
 var saveEmail=function(){
 	alert("Salvando Email Actualizado");
 	sendRefreshEmail();
+	$("#start").hide();
+	$("#preview").hide();
+	$("#formEmails").hide();
+	$("#readEmails").show();
+	sendReadEmails();
+
 }
 
 //route for preview Email
@@ -42,6 +48,11 @@ var viewEmail=function(id){
 var removeEmail=function(id){
 	alert("Remove email: "+id);
 	sendRemoveEmail(id);
+	$("#start").hide();
+	$("#preview").hide();
+	$("#formEmails").hide();
+	$("#readEmails").show();
+	sendReadEmails();
 }
 
 //Routes Director JS
