@@ -1,7 +1,11 @@
 $(document).ready(function() {
 		
 		alert("Validando");
-    
+		 //show and hide divs
+			$("#start").show();
+			$("#formEmails").hide();
+			$("#readEmails").hide();
+			 
 		tinymce.init({
         selector: 'textarea',
         setup: function(editor) {
