@@ -109,5 +109,38 @@ router.post("/showEmail").handler { routingContext ->
 				})
 }
 
+//route for receive a petition and update an email
+router.post("/update").handler { routingContext ->
+
+
+	//recuperando los datos del formulario
+	  def emailToUpdate= routingContext.request().getParam("email_id")
+		def receiverEmail= routingContext.request().getParam("receiverEmail")
+		def senderEmail= routingContext.request().getParam("senderEmail")
+		def submitInput= routingContext.request().getParam("subjectEmail")
+		def contentText= routingContext.request().getParam("contentEmail")
+		
+		def query = ["_id":emailToUpdate]
+		def update = [
+		$set:[
+		receiver:receiverEmail,
+		sender:senderEmail,
+		submit:submitInput,
+		content:contentText
+		]
+		]
+
+		mongoClient.update("email_storage", query, update, { res ->
+				if (res.succeeded()) {
+						routingContext.response()
+						.setStatusCode(201)
+						.putHeader("content-type", "text/html; charset=utf-8")
+						.end("Update!")
+				} else {
+				res.cause().printStackTrace()
+				}
+		})
+}
+
 server.requestHandler(router.&accept).listen(8080)
 
