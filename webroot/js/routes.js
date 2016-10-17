@@ -32,6 +32,7 @@ var viewEmail=function(id){
 //route for delete Email
 var removeEmail=function(id){
 	alert("Remove email: "+id);
+	sendRemoveEmail(id);
 }
 
 //Routes Director JS
