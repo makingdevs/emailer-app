@@ -10,6 +10,7 @@ var readEmails=function(){
 	sendReadEmails();
 }
 
+// route for new Email
 var newAdd=function(){
 	alert("Mostrando Forma para Agregar un correo nuevo");
 	//show and hide divs
@@ -18,10 +19,29 @@ var newAdd=function(){
 	$("#readEmails").hide();
 }
 
+//route for update Email
+var updateEmail=function(id){
+	alert("Update email: "+id);
+}
+
+//route for preview Email
+var viewEmail=function(id){
+	alert("Preview email: "+id);
+}
+
+//route for delete Email
+var removeEmail=function(id){
+	alert("Remove email: "+id);
+}
+
 //Routes Director JS
 var routes = {
 	'/': readEmails,
 	'/newEmail': newAdd,
+  '/editEmail/:mailId': updateEmail,
+  '/previewEmail/:mailId': viewEmail,
+  '/deleteEmail/:mailId': removeEmail
 };
+
 var router = Router(routes);
 router.init();
