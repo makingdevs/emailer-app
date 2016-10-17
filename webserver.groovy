@@ -154,5 +154,26 @@ router.route("/countTotal").handler({ routingContext ->
     }
   })
 })
+
+//router for show only a set of values
+router.post("/showSet").handler { routingContext ->
+  def setValue=0
+  setValue= routingContext.request().getParam("setValue")
+  println "El valor del set value es"+setValue
+  def query = [:]
+  def options=[
+  limit:10,
+  skip:setValue.toInteger()
+  ]
+  mongoClient.findWithOptions("email_storage", query, options, { res ->
+    if (res.succeeded()) {
+      routingContext.response()
+      .putHeader("content-type", "application/json; charset=utf-8")
+      .end(Json.encodePrettily(res.result()))
+    } else {
+      res.cause().printStackTrace()
+    }
+  })
+}
 server.requestHandler(router.&accept).listen(8080)
 
