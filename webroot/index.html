@@ -60,6 +60,20 @@
 			</div>
 	</script>
 
+   <script id="previewTemplate" type="text/x-handlebars-template">
+			<div class="col-sm-12">
+					<div class="well">
+							<p class="customButton"> {{_id}}</p>
+							<div class="thumbnail" id="previewBody">	
+								<br>
+								<b>To:</b> {{receiver}}<br>
+								<b>From:</b> {{sender}}<br>
+								<b>Subject:</b> {{submit}}<br>
+								<hr>
+							</div>
+					</div>
+			</div>
+	</script>
 
 <nav class="navbar navbar-default">
 		<div class="container-fluid">
@@ -89,15 +103,6 @@
 <div class="container text-center">    
 
 		<div class="row">
-				<div class="alert alert-success fade in col-sm-10 col-md-offset-1">
-					<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-					<p><strong>Ey!</strong></p>
-					People are looking at your profile. Find out who.
-				</div>
-		</div>
-
-
-		<div class="row">
 				<div class="col-sm-3 well">
 								<div class="thumbnail">
 										<p class="custom">Emailer App</p>
@@ -123,6 +128,9 @@
 <div class="col-sm-9">
 
 <div class="row" id="readEmails">
+
+</div>
+<div class="row" id="showEmails">
 
 </div>
 
