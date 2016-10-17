@@ -132,6 +132,7 @@
 						<form method="post" role="form" id="emailForm" action="#/newEmail">
 						<p class="customButton">Email</p>
 						<div class="input-group">
+									<input type="hidden" class="form-control" name="email_id" id="email_id"/>
 									<span class="input-group-addon" id="basic-addon1">Sender&nbsp;&nbsp;&nbsp;</span>
 									<input type="text" class="form-control" 
 									placeholder="sender@emailer.com" aria-describedby="basic-addon1" name="senderEmail" id="senderEmail">
@@ -156,6 +157,7 @@
 						<span class="input-group-btn">
 						 <button class="btn btn-default" type="submit">Go!</button>
 						</span>
+						<a href="#/updateEmail">Update Email</a>
 						</form>
 			  </div>
 		</div>
@@ -168,6 +170,16 @@
 				</div>
 		</div>
 </div>
+
+
+<div class="row" id="preview">
+		<div class="col-sm-12">
+				<div class="well">
+					<p class="custom">preview</p>
+				</div>
+		</div>
+</div>
+
 
 </div>
 </div>
