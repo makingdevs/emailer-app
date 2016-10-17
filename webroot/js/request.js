@@ -55,6 +55,7 @@ function sendUpdateEmail(id){
 						alert("populate");
 						//show divs
 						$("#formEmails").show();
+						$("#readEmails").hide();
 						//populate inputs
 						tinyMCE.remove();
 						var json=$.parseJSON(response);
@@ -66,4 +67,17 @@ function sendUpdateEmail(id){
 						tinymce.init({'selector':'textarea'});
 					}
 			});
+}
+
+//Ajax request for update the form at vertx
+function sendRefreshEmail(){
+	var tiny= tinyMCE.activeEditor.getContent();
+	$.ajax({
+		data: $("#emailForm").serialize() + " &contentEmail="+tiny,
+		type: 'post',
+		url: 'http://localhost:8080/update',
+		success: function(){
+		alert("Email Actualizado ");
+		}
+	});
 }

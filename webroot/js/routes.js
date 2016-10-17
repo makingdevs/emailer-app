@@ -5,6 +5,7 @@ var readEmails=function(){
 	alert("Leyendo Emails");
 	//show and hide divs
 	$("#start").hide();
+	$("#preview").hide();
 	$("#formEmails").hide();
 	$("#readEmails").show();
 	sendReadEmails();
@@ -15,14 +16,21 @@ var newAdd=function(){
 	alert("Mostrando Forma para Agregar un correo nuevo");
 	//show and hide divs
 	$("#start").hide();
+	$("#preview").hide();
 	$("#formEmails").show();
 	$("#readEmails").hide();
 }
 
-//route for update Email
-var updateEmail=function(id){
+//route for edit Email
+var editEmail=function(id){
 	alert("Update email: "+id);
 	sendUpdateEmail(id);
+}
+
+//route for save updatedEmail
+var saveEmail=function(){
+	alert("Salvando Email Actualizado");
+	sendRefreshEmail();
 }
 
 //route for preview Email
@@ -40,7 +48,8 @@ var removeEmail=function(id){
 var routes = {
 	'/': readEmails,
 	'/newEmail': newAdd,
-  '/editEmail/:mailId': updateEmail,
+	'/updateEmail': saveEmail,
+  '/editEmail/:mailId': editEmail,
   '/previewEmail/:mailId': viewEmail,
   '/deleteEmail/:mailId': removeEmail
 };
