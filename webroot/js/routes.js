@@ -19,6 +19,11 @@ var newAdd=function(){
 	$("#formEmails").show();
 	$("#readEmails").hide();
 	$("#showEmails").hide();
+
+  tinymce.remove();
+  $('input').each(function(){ $(this).val(''); });
+  $("textarea").val("");
+  tinymce.init({'selector':'textarea'});
 }
 
 //route for edit Email
