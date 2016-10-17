@@ -5,12 +5,12 @@
 		<meta charset="UTF-8">
 		<title>Emailer Web App</title>
 				<link href="third-party/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-				<link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet"> 
+				<link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
 				<link href="third-party/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet">
 				<link href="third-party/form.validation/dist/css/formValidation.css" rel="stylesheet">
 
 				<meta name="viewport" content="width=device-width, initial-scale=1">
-				<style>    
+				<style>
 				footer {
 					background-color: black;
 				color: white;
@@ -20,7 +20,7 @@
 				font-family: 'Pacifico', cursive;
 				font-size: 300%;
 				}
-				
+
 				p.customButton{
 				font-family: 'Pacifico', cursive;
 				font-size: 150%;
@@ -34,7 +34,7 @@
 			<div class="col-sm-12">
 					<div class="well">
 							<p class="customButton">Archivo</p>
-							<div class="thumbnail">	
+							<div class="thumbnail">
 							<table class="table table-hover">
 							<tr>
 							<th class="text-center">ID</th>
@@ -64,7 +64,7 @@
 			<div class="col-sm-12">
 					<div class="well">
 							<p class="customButton"> {{_id}}</p>
-							<div class="thumbnail" id="previewBody">	
+							<div class="thumbnail" id="previewBody">
 								<br>
 								<b>To:</b> {{receiver}}<br>
 								<b>From:</b> {{sender}}<br>
@@ -100,18 +100,20 @@
 		</div>
 </nav>
 
-<div class="container text-center">    
+<div class="container text-center">
 
 		<div class="row">
 				<div class="col-sm-3 well">
 								<div class="thumbnail">
 										<p class="custom">Emailer App</p>
-										<img src="resources/buzon.png" width="70%"/>
+					          <a href="http://localhost:8080/static/">
+                    <img src="resources/buzon.png" width="70%"/>
+                    </a>
 								</div>
 
 								<div class="thumbnail">
 										<a href="#/">
-										<p class="customButton">Almacén de Correos 
+										<p class="customButton">Almacén de Correos
 										</p></a>
 								</div>
 
@@ -142,19 +144,19 @@
 						<div class="input-group">
 									<input type="hidden" class="form-control" name="email_id" id="email_id"/>
 									<span class="input-group-addon" id="basic-addon1">Sender&nbsp;&nbsp;&nbsp;</span>
-									<input type="text" class="form-control" 
+									<input type="text" class="form-control" required
 									placeholder="sender@emailer.com" aria-describedby="basic-addon1" name="senderEmail" id="senderEmail">
 						</div>
 						<br>
 						<div class="input-group">
 									<span class="input-group-addon" id="basic-addon1">Receiver</span>
-									<input type="text" class="form-control" 
+									<input type="text" class="form-control" required
 									placeholder="receiver@emailer.com" aria-describedby="basic-addon1" id="receiverEmail" name="receiverEmail">
 						</div>
 						<br>
 						<div class="input-group">
 									<span class="input-group-addon" id="basic-addon1">Subject&nbsp;&nbsp;</span>
-									<input type="text" class="form-control" 
+									<input type="text" class="form-control" required
 									placeholder=" Subject Here " aria-describedby="basic-addon1" id="subjectEmail" name="subjectEmail">
 						</div>
 						<br>
@@ -191,11 +193,11 @@
 
 </div>
 </div>
-	
+
 		<div class="row">
 				<div class="col-sm-12">
 							<div class="thumbnail">
-								<p>Hi</p>	
+								<p>Hi</p>
 						</div>
 				</div>
 		</div>

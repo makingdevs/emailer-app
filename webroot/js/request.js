@@ -3,7 +3,8 @@
 //New Add Email
 function sendNewEmail(){
 	alert("Agregando Nuevo Email...Espera siguiente mensaje");
-	$.ajax({
+  //limpiando inputs
+  $.ajax({
 			data: $("#emailForm").serialize(),
 			type: 'post',
 			url: 'http://localhost:8080/newEmail',
