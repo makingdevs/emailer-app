@@ -20,7 +20,6 @@ var newAdd=function(){
 	$("#readEmails").hide();
 	$("#showEmails").hide();
   //clean inputs and textarea
-  tinymce.remove();
   $('input').each(function(){ $(this).val(''); });
   $("textarea").val("");
   tinymce.init({'selector':'textarea'});
