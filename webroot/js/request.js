@@ -10,7 +10,8 @@ function sendNewEmail(){
 			url: 'http://localhost:8080/newEmail',
 			success: function(){
 			alert("Email agregado exitosamente");
-			}
+			alert($("#emailForm").serialize());
+      }
 	});
 
 }
@@ -72,9 +73,10 @@ function sendUpdateEmail(id){
 
 //Ajax request for update the form at vertx
 function sendRefreshEmail(){
-	var tiny= tinyMCE.activeEditor.getContent();
+//	var tiny= tinyMCE.activeEditor.getContent();
+	alert("Esto se va a guardar:"+ $("#emailForm").serialize()); //+ " &contentEmail="+tiny,
 	$.ajax({
-		data: $("#emailForm").serialize() + " &contentEmail="+tiny,
+		data: $("#emailForm").serialize(), //+ " &contentEmail="+tiny,
 		type: 'post',
 		url: 'http://localhost:8080/update',
 		success: function(){
