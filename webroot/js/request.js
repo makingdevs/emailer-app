@@ -81,3 +81,21 @@ function sendRefreshEmail(){
 		}
 	});
 }
+
+function sendPreviewEmail(id){
+	alert("Previsualizando Enviando AJAX request");
+	$.ajax({
+			data: "idEmail="+id,
+			url: 'http://localhost:8080/showEmail',
+			type: 'post',
+			success: function (response) {
+					alert("ok recuperando y visualizando");
+					var json=$.parseJSON(response);
+					var source=$("#previewTemplate").html();
+					var template=Handlebars.compile(source);
+					var html = template(json);
+					$("#showEmails").html(html);
+					$("#previewBody").append(json.content);
+			}
+			});
+}
