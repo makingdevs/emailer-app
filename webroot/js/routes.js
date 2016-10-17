@@ -6,7 +6,7 @@ var readEmails=function(){
 	//show and hide divs
 	$("#start").hide();
 	$("#formEmails").hide();
-	$("#showEmails").show();
+	$("#showEmails").hide();
 	$("#readEmails").show();
 	sendReadEmails();
 }
@@ -19,7 +19,7 @@ var newAdd=function(){
 	$("#formEmails").show();
 	$("#readEmails").hide();
 	$("#showEmails").hide();
-
+  //clean inputs and textarea
   tinymce.remove();
   $('input').each(function(){ $(this).val(''); });
   $("textarea").val("");
@@ -53,6 +53,8 @@ var saveEmail=function(){
 var viewEmail=function(id){
 	alert("Preview email: "+id);
 	sendPreviewEmail(id);
+	alert("Consulta hecha, pintando divs");
+	$("#showEmails").show();
 }
 
 //route for delete Email

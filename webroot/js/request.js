@@ -97,6 +97,6 @@ function sendPreviewEmail(id){
 					var html = template(json);
 					$("#showEmails").html(html);
 					$("#previewBody").append(json.content);
-			}
+      }
 			});
 }
