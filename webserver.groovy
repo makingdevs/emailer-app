@@ -90,5 +90,24 @@ router.post("/remove").handler { routingContext ->
 				})
 }
 
+//route for show one email
+router.post("/showEmail").handler { routingContext ->
+	def idEmail= routingContext.request().getParam("idEmail")
+		def query = ["_id":idEmail]
+		mongoClient.find("email_storage", query, { res ->
+				if (res.succeeded()) {
+						res.result().each { json ->
+						def jsonEmail =groovy.json.JsonOutput.toJson(json)
+						routingContext.response()
+						.setStatusCode(201)
+						.putHeader("content-type", "text/html; charset=utf-8")
+						.end(jsonEmail)
+						}
+				} else {
+				res.cause().printStackTrace()
+				}
+				})
+}
+
 server.requestHandler(router.&accept).listen(8080)
 
