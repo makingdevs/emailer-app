@@ -54,6 +54,7 @@ var viewEmail=function(id){
 	alert("Preview email: "+id);
 	sendPreviewEmail(id);
 	alert("Consulta hecha, pintando divs");
+	$("#readEmails").hide();
 	$("#showEmails").show();
 }
 
