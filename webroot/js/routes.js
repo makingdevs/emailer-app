@@ -69,12 +69,19 @@ var removeEmail=function(id){
 	sendReadEmails();
 }
 
+//read the paginates
+var readSetEmails=function(skip){
+  alert("Entrando al read Set Emails");
+  sendSetEmails(skip);
+}
+
 //Routes Director JS
 var routes = {
 	'/': readEmails,
 	'/newEmail': newAdd,
 	'/updateEmail': saveEmail,
   '/editEmail/:mailId': editEmail,
+  '/setEmails/:mailId': readSetEmails,
   '/previewEmail/:mailId': viewEmail,
   '/deleteEmail/:mailId': removeEmail
 };
