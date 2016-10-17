@@ -119,7 +119,7 @@ router.post("/update").handler { routingContext ->
 		def senderEmail= routingContext.request().getParam("senderEmail")
 		def submitInput= routingContext.request().getParam("subjectEmail")
 		def contentText= routingContext.request().getParam("contentEmail")
-		
+
 		def query = ["_id":emailToUpdate]
 		def update = [
 		$set:[
@@ -142,5 +142,17 @@ router.post("/update").handler { routingContext ->
 		})
 }
 
+//router by send the total of documents
+router.route("/countTotal").handler({ routingContext ->
+  def query = [:]
+  //conteo de numeros
+  mongoClient.count("email_storage",query,{res ->
+    if(res.succeeded()){
+      routingContext.response()
+      .putHeader("content-type", "application/json; charset=utf-8")
+      .end(Json.encodePrettily(res.result()))
+    }
+  })
+})
 server.requestHandler(router.&accept).listen(8080)
 
