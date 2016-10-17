@@ -3,6 +3,7 @@ $(document).ready(function() {
 		alert("Validando");
 		 //show and hide divs
 			$("#start").show();
+			$("#preview").hide();
 			$("#formEmails").hide();
 			$("#readEmails").hide();
 			 
