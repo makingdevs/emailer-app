@@ -104,6 +104,28 @@ function sendPreviewEmail(id){
 			});
 }
 
+function sendSetEmails(skip){
+  alert("Skip: "+skip);
+  $.ajax({
+    data: "setValue="+skip,
+    url:"http://localhost:8080/showSet",
+    type:'post',
+    success:
+      function(response){
+        var source = $("#entry-template").html();
+        var template = Handlebars.compile(source);
+        var wrapper={emails:response};
+        var html = template(wrapper);
+        $("#readEmails").html(html);
+        paginate();
+      },
+    error:
+      function(){
+        alert("error al procesar");
+      }
+  });
+}
+
 function paginate(){
   $.ajax({
     url:"http://localhost:8080/countTotal",
@@ -115,11 +137,11 @@ function paginate(){
         count=response;
         var pages= (count%10==0)? parseInt(count/10) : parseInt((count/10)+1);
 //        alert(pages);
-        var html="<ul><li><a href='#/'>1</a></li>";
+        var html="<ul>";
         var i;
-        var skip=10;
-        for(i=2; i<=pages; i++){
-          html=html.concat("<li><a href='#/showNext/"+skip+"'>"+i+"</a></li>");
+        var skip=0;
+        for(i=1; i<=pages; i++){
+          html=html.concat("<li><a href='#/setEmails/"+skip+"'>"+i+"</a></li>");
           skip=skip+10;
         }
         html=html.concat("</ul>");
