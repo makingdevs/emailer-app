@@ -14,6 +14,7 @@ function sendNewEmail(){
 
 }
 
+//ajax function for show all emails
 function sendReadEmails(){
 	alert("Send Read Emails");
 	$.ajax({
@@ -29,4 +30,17 @@ function sendReadEmails(){
 						$("#readEmails").html(html);
 				}
 		});
+}
+
+//ajax function for remove email
+function sendRemoveEmail(id){
+	$.ajax({
+			data: "idEmail="+id,
+			url: 'http://localhost:8080/remove',
+			type: 'post',
+			success: function (response) {
+				alert("Se elimino registro");
+			}
+	});
+
 }
