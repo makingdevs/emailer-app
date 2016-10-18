@@ -58,29 +58,9 @@
 			</div>
    </script>
 
-<nav class="navbar navbar-default">
-		<div class="container-fluid">
-				<div class="navbar-header">
-						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						</button>
-				</div>
-						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-								<ul class="nav navbar-nav">
-								<li class="active">
-								<a href="http://localhost:8080/static/">
-							  <span class="glyphicon glyphicon-home" aria-hidden="true">&nbsp;Inicio</span>
-								</a>
-								</li>
-								</ul>
-								<ul class="nav navbar-nav navbar-right">
-								<li><a href="#">Link</a></li>
-								</ul>
-						</div>
-		</div>
+
+<nav class="container-fluid text-center navbar">
+  <p class="customButton">Emailer App</p>
 </nav>
 
 <div class="container text-center">
@@ -88,7 +68,7 @@
 		<div class="row">
 				<div class="col-sm-3 well">
 								<div class="thumbnail">
-										<p class="custom">Emailer App</p>
+										<p class="custom">Inicio</p>
 					          <a href="http://localhost:8080/static/">
                     <img src="resources/buzon.png" width="70%"/>
                     </a>
@@ -145,11 +125,11 @@
 						</div>
 						<br>
 						<div class="input-group">
-									<textarea class="form-control" rows="3" placeholder="Contenido" id="contentEmail" name="contentEmail"></textarea>
+									<textarea class="form-control" rows="3" style="height: 200px; width: 100px;" placeholder="Contenido" id="contentEmail" name="contentEmail"></textarea>
 						</div>
 						<br>
 						<span class="input-group-btn">
-						 <button class="btn btn-default" type="submit">Go!</button>
+						 <button class="btn btn-default" type="submit">Save Email</button>
 						</span>
 						</form>
 			  </div>
@@ -157,15 +137,15 @@
 </div>
 
 <div class="row" id="start">
-  <br><br>
 		<div class="col-sm-12">
 				<div class="well">
-					<p class="custom">Welcome to Emailer App</p>
+					<p class="custom">Bienvenido</p>
           <div class="thumbnail" id="previewBody">
-            <p class="button">Please, select an option.</p><hr><hr><br>
+            <p class="customButton">Opciones</p><br>
             <strong>Almacén de Correos:</strong> Muestra los correos registrados.<br>
             <strong>Agregar Correo Nuevo:</strong> Permite agregar un correo nuevo.<br><br>
-            <hr><hr> <p class="customButton">Actualización más reciente: 18 de Octubre del 2016, 11:21 AM.</p>
+            <img src="resources/correoNuevo.png" width="20%"/><br>
+            <p class="customButton">Actualización más reciente: 18 de Octubre del 2016.</p>
           </div>
         </div>
 		</div>
