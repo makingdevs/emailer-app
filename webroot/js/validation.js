@@ -4,6 +4,9 @@ $(document).ready(function() {
 			$("#preview").hide();
 			$("#formEmails").hide();
 			$("#readEmails").hide();
+      $("#emailAdded").hide();
+      $("#emailUpdated").hide();
+      $("#emailDeleted").hide();
       validate();
 		});
 
@@ -85,11 +88,12 @@ function validate(){
           sendNewEmail();
           $('#emailForm').formValidation('resetForm', true);
           sendSetEmails(0);
+          $('#emailAdded').show();
           $("#readEmails").show();
           $("#formEmails").hide();
         }
         else{
-          alert("Email Update");
+          //alert("Email Update");
           tinymce.remove();
           sendRefreshEmail();
           $('#emailForm').formValidation('resetForm', true);
@@ -98,6 +102,7 @@ function validate(){
           $("#readEmails").show();
           $("#showEmails").hide();
           sendSetEmails(0);
+          $('#emailUpdated').show();
           //window.location.href = "http://localhost:8080/static/";
         }
     });

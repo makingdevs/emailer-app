@@ -43,6 +43,7 @@ var viewEmail=function(id){
 //route for delete Email
 var removeEmail=function(id){
 	sendRemoveEmail(id);
+  //$('#emailDeleted').show();
 	$("#start").hide();
 	$("#formEmails").hide();
 	$("#readEmails").show();
