@@ -76,7 +76,7 @@ var removeEmail=function(id){
 
 //read the paginates
 var readSetEmails=function(skip){
-  alert("Entrando al read Set Emails");
+//  alert("Entrando al read Set Emails");
   sendSetEmails(skip);
 }
 

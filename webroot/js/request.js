@@ -105,7 +105,7 @@ function sendPreviewEmail(id){
 }
 
 function sendSetEmails(skip){
-  alert("Skip: "+skip);
+  //alert("Skip: "+skip);
   $.ajax({
     data: "setValue="+skip,
     url:"http://localhost:8080/showSet",
@@ -133,7 +133,7 @@ function paginate(){
     dataType: 'json',
     success:
       function(response){
-        alert(response);
+//        alert(response);
         count=response;
         var pages= (count%10==0)? parseInt(count/10) : parseInt((count/10)+1);
 //        alert(pages);
