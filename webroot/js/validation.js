@@ -95,7 +95,8 @@ function validate(){
           $("#formEmails").hide();
           $("#readEmails").show();
           $("#showEmails").hide();
-          sendSetEmails(0);
+          //sendSetEmails(0);
+          window.location.href = "http://localhost:8080/static/";
         }
     });
 }
