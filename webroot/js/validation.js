@@ -4,8 +4,11 @@ $(document).ready(function() {
 			$("#preview").hide();
 			$("#formEmails").hide();
 			$("#readEmails").hide();
+      validate();
+		});
 
-		tinymce.init({
+function validate(){
+	tinymce.init({
         selector: 'textarea',
         setup: function(editor) {
             editor.on('keyup', function(e) {
@@ -50,7 +53,7 @@ $(document).ready(function() {
 						 subjectEmail: {
 						 validators: {
 						 		notEmpty: {
-						 		message: 'The email address is required and can\'t be empty'
+						 		message: 'The subject input is required and can\'t be empty'
 						 							}
 
 						 			}
@@ -77,7 +80,7 @@ $(document).ready(function() {
 				e.preventDefault();
 
         if($("#email_id").val() == "") {
-          alert("Agregando correo nuevo");
+          //alert("Agregando correo nuevo");
           tinymce.remove();
           sendNewEmail();
           sendSetEmails(0);
@@ -85,7 +88,7 @@ $(document).ready(function() {
           $("#formEmails").hide();
         }
         else{
-          alert("Actualizando correo");
+          //alert("Actualizando correo");
           tinymce.remove();
           sendRefreshEmail();
           $("#start").hide();
@@ -93,10 +96,8 @@ $(document).ready(function() {
           $("#readEmails").show();
           $("#showEmails").hide();
           sendSetEmails(0);
-
         }
-
     });
-	});
+}
 
 
