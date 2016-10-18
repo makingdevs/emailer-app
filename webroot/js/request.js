@@ -41,7 +41,7 @@ function sendUpdateEmail(id){
 						$('input[name="subjectEmail"]').val(json.submit);
 						$('textarea').val(json.content);
 						tinymce.init({'selector':'textarea'});
-					  validate();
+					 // validate();
           }
 			});
 }
