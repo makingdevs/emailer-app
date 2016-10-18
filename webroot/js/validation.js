@@ -4,7 +4,7 @@ $(document).ready(function() {
 			$("#preview").hide();
 			$("#formEmails").hide();
 			$("#readEmails").hide();
-      //validate();
+      validate();
 		});
 
 function validate(){
@@ -83,6 +83,7 @@ function validate(){
           //alert("Agregando correo nuevo");
           tinymce.remove();
           sendNewEmail();
+          $('#emailForm').formValidation('resetForm', true);
           sendSetEmails(0);
           $("#readEmails").show();
           $("#formEmails").hide();
@@ -91,12 +92,13 @@ function validate(){
           alert("Email Update");
           tinymce.remove();
           sendRefreshEmail();
+          $('#emailForm').formValidation('resetForm', true);
           $("#start").hide();
           $("#formEmails").hide();
           $("#readEmails").show();
           $("#showEmails").hide();
-          //sendSetEmails(0);
-          window.location.href = "http://localhost:8080/static/";
+          sendSetEmails(0);
+          //window.location.href = "http://localhost:8080/static/";
         }
     });
 }
