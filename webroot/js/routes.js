@@ -47,7 +47,8 @@ var saveEmail=function(){
 	$("#readEmails").show();
 	$("#showEmails").hide();
 
-	sendReadEmails();
+	//sendReadEmails();
+  sendSetEmails(0);
 
 }
 
@@ -68,7 +69,9 @@ var removeEmail=function(id){
 	$("#formEmails").hide();
 	$("#readEmails").show();
 	$("#showEmails").hide();
-	sendReadEmails();
+
+  //sendReadEmails();
+  sendSetEmails(0);
 }
 
 //read the paginates

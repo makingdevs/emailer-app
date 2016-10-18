@@ -83,7 +83,8 @@ $(document).ready(function() {
         tinymce.remove();
         sendNewEmail();
     //    alert("refrescando la tabla");
-        sendReadEmails();
+        //sendReadEmails();
+        sendSetEmails(0);
         $("#readEmails").show();
         $("#formEmails").hide();
          });
