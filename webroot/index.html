@@ -30,9 +30,9 @@
 							<td>{{_id}}</td>
 							<td>{{submit}}</td>
 							<td>
-							<a href="#/editEmail/{{_id}}" class="btn btn-xs btn-primary">Editar</a> &nbsp;
-							<a href="#/previewEmail/{{_id}}" class="btn btn-xs btn-success">Preview</a> &nbsp;
-							<a href="#/deleteEmail/{{_id}}" class="btn btn-xs btn-danger">Eliminar</a>
+							<a href="#/editEmail/{{_id}}" class="btn btn-primary btn-xs">Editar</a> &nbsp;
+							<a href="#/previewEmail/{{_id}}" class="btn btn-success btn-xs">Preview</a> &nbsp;
+							<a href="#/deleteEmail/{{_id}}" class="btn btn-danger btn-xs">Eliminar</a>
 							</td>
 							</tr>
 							{{/each}}
@@ -56,7 +56,7 @@
 							</div>
 					</div>
 			</div>
-	</script>
+   </script>
 
 <nav class="navbar navbar-default">
 		<div class="container-fluid">
@@ -119,6 +119,7 @@
 
 </div>
 
+
 <div class="row" id="formEmails">
 		<div class="col-sm-12">
 				<div class="well">
@@ -156,39 +157,29 @@
 </div>
 
 <div class="row" id="start">
+  <br><br>
+  <br><br>
 		<div class="col-sm-12">
 				<div class="well">
-					<p class="custom">Hi</p>
-				</div>
+					<p class="custom">Welcome to Emailer App</p>
+          <div class="thumbnail" id="previewBody">
+            <p class="button">Please, select an option.</p><hr>
+            <strong>Almacén de Correos:</strong> Muestra los correos registrados.<br>
+            <strong>Agregar Correo Nuevo:</strong> Permite agregar un correo nuevo.<br><br>
+            <hr> <p class="customButton">Actualización más reciente: 18 de Octubre del 2016, 11:21 AM.</p>
+          </div>
+        </div>
 		</div>
 </div>
 
+</div>
+    </div>
 
-<div class="row" id="preview">
-		<div class="col-sm-12">
-				<div class="well">
-					<p class="custom">preview</p>
-				</div>
-		</div>
 </div>
 
-
-</div>
-</div>
-
-		<div class="row">
-				<div class="col-sm-12">
-							<div class="thumbnail">
-								<p>Hi</p>
-						</div>
-				</div>
-		</div>
-
-		</div>
-
-		<footer class="container-fluid text-center">
-		<p class="customButton">Making Devs</p>
-		</footer>
+<footer class="container-fluid text-center">
+  <p class="customButton">Making Devs</p>
+</footer>
 
 <script type="text/javascript" src="third-party/jquery/dist/jquery.js"></script>
 <script type="text/javascript" src="third-party/handlebars/handlebars.js"></script>
