@@ -4,7 +4,7 @@ $(document).ready(function() {
 			$("#preview").hide();
 			$("#formEmails").hide();
 			$("#readEmails").hide();
-      validate();
+      //validate();
 		});
 
 function validate(){
@@ -88,7 +88,7 @@ function validate(){
           $("#formEmails").hide();
         }
         else{
-          //alert("Actualizando correo");
+          alert("Email Update");
           tinymce.remove();
           sendRefreshEmail();
           $("#start").hide();
