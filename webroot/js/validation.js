@@ -1,7 +1,5 @@
 $(document).ready(function() {
 
-	//	alert("Validando");
-		 //show and hide divs
 			$("#start").show();
 			$("#preview").hide();
 			$("#formEmails").hide();
@@ -11,7 +9,6 @@ $(document).ready(function() {
         selector: 'textarea',
         setup: function(editor) {
             editor.on('keyup', function(e) {
-                // Revalidate the contentEmail field
                 $('#emailForm').formValidation('revalidateField', 'contentEmail');
             });
         }
@@ -77,17 +74,29 @@ $(document).ready(function() {
             }
         })
 	.on('success.form.fv', function(e) {
-				// Prevent submit form
 				e.preventDefault();
-		//		alert("Vamos a hacer la petición Ajax");
-        tinymce.remove();
-        sendNewEmail();
-    //    alert("refrescando la tabla");
-        //sendReadEmails();
-        sendSetEmails(0);
-        $("#readEmails").show();
-        $("#formEmails").hide();
-         });
+
+        if($("#email_id").val() == "") {
+          alert("Agregando correo nuevo");
+          tinymce.remove();
+          sendNewEmail();
+          sendSetEmails(0);
+          $("#readEmails").show();
+          $("#formEmails").hide();
+        }
+        else{
+          alert("Actualizando correo");
+          tinymce.remove();
+          sendRefreshEmail();
+          $("#start").hide();
+          $("#formEmails").hide();
+          $("#readEmails").show();
+          $("#showEmails").hide();
+          sendSetEmails(0);
+
+        }
+
+    });
 	});
 
 
