@@ -3,6 +3,13 @@ footer {
   color: white;
   padding: 15px;
 }
+
+nav{
+  background-color: #383760;
+  color: white;
+  padding: 10px;
+}
+
 p.custom{
   font-family: 'Pacifico', cursive;
   font-size: 300%;
