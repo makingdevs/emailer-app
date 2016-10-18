@@ -2,7 +2,6 @@
 
 //New Add Email
 function sendNewEmail(){
-//	alert("Agregando Nuevo Email...Espera siguiente mensaje");
   //limpiando inputs
   $.ajax({
 			data: $("#emailForm").serialize(),
@@ -10,32 +9,11 @@ function sendNewEmail(){
 			url: 'http://localhost:8080/newEmail',
 			success: function(){
 			alert("Email agregado exitosamente");
-	//		alert($("#emailForm").serialize());
       }
 	});
 
 }
 
-//ajax function for show all emails
-function sendReadEmails(){
-  //	alert("Send Read Emails");
-	$.ajax({
-				url:"http://localhost:8080/show",
-				type:'GET',
-				dataType: 'json',
-				success:
-				function(response){
-						var source = $("#entry-template").html();
-						var template = Handlebars.compile(source);
-						var wrapper={emails:response};
-						var html = template(wrapper);
-						$("#readEmails").html(html);
-				}
-		});
-  paginate();
-}
-
-//ajax function for remove email
 function sendRemoveEmail(id){
 	$.ajax({
 			data: "idEmail="+id,
@@ -47,19 +25,14 @@ function sendRemoveEmail(id){
 	});
 }
 
-//ajax function for show one email
 function sendUpdateEmail(id){
-//	alert("Ajax submit");
 	$.ajax({
 			data: "idEmail="+id,
 			url: 'http://localhost:8080/showEmail',
 			type: 'post',
 			success: function (response) {
-//						alert("populate");
-						//show divs
 						$("#formEmails").show();
 						$("#readEmails").hide();
-						//populate inputs
 						tinyMCE.remove();
 						var json=$.parseJSON(response);
 						$('input[name="email_id"]').val(json._id);
@@ -68,32 +41,28 @@ function sendUpdateEmail(id){
 						$('input[name="subjectEmail"]').val(json.submit);
 						$('textarea').val(json.content);
 						tinymce.init({'selector':'textarea'});
-					}
+					  validate();
+          }
 			});
 }
 
-//Ajax request for update the form at vertx
 function sendRefreshEmail(){
-//	var tiny= tinyMCE.activeEditor.getContent();
-//	alert("Esto se va a guardar:"+ $("#emailForm").serialize()); //+ " &contentEmail="+tiny,
 	$.ajax({
 		data: $("#emailForm").serialize(), //+ " &contentEmail="+tiny,
 		type: 'post',
 		url: 'http://localhost:8080/update',
 		success: function(){
-		alert("Email Actualizado ");
+		console.log("Email Actualizado ");
 		}
 	});
 }
 
 function sendPreviewEmail(id){
-//	alert("Previsualizando Enviando AJAX request");
 	$.ajax({
 			data: "idEmail="+id,
 			url: 'http://localhost:8080/showEmail',
 			type: 'post',
 			success: function (response) {
-	//				alert("ok recuperando y visualizando");
 					var json=$.parseJSON(response);
 					var source=$("#previewTemplate").html();
 					var template=Handlebars.compile(source);
@@ -105,7 +74,6 @@ function sendPreviewEmail(id){
 }
 
 function sendSetEmails(skip){
-  //alert("Skip: "+skip);
   $.ajax({
     data: "setValue="+skip,
     url:"http://localhost:8080/showSet",
@@ -133,10 +101,8 @@ function paginate(){
     dataType: 'json',
     success:
       function(response){
-//        alert(response);
         count=response;
         var pages= (count%10==0)? parseInt(count/10) : parseInt((count/10)+1);
-//        alert(pages);
         var html="<ul>";
         var i;
         var skip=0;
