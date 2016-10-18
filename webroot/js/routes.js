@@ -16,10 +16,11 @@ var newAdd=function(){
   tinymce.remove();
   $("textarea").val("");
   tinymce.init({'selector':'textarea'});
+	validate();
   //show and hide divs
 	$("#start").hide();
 	$("#formEmails").show();
-	$("#readEmails").hide();
+  $("#readEmails").hide();
 	$("#showEmails").hide();
  }
 
@@ -27,7 +28,7 @@ var newAdd=function(){
 var editEmail=function(id){
 	sendUpdateEmail(id);
 	$("#start").hide();
-	$("#formEmails").hide();
+	$("#formEmails").show();
 	$("#readEmails").hide();
 	$("#showEmails").hide();
 }
