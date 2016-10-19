@@ -38,8 +38,6 @@ function sendUpdateEmail(id){
 						tinyMCE.remove();
 						var json=$.parseJSON(response);
 						$('input[name="email_id"]').val(json._id);
-						$('input[name="receiverEmail"]').val(json.receiver);
-						$('input[name="senderEmail"]').val(json.sender);
 						$('input[name="subjectEmail"]').val(json.submit);
 						$('textarea').val(json.content);
 						tinymce.init({'selector':'textarea'});
