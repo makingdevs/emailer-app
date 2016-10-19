@@ -120,3 +120,12 @@ function paginate(){
       }
   });
 }
+
+function sendRequestSend(){
+
+    alert("Sender request to send preview");
+
+}
+
+
+

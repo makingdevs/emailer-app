@@ -56,10 +56,16 @@ var readSetEmails=function(skip){
   sendSetEmails(skip);
 }
 
+var sendEmail=function(){
+  alert("Usted esta mandando un correito");
+  sendRequestSend();
+}
+
 //Routes Director JS
 var routes = {
 	'/': readEmails,
 	'/newEmail': newAdd,
+	'/sendEmail': sendEmail,
   '/editEmail/:mailId': editEmail,
   '/setEmails/:mailId': readSetEmails,
   '/previewEmail/:mailId': viewEmail,
