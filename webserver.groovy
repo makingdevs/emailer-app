@@ -4,6 +4,20 @@ import io.vertx.groovy.ext.web.handler.BodyHandler
 import io.vertx.core.json.Json
 import io.vertx.groovy.core.Vertx
 import io.vertx.groovy.ext.mongo.MongoClient
+//for use mail
+import io.vertx.ext.mail.StartTLSOptions
+import io.vertx.groovy.ext.mail.MailClient
+
+//Config email
+def configMail = [:]
+configMail.hostname = "smtp.gmail.com"
+configMail.port = 587
+configMail.starttls = "REQUIRED"
+configMail.username = "vonbertallanfylol@gmail.com"
+configMail.password = "Upiicsa2013"
+
+def mailClient = MailClient.createShared(vertx, configMail)
+
 
 //mongo config
 def config = Vertx.currentContext().config()
@@ -179,5 +193,48 @@ router.post("/showSet").handler { routingContext ->
     }
   })
 }
+
+//route for send an Email
+router.post("/send").handler { routingContext ->
+	  def idEmail="5807918de3bce56ae2e902b1"
+    println "Bienvenido, estamos enviando el email"+idEmail
+    def query = ["_id":idEmail]
+		mongoClient.find("email_storage", query, { res ->
+				if (res.succeeded()) {
+						res.result().each { json ->
+						def jsonEmail =groovy.json.JsonOutput.toJson(json)
+
+            println jsonEmail//escupelupe el json completo babe
+
+            //armar el correo
+            def message = [:]
+            message.from = "emailer@gmail.com"
+            message.to = "carlo@makingdevs.com"
+            message.subject = "Emailer App Preview Template 38964327hf378e"
+            message.cc = "carlogilmar12@gmail.com"
+            message.text = "this is the plain message text"
+            message.html = "this is html text <a href=\"http://vertx.io\">vertx.io</a>"
+
+            mailClient.sendMail(message, { result ->
+              if (result.succeeded()) {
+                println(result.result())
+                routingContext.response()
+                .setStatusCode(201)
+                .putHeader("content-type", "text/html; charset=utf-8")
+                .end("Enviado")
+              } else {
+                result.cause().printStackTrace()
+              }
+            })
+
+                        }
+				} else {
+				res.cause().printStackTrace()
+				}
+				})
+}
+
+
+
 server.requestHandler(router.&accept).listen(8080)
 
