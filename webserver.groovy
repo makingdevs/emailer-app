@@ -120,12 +120,18 @@ router.post("/update").handler { routingContext ->
 	  def emailToUpdate= routingContext.request().getParam("email_id")
 		def submitInput= routingContext.request().getParam("subjectEmail")
 		def contentText= routingContext.request().getParam("contentEmail")
+		def versionEmail= routingContext.request().getParam("versionEmail")
+
+    def newVersion= versionEmail.toInteger() + 1
+    def lastUpdate=(new Date()).toString()
 
 		def query = ["_id":emailToUpdate]
 		def update = [
 		$set:[
 		submit:submitInput,
-		content:contentText
+		content:contentText,
+    version:newVersion,
+    lastUpdate:lastUpdate
 		]
 		]
 
