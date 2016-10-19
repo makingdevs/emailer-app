@@ -40,24 +40,27 @@ router.route("/static/*").handler(
 
 //route by insert new Email to MongoDb
 router.post("/newEmail").handler { routingContext ->
-		def receiverEmail= routingContext.request().getParam("receiverEmail")
-		def senderEmail= routingContext.request().getParam("senderEmail")
 		def submitInput= routingContext.request().getParam("subjectEmail")
 		def contentText= routingContext.request().getParam("contentEmail")
+    def dateCreate=(new Date()).toString()
+    def lastUpdate=dateCreate
+    Integer version=1
 
 		def email=[
-		receiver:receiverEmail,
-		sender:senderEmail,
 		submit:submitInput,
-		content:contentText
-		]
+		content:contentText,
+    dateCreated:dateCreate,
+    lastUpdate:lastUpdate,
+    version:version
+    ]
 
-		mongoClient.save("email_storage", email, {id -> })
-		//response
+		mongoClient.save("email_storage", email, {id ->
 		routingContext.response()
 		.setStatusCode(201)
 		.putHeader("content-type", "text/html; charset=utf-8")
 		.end("ok! Email Agregado")
+
+    })
 }
 
 //route for show all items
@@ -115,16 +118,12 @@ router.post("/update").handler { routingContext ->
 
 	//recuperando los datos del formulario
 	  def emailToUpdate= routingContext.request().getParam("email_id")
-		def receiverEmail= routingContext.request().getParam("receiverEmail")
-		def senderEmail= routingContext.request().getParam("senderEmail")
 		def submitInput= routingContext.request().getParam("subjectEmail")
 		def contentText= routingContext.request().getParam("contentEmail")
 
 		def query = ["_id":emailToUpdate]
 		def update = [
 		$set:[
-		receiver:receiverEmail,
-		sender:senderEmail,
 		submit:submitInput,
 		content:contentText
 		]
