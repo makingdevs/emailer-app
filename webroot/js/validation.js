@@ -72,7 +72,7 @@ function validate(){
                                     format: 'text'
                                 });
 
-                                return text.length <= 200 && text.length >= 5;
+                                return text.length <= 20000 && text.length >= 10;
                             }
                         }
                     }

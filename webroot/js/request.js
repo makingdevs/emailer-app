@@ -123,19 +123,15 @@ function paginate(){
 
 function sendRequestSend(){
 
-    alert("Sender request to send preview");
-  
-		alert($("#previewForm").serialize());
-
 				$.ajax({
 						data: $("#previewForm").serialize(),
 						type: 'post',
 						url: 'http://localhost:8080/send',
 						success: function(){
-						alert("okidoqui");
+						console.log("Enviado.");
 						},
 						error: function(){
-						alert("error");
+						alert("error al enviar");
 						}
 				});
 
