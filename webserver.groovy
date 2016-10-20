@@ -10,43 +10,11 @@ import io.vertx.groovy.ext.mail.MailClient
 
 
 def config = Vertx.currentContext().config()
-if(!config.mail || config.mongo)
+if(!config.mail || !config.mongo)
   throw new RuntimeException("Cannot run withouit config, check https://github.com/makingdevs/emailer-app/wiki/Emailer-App")
 
-//Config email
-def configMail = [:]
-configMail.hostname = "smtp.gmail.com"
-configMail.port = 587
-configMail.starttls = "REQUIRED"
-configMail.username = "vonbertallanfylol@gmail.com"
-configMail.password = "Upiicsa2013"
-
-def mailClient = MailClient.createShared(vertx, configMail)
-
-
-//mongo config
-println "*"*80
-println Vertx.currentContext().dump()
-println config
-println "*"*80
-def uri = config.mongo_uri
-
-if (uri == null) {
-  uri = "mongodb://localhost:27017"
-}
-
-def db = config.mongo_db
-if (db == null) {
-	db = "emailerDevelop"
-}
-
-def mongoconfig = [
-	connection_string:uri,
-	db_name:db
-]
-
-def mongoClient = MongoClient.createShared(vertx, mongoconfig)
-
+def mailClient = MailClient.createShared(vertx, config.mail)
+def mongoClient = MongoClient.createShared(vertx, config.mongo)
 
 
 //vertx routes
