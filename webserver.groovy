@@ -8,6 +8,11 @@ import io.vertx.groovy.ext.mongo.MongoClient
 import io.vertx.ext.mail.StartTLSOptions
 import io.vertx.groovy.ext.mail.MailClient
 
+
+def config = Vertx.currentContext().config()
+if(!config.mail || config.mongo)
+  throw new RuntimeException("Cannot run withouit config, check https://github.com/makingdevs/emailer-app/wiki/Emailer-App")
+
 //Config email
 def configMail = [:]
 configMail.hostname = "smtp.gmail.com"
@@ -20,12 +25,15 @@ def mailClient = MailClient.createShared(vertx, configMail)
 
 
 //mongo config
-def config = Vertx.currentContext().config()
+println "*"*80
+println Vertx.currentContext().dump()
+println config
+println "*"*80
 def uri = config.mongo_uri
 
-	if (uri == null) {
-		uri = "mongodb://localhost:27017"
-	}
+if (uri == null) {
+  uri = "mongodb://localhost:27017"
+}
 
 def db = config.mongo_db
 if (db == null) {
