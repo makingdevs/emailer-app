@@ -196,25 +196,33 @@ router.post("/showSet").handler { routingContext ->
 
 //route for send an Email
 router.post("/send").handler { routingContext ->
-	  def idEmail="5807918de3bce56ae2e902b1"
-    println "Bienvenido, estamos enviando el email"+idEmail
-    def query = ["_id":idEmail]
+	  
+		
+   	//obteniendo los campos del input
+
+	  def idTemplate= routingContext.request().getParam("email_id")
+	  def emailToSend= routingContext.request().getParam("emailPreview")
+
+    def query = ["_id":idTemplate]
+		
+		//buscando idTemplate en Mongo
 		mongoClient.find("email_storage", query, { res ->
 				if (res.succeeded()) {
 						res.result().each { json ->
-						def jsonEmail =groovy.json.JsonOutput.toJson(json)
-
-            println jsonEmail//escupelupe el json completo babe
-
+						def jsonEmail =groovy.json.JsonOutput.toJson(json)//regresando el json del template
+						println "armando el correo id: "+idTemplate
             //armar el correo
             def message = [:]
             message.from = "emailer@gmail.com"
             message.to = "carlo@makingdevs.com"
-            message.subject = "Emailer App Preview Template 38964327hf378e"
-            message.cc = "carlogilmar12@gmail.com"
+            message.subject = "Emailer test 22:44"
+            //message.cc = "carlogilmar12@gmail.com"
             message.text = "this is the plain message text"
             message.html = "this is html text <a href=\"http://vertx.io\">vertx.io</a>"
+						
+						println "Enviando el correo"
 
+						//Mandando el correo
             mailClient.sendMail(message, { result ->
               if (result.succeeded()) {
                 println(result.result())
@@ -226,8 +234,7 @@ router.post("/send").handler { routingContext ->
                 result.cause().printStackTrace()
               }
             })
-
-                        }
+          }
 				} else {
 				res.cause().printStackTrace()
 				}
