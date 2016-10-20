@@ -196,15 +196,15 @@ router.post("/showSet").handler { routingContext ->
 
 //route for send an Email
 router.post("/send").handler { routingContext ->
-	  
-		
+
+
    	//obteniendo los campos del input
 
 	  def idTemplate= routingContext.request().getParam("email_id")
 	  def emailToSend= routingContext.request().getParam("emailPreview")
 
     def query = ["_id":idTemplate]
-		
+
 		//buscando idTemplate en Mongo
 		mongoClient.find("email_storage", query, { res ->
 				if (res.succeeded()) {
@@ -214,12 +214,12 @@ router.post("/send").handler { routingContext ->
             //armar el correo
             def message = [:]
             message.from = "emailer@gmail.com"
-            message.to = "carlo@makingdevs.com"
+            message.to = emailToSend
             message.subject = "Emailer test 22:44"
             //message.cc = "carlogilmar12@gmail.com"
             message.text = "this is the plain message text"
             message.html = "this is html text <a href=\"http://vertx.io\">vertx.io</a>"
-						
+
 						println "Enviando el correo"
 
 						//Mandando el correo
