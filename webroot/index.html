@@ -49,37 +49,35 @@
    <script id="previewTemplate" type="text/x-handlebars-template">
 			<div class="col-sm-12">
 					<div class="well">
-							<p class="customButton"> {{_id}}</p>
-							<div class="thumbnail" id="previewBody">
-								<br>
-								<b>Subject:</b> {{submit}}<br>
-								<hr>
-							</div>
-              <div class="row">
-                <div class="col-xs-6 col-sm-4"><small><strong>Version</strong></small></div>
-                <div class="col-xs-6 col-sm-4"><small><strong>Date Created</strong></small></div>
-                <div class="col-xs-6 col-sm-4"><small><strong>Last Update</strong></small></div>
-								</div>
-								<div class="row">
-								<div class="col-xs-6 col-sm-4"><small>{{version}}</small></div>
-								<div class="col-xs-6 col-sm-4"><small>{{dateCreated}}</small></div>
-								<div class="col-xs-6 col-sm-4"><small>{{lastUpdate}}</small></div>
-								</div>
-								<br>
-								<div class="row">
+              <small><b>Subject </b></small><p class="customButton">{{subject}}</p>
+
+               <div class="row">
+                  <div class="col-xs-6 col-sm-3"><strong>Id</strong></div>
+                  <div class="col-xs-6 col-sm-3"><strong>Date Created</strong></div>
+                  <div class="col-xs-6 col-sm-3"><strong>Last Update</strong></div>
+                  <div class="col-xs-6 col-sm-3"><strong>Version</strong></div>
+                </div>
+
+                <div class="row">
+                  <div class="col-xs-6 col-sm-3"><small>{{_id}}</small></div>
+                  <div class="col-xs-6 col-sm-3"><small>{{dateCreated}}</small></div>
+                  <div class="col-xs-6 col-sm-3"><small>{{lastUpdate}}</small></div>
+                  <div class="col-xs-6 col-sm-3"><small>{{version}}</small></div>
+                </div>
+                <br>
+                <div class="thumbnail" id="previewBody"> </div>
+                <div class="row">
+                    <form name="previewForm" id="previewForm" method="post" class="navbar-form" action="#/sendEmail">
+                    <div class="form-group">
+                    <input type="hidden" class="form-control" name="email_id" id="email_id" value="{{_id}}"/>
+                    <input type="email" class="form-control" name="emailPreview" id="emailPreview" required placeholder="Email">
+                    </div>
+                    <a href="#/sendEmail" class="btn btn-default">Enviar prueba</a>
+                    </form>
+                </div>
 
 
-
-								<form name="previewForm" id="previewForm" method="post" class="navbar-form" action="#/sendEmail">
-								<div class="form-group">
-								<input type="hidden" class="form-control" name="email_id" id="email_id" value="{{_id}}"/>
-								<input type="email" class="form-control" name="emailPreview" id="emailPreview" required placeholder="Email">
-								</div>
-								<a href="#/sendEmail" class="btn btn-default">Enviar prueba</a>
-								</form>
-
-              </div>
-             </div>
+ </div>
 			</div>
    </script>
 
@@ -204,6 +202,7 @@
 <script type="text/javascript" src="third-party/handlebars/handlebars.js"></script>
 <script type="text/javascript" src="third-party/bootstrap/dist/js/bootstrap.js"></script>
 <script type="text/javascript" src="third-party/tinymce/tinymce.js"></script>
+<script type="text/javascript" src="third-party/moment/moment.js"></script>
 <script type="text/javascript" src="third-party/form.validation/dist/js/formValidation.js"></script>
 <script src="https://rawgit.com/flatiron/director/master/build/director.min.js"></script>
 <script type="text/javascript" src="third-party/form.validation/dist/js/framework/bootstrap.js"></script>
