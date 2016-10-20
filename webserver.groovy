@@ -210,17 +210,14 @@ router.post("/send").handler { routingContext ->
 				if (res.succeeded()) {
 						res.result().each { json ->
 						def jsonEmail =groovy.json.JsonOutput.toJson(json)//regresando el json del template
-						println "armando el correo id: "+idTemplate
+            //println "respuesta:  "+json["version"]
             //armar el correo
             def message = [:]
-            message.from = "emailer@gmail.com"
+            message.from = "emailer@app.com"
             message.to = emailToSend
-            message.subject = "Emailer test 22:44"
+            message.subject = json["submit"]
             //message.cc = "carlogilmar12@gmail.com"
-            message.text = "this is the plain message text"
-            message.html = "this is html text <a href=\"http://vertx.io\">vertx.io</a>"
-
-						println "Enviando el correo"
+            message.html = json["content"]
 
 						//Mandando el correo
             mailClient.sendMail(message, { result ->
