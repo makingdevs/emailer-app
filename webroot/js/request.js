@@ -72,7 +72,7 @@ function sendPreviewEmail(id){
 					var template=Handlebars.compile(source);
 					var html = template(json);
 					$("#showEmails").html(html);
-					$("#previewBody").append(json.content);
+					$("#previewBody").html(json.content);
       }
 			});
 }
