@@ -40,8 +40,8 @@ function sendUpdateEmail(id){
 						$('input[name="email_id"]').val(json._id);
 						$('input[name="versionEmail"]').val(json.version);
 						$('input[name="createdEmail"]').val(json.dateCreated);
-						$('input[name="updatedEmail"]').val(json.lastUpdate);
-						$('input[name="subjectEmail"]').val(json.submit);
+						$('input[name="updatedEmail"]').val(json.lastUpdated);
+						$('input[name="subjectEmail"]').val(json.subject);
 						$('textarea').val(json.content);
 						tinymce.init({'selector':'textarea'});
 					 // validate();
