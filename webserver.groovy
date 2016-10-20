@@ -16,7 +16,6 @@ if(!config.mail || !config.mongo)
 def mailClient = MailClient.createShared(vertx, config.mail)
 def mongoClient = MongoClient.createShared(vertx, config.mongo)
 
-
 //vertx routes
 def server = vertx.createHttpServer()
 def router = Router.router(vertx)
@@ -30,26 +29,20 @@ router.route("/static/*").handler(
 
 //route by insert new Email to MongoDb
 router.post("/newEmail").handler { routingContext ->
-		def submitInput= routingContext.request().getParam("subjectEmail")
-		def contentText= routingContext.request().getParam("contentEmail")
-    def dateCreate=(new Date()).toString()
-    def lastUpdate=dateCreate
-    Integer version=1
-
-		def email=[
-		submit:submitInput,
-		content:contentText,
-    dateCreated:dateCreate,
-    lastUpdate:lastUpdate,
-    version:version
+    def params = routingContext.request().params()
+    def email = [
+      subject:params.subjectEmail,
+      content:params.contentEmail,
+      dateCreated:new Date().time,
+      lastUpdated:new Date().time,
+      version:1
     ]
 
-		mongoClient.save("email_storage", email, {id ->
-		routingContext.response()
-		.setStatusCode(201)
-		.putHeader("content-type", "text/html; charset=utf-8")
-		.end("ok! Email Agregado")
-
+		mongoClient.save("email_storage", email, { id ->
+      routingContext.response()
+      .setStatusCode(201)
+      .putHeader("content-type", "text/html; charset=utf-8")
+      .end("ok! Email Agregado")
     })
 }
 
