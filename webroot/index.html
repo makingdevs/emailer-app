@@ -64,8 +64,10 @@
                  <div class="col-xs-6 col-sm-4"><small><b>Options</b></small></div>
                </div>
                <div class="row">
-                 <div class="col-xs-6 col-sm-4"><small>{{dateCreated}}</small></div>
-                 <div class="col-xs-6 col-sm-4"><small>{{lastUpdate}}</small></div>
+                 <input type="hidden"  name="date" id="date" value="{{dateCreated}}"/>
+                 <input type="hidden"  name="update" id="update" value="{{lastUpdate}}"/>
+                 <div class="col-xs-6 col-sm-4" id="createdDate"></div>
+                 <div class="col-xs-6 col-sm-4" id="updatedDate"></small></div>
                  <div class="col-xs-6 col-sm-4">
                  <a href="#/editEmail/{{_id}}" class="btn btn-primary btn-xs">Editar</a> &nbsp;
                  <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target=".bs-example-modal-sm">Delete</button>
