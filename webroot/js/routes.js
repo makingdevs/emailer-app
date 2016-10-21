@@ -15,8 +15,9 @@ var newAdd=function(){
   $('input').each(function(){ $(this).val(''); });
   tinymce.remove();
   $("textarea").val("");
-  tinymce.init({'selector':'textarea'});
-	//validate();
+  //tinymce.init({'selector':'textarea'});
+  tiny();
+  //validate();
   //show and hide divs
 	$("#start").hide();
 	$("#formEmails").show();
