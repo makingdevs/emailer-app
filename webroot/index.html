@@ -21,6 +21,7 @@
 							<div class="thumbnail">
 							<table class="table table-hover" name="reader" id="reader">
 							<tr>
+							<th class="text-center">#</th>
 							<th class="text-center">ID</th>
 							<th class="text-center">Subject</th>
 							<th class="text-center">Version</th>
@@ -29,6 +30,7 @@
 							<tbody>
 						  {{#each emails}}
 							<tr>
+							<td>{{@index}}</td>
 							<td>{{_id}}</td>
 							<td>{{subject}}</td>
 							<td>{{version}}</td>
