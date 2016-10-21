@@ -108,15 +108,15 @@ function tiny(){
           selector: 'textarea',
           menubar: false,
           height: 500,
-          width: 650,
+          width: 870,
                 plugins: [
                       'advlist autolink lists link image charmap print preview hr anchor pagebreak',
                           'searchreplace wordcount visualblocks visualchars code fullscreen',
                               'insertdatetime media nonbreaking save table contextmenu directionality',
                                   'emoticons template paste textcolor colorpicker textpattern imagetools codesample'
                                       ],
-                toolbar1: ' bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-                toolbar2: 'preview | forecolor formatselect fontsizeselect fontselect | code ',
+                toolbar1: 'formatselect fontsizeselect fontselect | code ',
+                toolbar2: ' preview forecolor bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
                 image_advtab: true,
                 setup: function(editor) {
                   editor.on('keyup', function(e) {
