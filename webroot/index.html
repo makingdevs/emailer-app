@@ -68,8 +68,26 @@
                  <div class="col-xs-6 col-sm-4"><small>{{lastUpdate}}</small></div>
                  <div class="col-xs-6 col-sm-4">
                  <a href="#/editEmail/{{_id}}" class="btn btn-primary btn-xs">Editar</a> &nbsp;
-							   <a href="#/deleteEmail/{{_id}}" class="btn btn-danger btn-xs">Eliminar</a>
+                 <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target=".bs-example-modal-sm">Delete</button>
+                 <a href="#/" class="btn btn-secondary btn-xs">Regresar</a> &nbsp;
                </div>
+
+               <div class="row" id="modal">
+               <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                 <div class="modal-dialog modal-sm" role="document">
+                     <div class="modal-content">
+                          <br>
+                          <b>Aviso</b><br><br>
+                          Estas a punto de eliminar el correo <b>{{subject}}</b> con el id <b>{{_id}}</b><br>
+                          ¿Es correcto?<br><br>
+                          <a href="#/deleteEmail/{{_id}}" class="btn btn-danger btn-xs">Si quiero eliminarlo</a>
+                          <button type="button" class="btn btn-primary btn-xs" data-dismiss="modal">No quiero eso</button>
+                          <br><br>
+                      </div>
+                 </div>
+               </div>
+               </div>
+
              </div>
          </div>
                <b><small>Preview</small></b>
@@ -157,7 +175,8 @@
 				<div class="well">
 						<form method="post" role="form" id="emailForm" action="#/newEmail">
 						<p class="customButton">Email</p>
-						<div class="input-group">
+            <a href="#/" class="btn btn-secondary btn-xs">Regresar</a> &nbsp;
+            <div class="input-group">
 									<input type="hidden" class="form-control" name="email_id" id="email_id"/>
 									<input type="hidden" class="form-control" name="versionEmail" id="versionEmail"/>
 									<input type="hidden" class="form-control" name="createdEmail" id="createdEmail"/>
