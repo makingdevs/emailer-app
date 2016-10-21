@@ -33,9 +33,7 @@
 							<td>{{subject}}</td>
 							<td>{{version}}</td>
 							<td>
-							<a href="#/editEmail/{{_id}}" class="btn btn-primary btn-xs">Editar</a> &nbsp;
 							<a href="#/previewEmail/{{_id}}" class="btn btn-success btn-xs">Preview</a> &nbsp;
-							<a href="#/deleteEmail/{{_id}}" class="btn btn-danger btn-xs">Eliminar</a>
 							</td>
 							</tr>
 							{{/each}}
@@ -49,22 +47,32 @@
    <script id="previewTemplate" type="text/x-handlebars-template">
 			<div class="col-sm-12">
 					<div class="well">
-              <small><b>Subject </b></small><p class="customButton">{{subject}}</p>
+           <small><b>Subject</b></small><p class="customButton">{{subject}}</p>
+            <div class="thumbnail">
+              <div class="row">
+                 <div class="col-xs-6"><small><b>Id</b></small></div>
+                 <div class="col-xs-6"><small><b>Version</b></small></div>
+              </div>
+              <div class="row">
+                 <div class="col-xs-6"><small>{{_id}}</small></div>
+                 <div class="col-xs-6"><small>{{version}}</small></div>
+              </div>
 
                <div class="row">
-                  <div class="col-xs-6 col-sm-3"><strong>Id</strong></div>
-                  <div class="col-xs-6 col-sm-3"><strong>Date Created</strong></div>
-                  <div class="col-xs-6 col-sm-3"><strong>Last Update</strong></div>
-                  <div class="col-xs-6 col-sm-3"><strong>Version</strong></div>
-                </div>
-
-                <div class="row">
-                  <div class="col-xs-6 col-sm-3"><small>{{_id}}</small></div>
-                  <div class="col-xs-6 col-sm-3"><small>{{dateCreated}}</small></div>
-                  <div class="col-xs-6 col-sm-3"><small>{{lastUpdate}}</small></div>
-                  <div class="col-xs-6 col-sm-3"><small>{{version}}</small></div>
-                </div>
-                <br>
+                 <div class="col-xs-6 col-sm-4"><small><b>Date Created</b></small></div>
+                 <div class="col-xs-6 col-sm-4"><small><b>Last Update</b></small></div>
+                 <div class="col-xs-6 col-sm-4"><small><b>Options</b></small></div>
+               </div>
+               <div class="row">
+                 <div class="col-xs-6 col-sm-4"><small>{{dateCreated}}</small></div>
+                 <div class="col-xs-6 col-sm-4"><small>{{lastUpdate}}</small></div>
+                 <div class="col-xs-6 col-sm-4">
+                 <a href="#/editEmail/{{_id}}" class="btn btn-primary btn-xs">Editar</a> &nbsp;
+							   <a href="#/deleteEmail/{{_id}}" class="btn btn-danger btn-xs">Eliminar</a>
+               </div>
+             </div>
+         </div>
+               <b><small>Preview</small></b>
                 <div class="thumbnail" id="previewBody"> </div>
                 <div class="row">
                     <form name="previewForm" id="previewForm" method="post" class="navbar-form" action="#/sendEmail">
