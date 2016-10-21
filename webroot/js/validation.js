@@ -110,10 +110,10 @@ function tiny(){
           height: 500,
           width: 870,
                 plugins: [
-                      'autoresize advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                      'autoresize advlist autolink lists link image charmap print preview hr anchor ',
                           'searchreplace wordcount visualblocks visualchars code fullscreen',
                               'insertdatetime media nonbreaking save table contextmenu directionality',
-                                  'emoticons template paste textcolor colorpicker textpattern imagetools codesample'
+                                  'textcolor colorpicker textpattern imagetools codesample'
                                       ],
                 toolbar1: 'formatselect fontsizeselect fontselect | code ',
                 toolbar2: ' preview forecolor bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
