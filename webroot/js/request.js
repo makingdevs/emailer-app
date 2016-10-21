@@ -8,8 +8,7 @@ function sendNewEmail(){
 			type: 'post',
 			url: 'http://localhost:8080/newEmail',
 			success: function(){
-      console.log("Email Agregado");
-		   // $("#emailAdded").show();
+		  $(".alert").show();
       }
 	});
 
@@ -21,8 +20,7 @@ function sendRemoveEmail(id){
 			url: 'http://localhost:8080/remove',
 			type: 'post',
 			success: function (response) {
-		  $("#emailDeleted").show();
-      console.log("Email Eliminado ");
+		  $(".alert").show();
 			}
 	});
 }
@@ -55,8 +53,7 @@ function sendRefreshEmail(){
 		type: 'post',
 		url: 'http://localhost:8080/update',
 		success: function(){
-		    //$("#emailUpdated").show();
-      console.log("Email Actualizado ");
+		  $(".alert").show();
 		}
 	});
 }
@@ -138,7 +135,8 @@ function sendRequestSend(){
 						type: 'post',
 						url: 'http://localhost:8080/send',
 						success: function(){
-						console.log("Enviado.");
+		        $(".alert").show();
+            $("#emailSended").show();
 						},
 						error: function(){
 						alert("error al enviar");
