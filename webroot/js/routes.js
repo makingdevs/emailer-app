@@ -27,7 +27,7 @@ var newAdd=function(){
 //route for edit Email
 var editEmail=function(id){
 	sendUpdateEmail(id);
-	$("#start").hide();
+  $("#start").hide();
 	$("#formEmails").show();
 	$("#readEmails").hide();
 	$("#showEmails").hide();
@@ -57,7 +57,6 @@ var readSetEmails=function(skip){
 }
 
 var sendEmail=function(){
-  alert("Usted esta mandando un correito");
   sendRequestSend();
 }
 
