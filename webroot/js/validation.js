@@ -11,14 +11,8 @@ $(document).ready(function() {
 		});
 
 function validate(){
-	tinymce.init({
-        selector: 'textarea',
-        setup: function(editor) {
-            editor.on('keyup', function(e) {
-                $('#emailForm').formValidation('revalidateField', 'contentEmail');
-            });
-        }
-    });
+
+    tiny();
 
     $('#emailForm')
         .formValidation({
@@ -108,4 +102,27 @@ function validate(){
     });
 }
 
+function tiny(){
 
+      tinymce.init({
+          selector: 'textarea',
+          menubar: false,
+          height: 500,
+          width: 650,
+                plugins: [
+                      'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                          'searchreplace wordcount visualblocks visualchars code fullscreen',
+                              'insertdatetime media nonbreaking save table contextmenu directionality',
+                                  'emoticons template paste textcolor colorpicker textpattern imagetools codesample'
+                                      ],
+                toolbar1: ' bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+                toolbar2: 'preview | forecolor formatselect fontsizeselect fontselect | code ',
+                image_advtab: true,
+                setup: function(editor) {
+                  editor.on('keyup', function(e) {
+                    $('#emailForm').formValidation('revalidateField', 'contentEmail');
+                  });
+                }
+      });
+
+}
