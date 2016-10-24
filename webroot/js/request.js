@@ -73,11 +73,11 @@ function sendPreviewEmail(id){
 					$("#previewBody").html(json.content);
           //tomando el valor de las fechas
           var date=json.dateCreated;
-          var update=json.lastUpdated;
+          var update=json.lastUpdate;
           date=parseInt(date);
           update=parseInt(update);
           var dateCreate=moment(date).format('MMMM Do YYYY');
-          var updateCreate=moment(update).startOf('hour').fromNow()
+          var updateCreate=moment(update).format('MMMM Do YYYY, h:mm:ss');
           $("#createdDate").html("<small>"+dateCreate+"</small>");
           $("#updatedDate").html("<small>"+updateCreate+"</small>");
 
