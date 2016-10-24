@@ -8,7 +8,7 @@ function sendNewEmail(){
 			type: 'post',
 			url: 'http://localhost:8080/newEmail',
 			success: function(){
-		  $(".alert").show();
+		  $("#emailAdded").show();
       }
 	});
 
@@ -20,7 +20,7 @@ function sendRemoveEmail(id){
 			url: 'http://localhost:8080/remove',
 			type: 'post',
 			success: function (response) {
-		  $(".alert").show();
+		  $("#emailDeleted").show();
 			}
 	});
 }
@@ -54,7 +54,7 @@ function sendRefreshEmail(){
 		type: 'post',
 		url: 'http://localhost:8080/update',
 		success: function(){
-		  $(".alert").show();
+		  $("#emailUpdated").show();
 		}
 	});
 }
@@ -136,7 +136,7 @@ function sendRequestSend(){
 						type: 'post',
 						url: 'http://localhost:8080/send',
 						success: function(){
-		        $(".alert").show();
+		        //$(".alert").show();
             $("#emailSended").show();
 						},
 						error: function(){
