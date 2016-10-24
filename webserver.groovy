@@ -134,7 +134,7 @@ router.post("/showSet").handler { routingContext ->
     if (res.succeeded()) {
       routingContext.response()
       .putHeader("content-type", "application/json; charset=utf-8")
-      .end(Json.encodePrettily(res.result()))
+      .end(Json.encodePrettily(res.result().reverse()))
     } else {
       res.cause().printStackTrace()
     }
