@@ -9,6 +9,7 @@ function sendNewEmail(){
 			url: 'http://localhost:8080/newEmail',
 			success: function(){
 		  $("#emailAdded").show();
+      router.setRoute('/');
       }
 	});
 
