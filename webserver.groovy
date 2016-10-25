@@ -174,18 +174,14 @@ router.post("/send").handler { routingContext ->
 				})
 }
 
-def handleGetProduct(routingContext) {
-  def productID = routingContext.request().getParam("productID")
-  def toEmail = routingContext.request().getParam("toEmail")
-  def ccEmail = routingContext.request().getParam("ccEmail")
-  def ccoEmail = routingContext.request().getParam("ccoEmail")
-  def response = routingContext.response()
-        response.putHeader("content-type", "application/json").end("Id encontrado y enviado a "+toEmail)
+//router por post
+router.post("/serviceEmail").handler { routingContext ->
+    def json=routingContext.getBodyAsJson()
+						routingContext.response()
+						.setStatusCode(201)
+						.putHeader("content-type", "text/html; charset=utf-8")
+						.end("Datos recibidos: "+Json.encodePrettily(json))
 }
-
-
-//router
-router.get("/service/:productID/:toEmail/:ccEmail/:ccoEmail").handler(this.&handleGetProduct)
 
 server.requestHandler(router.&accept).listen(8080)
 
