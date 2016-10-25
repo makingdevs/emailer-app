@@ -71,7 +71,7 @@ function sendPreviewEmail(id){
 					var template=Handlebars.compile(source);
 					var html = template(json);
 					$("#showEmails").html(html);
-					$("#previewBody").html(json.content);
+          $('#iframeID').contents().find("body").html(json.content)
           //tomando el valor de las fechas
           var date=json.dateCreated;
           var update=json.lastUpdate;
