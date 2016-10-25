@@ -30,7 +30,7 @@ router.post("/newEmail").handler { routingContext ->
       subject:params.subjectEmail,
       content:params.contentEmail,
       dateCreated:new Date().time,
-      lastUpdated:new Date().time,
+      lastUpdate:new Date().time,
       version:1
     ]
 		mongoClient.save("email_storage", email, { id ->
