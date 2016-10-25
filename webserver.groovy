@@ -176,20 +176,51 @@ router.post("/send").handler { routingContext ->
 
 //router por post
 router.post("/serviceEmail").handler { routingContext ->
-  println routingContext.request().delegate.properties
-  println routingContext.request().delegate.dump()
-  println routingContext?.getBody()
-  println routingContext?.getBody()?.length()
-  def json = [error:"No body"]
+
+  def jsonResponse = [error:"I can't complete my job because I don't have the correct params, please check."]
   def statusCode = 400
+  //validando si el tamaño del getBody es mayor a cero, entonces si hay parámetros
   if(routingContext?.getBody()?.length()){
-    json=routingContext.getBodyAsJson()
+    jsonResponse=routingContext.getBodyAsJson()
     statusCode = 200
   }
-  routingContext.response()
-  .setStatusCode(statusCode)
-  .putHeader("Content-Type", "json/application; charset=utf-8")
-  .end(Json.encodePrettily(json))
+
+  println "Este es el json para:"+jsonResponse["to"]
+  println "Este es el id del emailer"+jsonResponse["id"]
+
+  //buscar el id del emailer
+  def query = ["_id":jsonResponse["id"]]
+
+  mongoClient.find("email_storage", query, { res ->
+
+    if (res.succeeded()) {
+
+      res.result().each { json ->
+        //recuperando y armando el correo
+        def jsonEmail =groovy.json.JsonOutput.toJson(json)//regresando el json del template
+        def message = [:]
+        message.from = "emailer@app.com"
+        message.to = jsonResponse["to"]
+        message.subject = json["subject"]
+        message.html = json["content"]
+
+        //enviando correo
+        mailClient.sendMail(message, { result ->
+          if (result.succeeded()) {
+            println(result.result())
+            routingContext.response()
+            .setStatusCode(201)
+            .putHeader("content-type", "text/html; charset=utf-8")
+            .end("Enviando el Correo")
+          } else {
+            result.cause().printStackTrace()
+          }
+        })
+      }
+    } else {
+      res.cause().printStackTrace()
+    }
+  })
 }
 
 server.requestHandler(router.&accept).listen(8080)
