@@ -30,7 +30,7 @@ router.post("/newEmail").handler { routingContext ->
       subject:params.subjectEmail,
       content:params.contentEmail,
       dateCreated:new Date().time,
-      lastUpdated:new Date().time,
+      lastUpdate:new Date().time,
       version:1
     ]
 		mongoClient.save("email_storage", email, { id ->
@@ -172,6 +172,24 @@ router.post("/send").handler { routingContext ->
 				res.cause().printStackTrace()
 				}
 				})
+}
+
+//router por post
+router.post("/serviceEmail").handler { routingContext ->
+  println routingContext.request().delegate.properties
+  println routingContext.request().delegate.dump()
+  println routingContext?.getBody()
+  println routingContext?.getBody()?.length()
+  def json = [error:"No body"]
+  def statusCode = 400
+  if(routingContext?.getBody()?.length()){
+    json=routingContext.getBodyAsJson()
+    statusCode = 200
+  }
+  routingContext.response()
+  .setStatusCode(statusCode)
+  .putHeader("Content-Type", "json/application; charset=utf-8")
+  .end(Json.encodePrettily(json))
 }
 
 server.requestHandler(router.&accept).listen(8080)
