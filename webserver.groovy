@@ -176,11 +176,20 @@ router.post("/send").handler { routingContext ->
 
 //router por post
 router.post("/serviceEmail").handler { routingContext ->
-    def json=routingContext.getBodyAsJson()
-						routingContext.response()
-						.setStatusCode(201)
-						.putHeader("content-type", "text/html; charset=utf-8")
-						.end("Datos recibidos: "+Json.encodePrettily(json))
+  println routingContext.request().delegate.properties
+  println routingContext.request().delegate.dump()
+  println routingContext?.getBody()
+  println routingContext?.getBody()?.length()
+  def json = [error:"No body"]
+  def statusCode = 400
+  if(routingContext?.getBody()?.length()){
+    json=routingContext.getBodyAsJson()
+    statusCode = 200
+  }
+  routingContext.response()
+  .setStatusCode(statusCode)
+  .putHeader("Content-Type", "json/application; charset=utf-8")
+  .end(Json.encodePrettily(json))
 }
 
 server.requestHandler(router.&accept).listen(8080)
