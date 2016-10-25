@@ -177,15 +177,16 @@ router.post("/send").handler { routingContext ->
 //router por post
 router.post("/serviceEmail").handler { routingContext ->
 
-  def jsonResponse = [error:"I can't complete my job because I don't have the correct params, please check."]
-  def statusCode = 400
   //validando si el tamaño del getBody es mayor a cero, entonces si hay parámetros
-  if(routingContext?.getBody()?.length()){
-    jsonResponse=routingContext.getBodyAsJson()
-    statusCode = 200
+  if(!(routingContext?.getBody()?.length())){
+    routingContext.response()
+    .setStatusCode(400)
+    .putHeader("content-type", "text/html; charset=utf-8")
+    .end("Empty emailer params")
   }
+  else{
 
-  println "Este es el json para:"+jsonResponse["to"]
+  def jsonResponse=routingContext.getBodyAsJson()
   println "Este es el id del emailer"+jsonResponse["id"]
 
   //buscar el id del emailer
@@ -200,20 +201,22 @@ router.post("/serviceEmail").handler { routingContext ->
         def jsonEmail =groovy.json.JsonOutput.toJson(json)//regresando el json del template
         def message = [:]
         message.from = "emailer@app.com"
-        message.to = jsonResponse["to"]
-        message.subject = json["subject"]
-        message.html = json["content"]
+        message.to = jsonResponse["to"]//de la peticion
+        message.subject = jsonResponse["subject"]//de la peticion
+        message.html = json["content"]//del emailer en db
 
         //enviando correo
         mailClient.sendMail(message, { result ->
           if (result.succeeded()) {
-            println(result.result())
             routingContext.response()
             .setStatusCode(201)
             .putHeader("content-type", "text/html; charset=utf-8")
-            .end("Enviando el Correo")
+            .end("Emailer Founded [done] Emailer generated [done] Emailer sending [in progress...] Please wait a seconds")
           } else {
-            result.cause().printStackTrace()
+            routingContext.response()
+            .setStatusCode(204)
+            .putHeader("content-type", "text/html; charset=utf-8")
+            .end("The emailer doesn't exist. Please check your id. Go to localhost:8080/static/#/ and choose one valid id.")
           }
         })
       }
@@ -221,7 +224,7 @@ router.post("/serviceEmail").handler { routingContext ->
       res.cause().printStackTrace()
     }
   })
+ }
 }
-
 server.requestHandler(router.&accept).listen(8080)
 
