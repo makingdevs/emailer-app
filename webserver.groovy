@@ -202,6 +202,8 @@ router.post("/serviceEmail").handler { routingContext ->
         def message = [:]
         message.from = "emailer@app.com"
         message.to = jsonResponse["to"]//de la peticion
+        message.cc = jsonResponse["cc"]//de la peticion
+        message.bcc = jsonResponse["cco"]//de la peticion
         message.subject = jsonResponse["subject"]//de la peticion
         message.html = json["content"]//del emailer en db
 
