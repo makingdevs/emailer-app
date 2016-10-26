@@ -182,7 +182,7 @@ router.post("/serviceEmail").handler { routingContext ->
     routingContext.response()
     .setStatusCode(400)
     .putHeader("content-type", "text/html; charset=utf-8")
-    .end("Empty emailer params")
+    .end("I Can't complete my job because you don't send me the correct params.")
   }
   else{
 
@@ -195,17 +195,18 @@ router.post("/serviceEmail").handler { routingContext ->
   mongoClient.find("email_storage", query, { res ->
 
     if (res.succeeded()) {
-
       res.result().each { json ->
         //recuperando y armando el correo
         def jsonEmail =groovy.json.JsonOutput.toJson(json)//regresando el json del template
+        //Armando el correo a enviar con los datos de
         def message = [:]
         message.from = "emailer@app.com"
         message.to = jsonResponse["to"]//de la peticion
-        message.cc = jsonResponse["cc"]//de la peticion
-        message.bcc = jsonResponse["cco"]//de la peticion
         message.subject = jsonResponse["subject"]//de la peticion
         message.html = json["content"]//del emailer en db
+        //Evaluando si hay cc y cco
+        if(jsonResponse["cc"]) message.cc = jsonResponse["cc"]//de la peticion
+        if(jsonResponse["cco"]) message.bcc = jsonResponse["cco"]//de la peticion
 
         //enviando correo
         mailClient.sendMail(message, { result ->
@@ -213,12 +214,9 @@ router.post("/serviceEmail").handler { routingContext ->
             routingContext.response()
             .setStatusCode(201)
             .putHeader("content-type", "text/html; charset=utf-8")
-            .end("Emailer Founded [done] Emailer generated [done] Emailer sending [in progress...] Please wait a seconds")
+            .end("Emailer Founded [done] \nEmailer generated [done] \nEmailer sending [in progress...] \nPlease wait a seconds")
           } else {
-            routingContext.response()
-            .setStatusCode(204)
-            .putHeader("content-type", "text/html; charset=utf-8")
-            .end("The emailer doesn't exist. Please check your id. Go to localhost:8080/static/#/ and choose one valid id.")
+            result.cause().printStackTrace()
           }
         })
       }
