@@ -177,68 +177,70 @@ router.post("/send").handler { routingContext ->
 //router por post
 router.post("/serviceEmail").handler { routingContext ->
 
-  //validando si el tamaño del getBody es mayor a cero, entonces si hay parámetros
-  if(!(routingContext?.getBody()?.length())){
+  if(routingContext.getBody().length()){
+    def jsonResponse=routingContext.getBodyAsJson()
+    println "Este es el id del emailer"+jsonResponse["id"]
+    //buscar el id del emailer
+    def query = ["_id":jsonResponse["id"]]
+    mongoClient.find("email_storage", query, { res ->
+      if(res.result){
+        //recuperando json
+        res.result().each { json ->
+          if(jsonResponse["params"]){
+            //recuperando y armando el correo
+            def jsonEmail =groovy.json.JsonOutput.toJson(json)//regresando el json del template
+            //Match con Engine-------
+            //Obtener el contenido
+            def params=jsonResponse["params"]
+            //Inicializar el engine
+            def engine=new groovy.text.SimpleTemplateEngine()
+            //hacer el match, e imprimir el resultado
+            def contentEmail=engine.createTemplate(json["content"]).make(params)
+            //Armando el correo a enviar con los datos de
+            def message = [:]
+            message.from = "emailer@app.com"
+            message.to = jsonResponse["to"]//de la peticion
+            message.subject = jsonResponse["subject"]//de la peticion
+            message.html = contentEmail.toString()//del emailer en db
+            //Evaluando si hay cc y cco
+            if(jsonResponse["cc"]) message.cc = jsonResponse["cc"]//de la peticion
+            if(jsonResponse["cco"]) message.bcc = jsonResponse["cco"]//de la peticion
+              //Enviando el correo
+              mailClient.sendMail(message, { result ->
+                if (result.succeeded()) {
+                  routingContext.response()
+                  .setStatusCode(201)
+                  .putHeader("content-type", "text/html; charset=utf-8")
+                  .end("Emailer Founded [done] \nEmailer generated [done] \nEmailer sending [in progress...] \nPlease wait a seconds")
+                } else {
+                  result.cause().printStackTrace()
+                }
+              })
+        }
+        else{
+        //response
+        routingContext.response()
+        .setStatusCode(400)
+        .putHeader("Content-Type", "text/html; charset=utf-8")
+        .end("I can't make the email, please send me params for fill the Emailer template.")
+        }
+        }//result.each
+      }
+      else{
+        //response
+        routingContext.response()
+        .setStatusCode(400)
+        .putHeader("Content-Type", "text/html; charset=utf-8")
+        .end("I can't find the ID, please give me a true ID")
+      }
+    })
+  }else{
+    //response
     routingContext.response()
     .setStatusCode(400)
-    .putHeader("content-type", "text/html; charset=utf-8")
-    .end("I Can't complete my job because you don't send me the correct params.")
+    .putHeader("Content-Type", "text/html; charset=utf-8")
+    .end("I can't do my job, please send me something please.")
   }
-  else{
-
-  def jsonResponse=routingContext.getBodyAsJson()
-  println "Este es el id del emailer"+jsonResponse["id"]
-
-  //buscar el id del emailer
-  def query = ["_id":jsonResponse["id"]]
-
-  mongoClient.find("email_storage", query, { res ->
-
-    if (res.succeeded()) {
-      res.result().each { json ->
-        //recuperando y armando el correo
-        def jsonEmail =groovy.json.JsonOutput.toJson(json)//regresando el json del template
-        //Match con Engine-------
-        println "Recuperando Params"
-        println jsonResponse["params"]
-        //Obtener el contenido
-        def params=jsonResponse["params"]
-        //Inicializar el engine
-        def engine=new groovy.text.SimpleTemplateEngine()
-        //hacer el match, e imprimir el resultado
-        def contentEmail=engine.createTemplate(json["content"]).make(params)
-        println "Aqui lo nuevo producido por los parametros:"
-        println contentEmail.properties
-
-        //Armando el correo a enviar con los datos de
-        def message = [:]
-        message.from = "emailer@app.com"
-        message.to = jsonResponse["to"]//de la peticion
-        message.subject = jsonResponse["subject"]//de la peticion
-        //message.html = json["content"]//del emailer en db
-        message.html = contentEmail.toString()//del emailer en db
-        //Evaluando si hay cc y cco
-        if(jsonResponse["cc"]) message.cc = jsonResponse["cc"]//de la peticion
-        if(jsonResponse["cco"]) message.bcc = jsonResponse["cco"]//de la peticion
-
-
-        //enviando correo
-        mailClient.sendMail(message, { result ->
-          if (result.succeeded()) {
-            routingContext.response()
-            .setStatusCode(201)
-            .putHeader("content-type", "text/html; charset=utf-8")
-            .end("Emailer Founded [done] \nEmailer generated [done] \nEmailer sending [in progress...] \nPlease wait a seconds")
-          } else {
-            result.cause().printStackTrace()
-          }
-        })
-      }
-    } else {
-      res.cause().printStackTrace()
-    }
-  })
- }
 }
 server.requestHandler(router.&accept).listen(8080)
 
