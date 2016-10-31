@@ -53,4 +53,16 @@ eb.consumer("com.makingdevs.emailer.count", { message ->
   })
 })
 
-
+//Show one Email
+eb.consumer("com.makingdevs.emailer.show.one", { message ->
+  mongoClient.find("email_storage", message.body(), { res ->
+    if (res.succeeded()) {
+      res.result().each { json ->
+        def jsonEmail =groovy.json.JsonOutput.toJson(json)
+        message.reply(jsonEmail)
+      }
+    } else {
+      res.cause().printStackTrace()
+    }
+  })
+})
