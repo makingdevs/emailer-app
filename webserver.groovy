@@ -161,6 +161,55 @@ router.post("/showSet").handler { routingContext ->
   })
 }
 
+router.post("/update").handler { routingContext ->
+
+    //Obtener datos del update
+    def paramsUpdate=routingContext.request().params()
+    def query = ["_id":paramsUpdate.email_id]
+    def update = [
+		$set:[
+          subject:paramsUpdate.subjectEmail,
+          content:paramsUpdate.contentEmail,
+          version:paramsUpdate.versionEmail.toInteger() +1,
+          lastUpdate:new Date().time
+	    	]
+		]
+
+    //message
+    def message=[
+      query:query,
+      dataUpdate:update
+    ]
+
+    //eventBus
+    vertx.eventBus().send("com.makingdevs.emailer.update", message, { reply ->
+    if (reply.succeeded()) {
+      routingContext.response()
+      .setStatusCode(201)
+      .putHeader("content-type", "application/json; charset=utf-8")
+      .end("Update [ok]")
+    }
+    else {
+      routingContext.response()
+      .setStatusCode(400)
+      .putHeader("content-type", "text/html; charset=utf-8")
+      .end("Problema para actualizar")
+    }
+    })
+
+    /*
+		mongoClient.update("email_storage", query, update, { res ->
+				if (res.succeeded()) {
+						routingContext.response()
+						.setStatusCode(201)
+						.putHeader("content-type", "text/html; charset=utf-8")
+						.end("Update!")
+				} else {
+				res.cause().printStackTrace()
+				}
+		})
+    */
+}
 /*
 router.post("/update").handler { routingContext ->
 
