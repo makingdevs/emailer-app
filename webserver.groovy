@@ -179,7 +179,6 @@ router.post("/serviceEmail").handler { routingContext ->
 
   if(routingContext.getBody().length()){
     def jsonResponse=routingContext.getBodyAsJson()
-    println "Este es el id del emailer"+jsonResponse["id"]
     //buscar el id del emailer
     def query = ["_id":jsonResponse["id"]]
     mongoClient.find("email_storage", query, { res ->
