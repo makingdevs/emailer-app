@@ -59,26 +59,26 @@ router.post("/newEmail").handler { routingContext ->
     })
 }
 
-
-
-
+//Show all emails
+router.route("/show").handler({ routingContext ->
+  vertx.eventBus().send("com.makingdevs.emailer.show.total", "Show me", { reply ->
+      if (reply.succeeded()) {
+        routingContext.response()
+        .setStatusCode(201)
+        .putHeader("content-type", "text/html; charset=utf-8")
+        .end(Json.encodePrettily(reply.result().body()))
+      }
+      else {
+        routingContext.response()
+        .setStatusCode(400)
+        .putHeader("content-type", "text/html; charset=utf-8")
+        .end("Problema para mostrar todos los documentos.")
+      }
+    })
+	})
 
 
 /*
-router.route("/show").handler({ routingContext ->
-  vertx.eventBus().publish("com.makingdevs.emailer.show.total", [ msg: "Mostrando todo", timestamp: new Date().time])
-		def query = [:]
-		mongoClient.find("email_storage", query, { res ->
-				if (res.succeeded()) {
-						routingContext.response()
-						.putHeader("content-type", "application/json; charset=utf-8")
-						.end(Json.encodePrettily(res.result()))
-				} else {
-				res.cause().printStackTrace()
-				}
-				})
-	})
-
 router.post("/remove").handler { routingContext ->
   vertx.eventBus().publish("com.makingdevs.emailer.remove", [ msg: "Quitando email", timestamp: new Date().time])
 	def emailRemove= routingContext.request().getParam("idEmail")
