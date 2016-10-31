@@ -2,24 +2,24 @@ import io.vertx.core.json.Json
 //mongo
 import io.vertx.groovy.core.Vertx
 import io.vertx.groovy.ext.mongo.MongoClient
-
 //Mongo DB
-
 def config = Vertx.currentContext().config()
 def mongoClient = MongoClient.createShared(vertx, config.mongo)
-
-
 
 //Event Bus Born
 def eb = vertx.eventBus()
 
 //Handlers for Event bus
-eb.consumer("com.makingdevs.emailer.new", { message ->
-    println("I have received a message: ${message.body()}")
-    mongoClient.save("email_storage", message.body(), { id ->
-      println "añadiendo email, checar en mongo directamente"
-    })
 
+//Add new Email
+eb.consumer("com.makingdevs.emailer.new", { message ->
+    mongoClient.save("email_storage", message.body(), { id ->
+      if (id.succeeded()) {
+        message.reply("[ok]")
+      } else {
+        res.cause().printStackTrace()
+      }
+    })
 })
 
 eb.consumer("com.makingdevs.emailer.show.total", { message ->
