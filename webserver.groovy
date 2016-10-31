@@ -115,27 +115,28 @@ router.route("/countTotal").handler({ routingContext ->
     })
 })
 
-
-/*
+//Show one Email
 router.post("/showEmail").handler { routingContext ->
-  vertx.eventBus().publish("com.makingdevs.emailer.show.email", [ msg: "Mostrando un  email", timestamp: new Date().time])
-	def idEmail= routingContext.request().getParam("idEmail")
-		def query = ["_id":idEmail]
-		mongoClient.find("email_storage", query, { res ->
-				if (res.succeeded()) {
-						res.result().each { json ->
-						def jsonEmail =groovy.json.JsonOutput.toJson(json)
-						routingContext.response()
-						.setStatusCode(201)
-						.putHeader("content-type", "text/html; charset=utf-8")
-						.end(jsonEmail)
-						}
-				} else {
-				res.cause().printStackTrace()
-				}
-				})
+  def emailId= routingContext.request().getParam("idEmail")
+  def query = ["_id":emailId]
+    vertx.eventBus().send("com.makingdevs.emailer.show.one", query, { reply ->
+      if (reply.succeeded()) {
+        routingContext.response()
+        .setStatusCode(201)
+        .putHeader("content-type", "application/json; charset=utf-8")
+        .end(reply.result().body())
+      }
+      else {
+        routingContext.response()
+        .setStatusCode(400)
+        .putHeader("content-type", "text/html; charset=utf-8")
+        .end("Problema para encontrar el ID")
+      }
+    })
 }
 
+
+/*
 router.post("/update").handler { routingContext ->
 
   vertx.eventBus().publish("com.makingdevs.emailer.update", [ msg: "Actualizando  un  email", timestamp: new Date().time])
