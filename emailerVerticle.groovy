@@ -66,3 +66,17 @@ eb.consumer("com.makingdevs.emailer.show.one", { message ->
     }
   })
 })
+
+//Show set of emails
+eb.consumer("com.makingdevs.emailer.show.set", { message ->
+  def query=[:]
+  mongoClient.findWithOptions("email_storage", query, message.body(), { res ->
+    if (res.succeeded()) {
+      message.reply(res.result().reverse())
+    } else {
+      res.cause().printStackTrace()
+    }
+  })
+})
+
+
