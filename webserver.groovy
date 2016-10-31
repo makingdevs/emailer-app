@@ -2,20 +2,27 @@ import io.vertx.groovy.ext.web.handler.StaticHandler
 import io.vertx.groovy.ext.web.Router
 import io.vertx.groovy.ext.web.handler.BodyHandler
 import io.vertx.core.json.Json
+
 import io.vertx.groovy.core.Vertx
-import io.vertx.groovy.ext.mongo.MongoClient
+
 //for use mail
 import io.vertx.ext.mail.StartTLSOptions
 import io.vertx.groovy.ext.mail.MailClient
-
 
 def config = Vertx.currentContext().config()
 if(!config.mail || !config.mongo)
   throw new RuntimeException("Cannot run withouit config, check https://github.com/makingdevs/emailer-app/wiki/Emailer-App")
 
 def mailClient = MailClient.createShared(vertx, config.mail)
-def mongoClient = MongoClient.createShared(vertx, config.mongo)
+//ndef mongoClient = MongoClient.createShared(vertx, config.mongo)
 
+//configuracion externalizada
+options =[
+  "config":config
+]
+
+
+//routers
 def server = vertx.createHttpServer()
 def router = Router.router(vertx)
 router.route().handler(BodyHandler.create())
@@ -25,8 +32,7 @@ router.route("/static/*").handler(
 )
 
 router.post("/newEmail").handler { routingContext ->
-
-  vertx.eventBus().publish("com.makingdevs.emailer.new", [ msg: "Correo Nuevo", timestamp: new Date().time])
+  //call verticle
 
     def params = routingContext.request().params()
     def email = [
@@ -36,14 +42,26 @@ router.post("/newEmail").handler { routingContext ->
       lastUpdate:new Date().time,
       version:1
     ]
+
+    println "Datos: "+email
+
+  vertx.eventBus().publish("com.makingdevs.emailer.new", email)
+  /*
 		mongoClient.save("email_storage", email, { id ->
       routingContext.response()
       .setStatusCode(201)
       .putHeader("content-type", "text/html; charset=utf-8")
       .end("ok! Email Agregado")
     })
+  */
 }
 
+
+
+
+
+
+/*
 router.route("/show").handler({ routingContext ->
   vertx.eventBus().publish("com.makingdevs.emailer.show.total", [ msg: "Mostrando todo", timestamp: new Date().time])
 		def query = [:]
@@ -252,9 +270,10 @@ router.post("/serviceEmail").handler { routingContext ->
     .putHeader("Content-Type", "text/html; charset=utf-8")
     .end("I can't do my job, please send me something please.")
   }
-}
+}*/
+
 server.requestHandler(router.&accept).listen(8080)
 
 //deploy verticles
-vertx.deployVerticle("emailerVerticle.groovy")
+vertx.deployVerticle("emailerVerticle.groovy", options)
 vertx.deployVerticle("senderVerticle.groovy")
