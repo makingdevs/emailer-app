@@ -45,6 +45,7 @@ router.post("/newEmail").handler { routingContext ->
 }
 
 router.route("/show").handler({ routingContext ->
+  vertx.eventBus().publish("com.makingdevs.emailer.show.total", [ msg: "Mostrando todo", timestamp: new Date().time])
 		def query = [:]
 		mongoClient.find("email_storage", query, { res ->
 				if (res.succeeded()) {
@@ -58,6 +59,7 @@ router.route("/show").handler({ routingContext ->
 	})
 
 router.post("/remove").handler { routingContext ->
+  vertx.eventBus().publish("com.makingdevs.emailer.remove", [ msg: "Quitando email", timestamp: new Date().time])
 	def emailRemove= routingContext.request().getParam("idEmail")
 		def query = ["_id":emailRemove]
 		mongoClient.remove("email_storage", query, { res ->
@@ -73,6 +75,7 @@ router.post("/remove").handler { routingContext ->
 }
 
 router.post("/showEmail").handler { routingContext ->
+  vertx.eventBus().publish("com.makingdevs.emailer.show.email", [ msg: "Mostrando un  email", timestamp: new Date().time])
 	def idEmail= routingContext.request().getParam("idEmail")
 		def query = ["_id":idEmail]
 		mongoClient.find("email_storage", query, { res ->
@@ -91,6 +94,8 @@ router.post("/showEmail").handler { routingContext ->
 }
 
 router.post("/update").handler { routingContext ->
+
+  vertx.eventBus().publish("com.makingdevs.emailer.update", [ msg: "Actualizando  un  email", timestamp: new Date().time])
 
     def paramsUpdate=routingContext.request().params()
     def query = ["_id":paramsUpdate.email_id]
@@ -115,6 +120,8 @@ router.post("/update").handler { routingContext ->
 }
 
 router.route("/countTotal").handler({ routingContext ->
+
+  vertx.eventBus().publish("com.makingdevs.emailer.count", [ msg: "Contando Emails", timestamp: new Date().time])
   def query = [:]
   mongoClient.count("email_storage",query,{res ->
     if(res.succeeded()){
@@ -126,6 +133,8 @@ router.route("/countTotal").handler({ routingContext ->
 })
 
 router.post("/showSet").handler { routingContext ->
+  vertx.eventBus().publish("com.makingdevs.emailer.show.set", [ msg: "Mostrando un set de email", timestamp: new Date().time])
+
   def setValue=0
   setValue= routingContext.request().getParam("setValue")
   def query = [:]
