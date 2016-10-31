@@ -65,7 +65,7 @@ router.route("/show").handler({ routingContext ->
       if (reply.succeeded()) {
         routingContext.response()
         .setStatusCode(201)
-        .putHeader("content-type", "text/html; charset=utf-8")
+        .putHeader("content-type", "application/json; charset=utf-8")
         .end(Json.encodePrettily(reply.result().body()))
       }
       else {
@@ -77,8 +77,7 @@ router.route("/show").handler({ routingContext ->
     })
 	})
 
-
-
+//Remove an email
 router.post("/remove").handler { routingContext ->
   def emailRemove= routingContext.request().getParam("idEmail")
   def query = ["_id":emailRemove]
@@ -97,6 +96,25 @@ router.post("/remove").handler { routingContext ->
       }
     })
 }
+
+//Count all of emails
+router.route("/countTotal").handler({ routingContext ->
+  vertx.eventBus().send("com.makingdevs.emailer.count", "Dame el conteo", { reply ->
+      if (reply.succeeded()) {
+        routingContext.response()
+        .setStatusCode(201)
+        .putHeader("content-type", "application/json; charset=utf-8")
+        .end(Json.encodePrettily(reply.result().body()))
+      }
+      else {
+        routingContext.response()
+        .setStatusCode(400)
+        .putHeader("content-type", "text/html; charset=utf-8")
+        .end("Problemas para contar emails.")
+      }
+    })
+})
+
 
 /*
 router.post("/showEmail").handler { routingContext ->
@@ -143,19 +161,6 @@ router.post("/update").handler { routingContext ->
 				}
 		})
 }
-
-router.route("/countTotal").handler({ routingContext ->
-
-  vertx.eventBus().publish("com.makingdevs.emailer.count", [ msg: "Contando Emails", timestamp: new Date().time])
-  def query = [:]
-  mongoClient.count("email_storage",query,{res ->
-    if(res.succeeded()){
-      routingContext.response()
-      .putHeader("content-type", "application/json; charset=utf-8")
-      .end(Json.encodePrettily(res.result()))
-    }
-  })
-})
 
 router.post("/showSet").handler { routingContext ->
   vertx.eventBus().publish("com.makingdevs.emailer.show.set", [ msg: "Mostrando un set de email", timestamp: new Date().time])
