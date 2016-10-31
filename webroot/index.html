@@ -214,11 +214,31 @@
 				<div class="well">
 					<p class="custom">Bienvenido</p>
           <div class="thumbnail" id="previewBody">
-            <p class="customButton">Opciones</p><br>
-            <strong>Almacén de Correos:</strong> Muestra los correos registrados.<br>
-            <strong>Agregar Correo Nuevo:</strong> Permite agregar un correo nuevo.<br><br>
-            <img src="resources/correoNuevo.png" width="20%"/><br>
-            <p class="customButton">Actualización más reciente: 18 de Octubre del 2016.</p>
+            <p class="customButton">Instrucciones Para Usar la Aplicación</p>
+
+            1.- Agrega un correo nuevo, incluyendo variables con el formato <b>${mivariable}</b><br>
+            2.- Visualiza la lista de correos que ya haz agregado en <b>Almacén de Correos</b><br>
+            3.- Previsualizar en <b>Preview</b><br>
+            3.1.- Es posible actualizar el contenido del correo en <b>Editar</b><br>
+            3.2.- Es posible remover el correo completo en <b>Eliminar</b><br>
+            3.3.- Es posible enviar una prueba del correo a tu correo en <b>Enviar Prueba</b><br>
+
+            <br><img src="resources/correoNuevo.png" width="15%"/><br>
+
+            <p class="customButton">Instrucciones para Usar el Servicio</p>
+            1.- Tener un email agregado en el Almacén, con variables.
+            <br>2.- En consola teclear el comando CURL como el siguiente ejemplo:
+            <br><br>
+            <b>curl -i -H "Content-Type: application/json" -X POST -d '{"id":"1ewf32rvf3evcf3f423", "subject":"saludos", "to":"carlo@me.com", "cc":"carlo@makingdevs.com", "cco":"carlogilmar12@gmail", "params":{ "organizacion":"MakingDevs" }}' localhost:8080/services</b>
+            <br>
+            <br>
+            Para una petición exitosa es necesario indicar:
+            <br>- Json con datos
+            <br>- Id existente.
+            <br>- Correo (to, cc, cco)
+            <br>- Parámetros que llenarán las variables
+            <br><br>
+            <p class="customButton">Actualización más reciente: 28 de Octubre del 2016.</p>
           </div>
         </div>
 		</div>
