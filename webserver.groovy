@@ -78,23 +78,27 @@ router.route("/show").handler({ routingContext ->
 	})
 
 
-/*
+
 router.post("/remove").handler { routingContext ->
-  vertx.eventBus().publish("com.makingdevs.emailer.remove", [ msg: "Quitando email", timestamp: new Date().time])
-	def emailRemove= routingContext.request().getParam("idEmail")
-		def query = ["_id":emailRemove]
-		mongoClient.remove("email_storage", query, { res ->
-				if (res.succeeded()) {
-				routingContext.response()
-				.setStatusCode(201)
-				.putHeader("content-type", "text/html; charset=utf-8")
-				.end("Eliminado!")
-				} else {
-				res.cause().printStackTrace()
-				}
-				})
+  def emailRemove= routingContext.request().getParam("idEmail")
+  def query = ["_id":emailRemove]
+    vertx.eventBus().send("com.makingdevs.emailer.remove", query, { reply ->
+      if (reply.succeeded()) {
+        routingContext.response()
+        .setStatusCode(201)
+        .putHeader("content-type", "text/html; charset=utf-8")
+        .end("Email Eliminado Exitosamente ${reply.result().body()}")
+      }
+      else {
+        routingContext.response()
+        .setStatusCode(400)
+        .putHeader("content-type", "text/html; charset=utf-8")
+        .end("Problema para eliminar  email.")
+      }
+    })
 }
 
+/*
 router.post("/showEmail").handler { routingContext ->
   vertx.eventBus().publish("com.makingdevs.emailer.show.email", [ msg: "Mostrando un  email", timestamp: new Date().time])
 	def idEmail= routingContext.request().getParam("idEmail")
