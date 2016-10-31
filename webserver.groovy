@@ -123,7 +123,7 @@ router.post("/showEmail").handler { routingContext ->
       if (reply.succeeded()) {
         routingContext.response()
         .setStatusCode(201)
-        .putHeader("content-type", "application/json; charset=utf-8")
+        .putHeader("content-type", "text/html; charset=utf-8")
         .end(reply.result().body())
       }
       else {
