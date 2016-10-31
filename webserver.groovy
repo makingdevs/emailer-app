@@ -25,6 +25,9 @@ router.route("/static/*").handler(
 )
 
 router.post("/newEmail").handler { routingContext ->
+
+  vertx.eventBus().publish("com.makingdevs.emailer.new", [ msg: "Correo Nuevo", timestamp: new Date().time])
+
     def params = routingContext.request().params()
     def email = [
       subject:params.subjectEmail,
@@ -243,3 +246,6 @@ router.post("/serviceEmail").handler { routingContext ->
 }
 server.requestHandler(router.&accept).listen(8080)
 
+//deploy verticles
+vertx.deployVerticle("emailerVerticle.groovy")
+vertx.deployVerticle("senderVerticle.groovy")
