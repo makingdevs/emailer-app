@@ -34,12 +34,21 @@ eb.consumer("com.makingdevs.emailer.show.total", { message ->
 
 //Remove Email
 eb.consumer("com.makingdevs.emailer.remove", { message ->
-  println "El mensaje que me envian es: ${message.body()}"
   mongoClient.remove("email_storage", message.body(), { res ->
     if (res.succeeded()) {
       message.reply("[ok]")
     } else {
       res.cause().printStackTrace()
+    }
+  })
+})
+
+//Count total of emails
+eb.consumer("com.makingdevs.emailer.count", { message ->
+  def query=[:]
+  mongoClient.count("email_storage",query,{res ->
+    if(res.succeeded()){
+      message.reply(res.result())
     }
   })
 })
