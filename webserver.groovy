@@ -135,6 +135,31 @@ router.post("/showEmail").handler { routingContext ->
     })
 }
 
+//Show set of emails
+router.post("/showSet").handler { routingContext ->
+
+  def setValue=0
+  setValue= routingContext.request().getParam("setValue")
+  def options=[
+      limit:10,
+      skip:setValue.toInteger()
+  ]
+//comunicate with verticle
+  vertx.eventBus().send("com.makingdevs.emailer.show.set", options, { reply ->
+    if (reply.succeeded()) {
+      routingContext.response()
+      .setStatusCode(201)
+      .putHeader("content-type", "application/json; charset=utf-8")
+      .end(Json.encodePrettily(reply.result().body()))
+    }
+    else {
+      routingContext.response()
+      .setStatusCode(400)
+      .putHeader("content-type", "text/html; charset=utf-8")
+      .end("Problema para mostrar el set de emails.")
+    }
+  })
+}
 
 /*
 router.post("/update").handler { routingContext ->
@@ -163,26 +188,7 @@ router.post("/update").handler { routingContext ->
 		})
 }
 
-router.post("/showSet").handler { routingContext ->
-  vertx.eventBus().publish("com.makingdevs.emailer.show.set", [ msg: "Mostrando un set de email", timestamp: new Date().time])
 
-  def setValue=0
-  setValue= routingContext.request().getParam("setValue")
-  def query = [:]
-  def options=[
-      limit:10,
-      skip:setValue.toInteger()
-      ]
-  mongoClient.findWithOptions("email_storage", query, options, { res ->
-    if (res.succeeded()) {
-      routingContext.response()
-      .putHeader("content-type", "application/json; charset=utf-8")
-      .end(Json.encodePrettily(res.result().reverse()))
-    } else {
-      res.cause().printStackTrace()
-    }
-  })
-}
 
 router.post("/send").handler { routingContext ->
 
