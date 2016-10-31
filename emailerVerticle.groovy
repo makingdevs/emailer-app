@@ -79,4 +79,12 @@ eb.consumer("com.makingdevs.emailer.show.set", { message ->
   })
 })
 
+//Update an email
+eb.consumer("com.makingdevs.emailer.update", { message ->
+
+  println "El mensaje recibido es: "+message.body()
+
+  })
+
+
 
