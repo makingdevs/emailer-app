@@ -14,6 +14,10 @@ eb.consumer("com.makingdevs.emailer.remove", { message ->
     println("I have received a message: ${message.body()}")
 })
 
+eb.consumer("com.makingdevs.emailer.show.email", { message ->
+    println("I have received a message: ${message.body()}")
+})
+
 eb.consumer("com.makingdevs.emailer.update", { message ->
     println("I have received a message: ${message.body()}")
 })
