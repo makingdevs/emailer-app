@@ -27,13 +27,13 @@ def server = vertx.createHttpServer()
 def router = Router.router(vertx)
 router.route().handler(BodyHandler.create())
 
+//Route to Index
 router.route("/static/*").handler(
 	 StaticHandler.create().setCachingEnabled(false)
 )
 
+//Add new Email
 router.post("/newEmail").handler { routingContext ->
-  //call verticle
-
     def params = routingContext.request().params()
     def email = [
       subject:params.subjectEmail,
@@ -43,17 +43,20 @@ router.post("/newEmail").handler { routingContext ->
       version:1
     ]
 
-    println "Datos: "+email
-
-  vertx.eventBus().publish("com.makingdevs.emailer.new", email)
-  /*
-		mongoClient.save("email_storage", email, { id ->
-      routingContext.response()
-      .setStatusCode(201)
-      .putHeader("content-type", "text/html; charset=utf-8")
-      .end("ok! Email Agregado")
+    vertx.eventBus().send("com.makingdevs.emailer.new", email, { reply ->
+      if (reply.succeeded()) {
+        routingContext.response()
+        .setStatusCode(201)
+        .putHeader("content-type", "text/html; charset=utf-8")
+        .end("Email Agregado Exitosamente.")
+      }
+      else {
+        routingContext.response()
+        .setStatusCode(400)
+        .putHeader("content-type", "text/html; charset=utf-8")
+        .end("Problema para agregar email.")
+      }
     })
-  */
 }
 
 
