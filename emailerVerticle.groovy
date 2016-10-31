@@ -1,15 +1,13 @@
 import io.vertx.core.json.Json
-//mongo
 import io.vertx.groovy.core.Vertx
 import io.vertx.groovy.ext.mongo.MongoClient
-//Mongo DB
+
+//Configuration of Mongo
 def config = Vertx.currentContext().config()
 def mongoClient = MongoClient.createShared(vertx, config.mongo)
 
 //Event Bus Born
 def eb = vertx.eventBus()
-
-//Handlers for Event bus
 
 //Add new Email
 eb.consumer("com.makingdevs.emailer.new", { message ->
@@ -22,27 +20,16 @@ eb.consumer("com.makingdevs.emailer.new", { message ->
     })
 })
 
+//Show all emails
 eb.consumer("com.makingdevs.emailer.show.total", { message ->
-    println("I have received a message: ${message.body()}")
+    def query=[:]
+    mongoClient.find("email_storage", query, { res ->
+      if (res.succeeded()) {
+        message.reply(res.result())
+      } else {
+        res.cause().printStackTrace()
+      }
+    })
 })
 
-eb.consumer("com.makingdevs.emailer.remove", { message ->
-    println("I have received a message: ${message.body()}")
-})
-
-eb.consumer("com.makingdevs.emailer.show.email", { message ->
-    println("I have received a message: ${message.body()}")
-})
-
-eb.consumer("com.makingdevs.emailer.update", { message ->
-    println("I have received a message: ${message.body()}")
-})
-
-eb.consumer("com.makingdevs.emailer.count", { message ->
-    println("I have received a message: ${message.body()}")
-})
-
-eb.consumer("com.makingdevs.emailer.show.set", { message ->
-    println("I have received a message: ${message.body()}")
-})
 
