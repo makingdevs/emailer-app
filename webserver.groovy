@@ -8,122 +8,92 @@ def config = Vertx.currentContext().config()
 if(!config.mail || !config.mongo)
   throw new RuntimeException("Cannot run withouit config, check https://github.com/makingdevs/emailer-app/wiki/Emailer-App")
 
-//configuracion externalizada
-options =[
+  //configuracion externalizada
+  options =[
   "config":config
-]
+  ]
 
-//routers
-def server = vertx.createHttpServer()
-def router = Router.router(vertx)
+  //routers
+  def server = vertx.createHttpServer()
+  def router = Router.router(vertx)
 router.route().handler(BodyHandler.create())
 
 //Route to Index
 router.route("/static/*").handler(
-	 StaticHandler.create().setCachingEnabled(false)
+  StaticHandler.create().setCachingEnabled(false)
 )
 
 //Add new Email
 router.post("/newEmail").handler { routingContext ->
-    def params = routingContext.request().params()
-    def email = [
-      subject:params.subjectEmail,
-      content:params.contentEmail,
-      dateCreated:new Date().time,
-      lastUpdate:new Date().time,
-      version:1
-    ]
-
-    vertx.eventBus().send("com.makingdevs.emailer.new", email, { reply ->
-      if (reply.succeeded()) {
-        routingContext.response()
-        .setStatusCode(201)
-        .putHeader("content-type", "text/html; charset=utf-8")
-        .end("Email Agregado Exitosamente.")
-      }
-      else {
-        routingContext.response()
-        .setStatusCode(400)
-        .putHeader("content-type", "text/html; charset=utf-8")
-        .end("Problema para agregar email.")
-      }
-    })
+  def params = routingContext.request().params()
+  def email = [
+  subject:params.subjectEmail,
+  content:params.contentEmail,
+  dateCreated:new Date().time,
+  lastUpdate:new Date().time,
+  version:1
+  ]
+  vertx.eventBus().send("com.makingdevs.emailer.new", email, { reply ->
+    if (reply.succeeded()) {
+      routingContext.response()
+      .setStatusCode(201)
+      .putHeader("content-type", "text/html; charset=utf-8")
+      .end("Email Agregado Exitosamente.")
+    }
+  })
 }
 
 //Show all emails
 router.route("/show").handler({ routingContext ->
   vertx.eventBus().send("com.makingdevs.emailer.show.total", "Show me", { reply ->
-      if (reply.succeeded()) {
-        routingContext.response()
-        .setStatusCode(201)
-        .putHeader("content-type", "application/json; charset=utf-8")
-        .end(Json.encodePrettily(reply.result().body()))
-      }
-      else {
-        routingContext.response()
-        .setStatusCode(400)
-        .putHeader("content-type", "text/html; charset=utf-8")
-        .end("Problema para mostrar todos los documentos.")
-      }
-    })
-	})
+    if (reply.succeeded()) {
+      routingContext.response()
+      .setStatusCode(201)
+      .putHeader("content-type", "application/json; charset=utf-8")
+      .end(Json.encodePrettily(reply.result().body()))
+    }
+
+  })
+})
 
 //Remove an email
 router.post("/remove").handler { routingContext ->
   def emailRemove= routingContext.request().getParam("idEmail")
   def query = ["_id":emailRemove]
-    vertx.eventBus().send("com.makingdevs.emailer.remove", query, { reply ->
-      if (reply.succeeded()) {
-        routingContext.response()
-        .setStatusCode(201)
-        .putHeader("content-type", "text/html; charset=utf-8")
-        .end("Email Eliminado Exitosamente ${reply.result().body()}")
-      }
-      else {
-        routingContext.response()
-        .setStatusCode(400)
-        .putHeader("content-type", "text/html; charset=utf-8")
-        .end("Problema para eliminar  email.")
-      }
-    })
+  vertx.eventBus().send("com.makingdevs.emailer.remove", query, { reply ->
+    if (reply.succeeded()) {
+      routingContext.response()
+      .setStatusCode(201)
+      .putHeader("content-type", "text/html; charset=utf-8")
+      .end("Email Eliminado Exitosamente ${reply.result().body()}")
+    }
+  })
 }
 
 //Count all of emails
 router.route("/countTotal").handler({ routingContext ->
   vertx.eventBus().send("com.makingdevs.emailer.count", "Dame el conteo", { reply ->
-      if (reply.succeeded()) {
-        routingContext.response()
-        .setStatusCode(201)
-        .putHeader("content-type", "application/json; charset=utf-8")
-        .end(Json.encodePrettily(reply.result().body()))
-      }
-      else {
-        routingContext.response()
-        .setStatusCode(400)
-        .putHeader("content-type", "text/html; charset=utf-8")
-        .end("Problemas para contar emails.")
-      }
-    })
+    if (reply.succeeded()) {
+      routingContext.response()
+      .setStatusCode(201)
+      .putHeader("content-type", "application/json; charset=utf-8")
+      .end(Json.encodePrettily(reply.result().body()))
+    }
+  })
 })
 
 //Show one Email
 router.post("/showEmail").handler { routingContext ->
   def emailId= routingContext.request().getParam("idEmail")
   def query = ["_id":emailId]
-    vertx.eventBus().send("com.makingdevs.emailer.show.one", query, { reply ->
-      if (reply.succeeded()) {
-        routingContext.response()
-        .setStatusCode(201)
-        .putHeader("content-type", "text/html; charset=utf-8")
-        .end(reply.result().body())
-      }
-      else {
-        routingContext.response()
-        .setStatusCode(400)
-        .putHeader("content-type", "text/html; charset=utf-8")
-        .end("Problema para encontrar el ID")
-      }
-    })
+  vertx.eventBus().send("com.makingdevs.emailer.show.one", query, { reply ->
+    if (reply.succeeded()) {
+      routingContext.response()
+      .setStatusCode(201)
+      .putHeader("content-type", "text/html; charset=utf-8")
+      .end(reply.result().body())
+    }
+  })
 }
 
 //Show set of emails
@@ -132,22 +102,16 @@ router.post("/showSet").handler { routingContext ->
   def setValue=0
   setValue= routingContext.request().getParam("setValue")
   def options=[
-      limit:10,
-      skip:setValue.toInteger()
+  limit:10,
+  skip:setValue.toInteger()
   ]
-//comunicate with verticle
+  //comunicate with verticle
   vertx.eventBus().send("com.makingdevs.emailer.show.set", options, { reply ->
     if (reply.succeeded()) {
       routingContext.response()
       .setStatusCode(201)
       .putHeader("content-type", "application/json; charset=utf-8")
       .end(Json.encodePrettily(reply.result().body()))
-    }
-    else {
-      routingContext.response()
-      .setStatusCode(400)
-      .putHeader("content-type", "text/html; charset=utf-8")
-      .end("Problema para mostrar el set de emails.")
     }
   })
 }
@@ -172,41 +136,27 @@ router.post("/update").handler { routingContext ->
       .putHeader("content-type", "application/json; charset=utf-8")
       .end("Update [ok]")
     }
-    else {
-      routingContext.response()
-      .setStatusCode(400)
-      .putHeader("content-type", "text/html; charset=utf-8")
-      .end("Problema para actualizar")
-    }
   })
 }
 
 //Mandar el preview a un email
 router.post("/send").handler { routingContext ->
 
-	  def idTemplate= routingContext.request().getParam("email_id")
-	  def emailToSend= routingContext.request().getParam("emailPreview")
-    def message=[
-        idTemplate,//id del email a enviar
-        emailToSend//Email receiver
-    ]
-    vertx.eventBus().send("com.makingdevs.emailer.send", message, { reply ->
-      if (reply.succeeded()) {
-        routingContext.response()
-        .setStatusCode(201)
-        .putHeader("content-type", "application/json; charset=utf-8")
-      .end("Sended. [ok]")
-    }
-    else {
-      routingContext.response()
-      .setStatusCode(400)
-      .putHeader("content-type", "text/html; charset=utf-8")
-      .end("Problema para enviar")
-    }
-    })
+  def idTemplate= routingContext.request().getParam("email_id")
+  def emailToSend= routingContext.request().getParam("emailPreview")
+  def message=[
+  idTemplate,//id del email a enviar
+  emailToSend//Email receiver
+  ]
+  vertx.eventBus().send("com.makingdevs.emailer.send", message)
+
+  routingContext.response()
+  .setStatusCode(201)
+  .putHeader("content-type", "application/json; charset=utf-8")
+  .end("Solicitud Enviada Coolicitud Enviada Correctamente..")
 }
 
-//router por post
+//Route para el servicio Web
 router.post("/serviceEmail").handler { routingContext ->
 
   if(routingContext.getBody().length()){
