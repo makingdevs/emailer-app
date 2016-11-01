@@ -145,15 +145,15 @@ router.post("/send").handler { routingContext ->
   def idTemplate= routingContext.request().getParam("email_id")
   def emailToSend= routingContext.request().getParam("emailPreview")
   def message=[
-  idTemplate,//id del email a enviar
-  emailToSend//Email receiver
+  id:idTemplate,
+  email:emailToSend
   ]
   vertx.eventBus().send("com.makingdevs.emailer.send", message)
 
   routingContext.response()
   .setStatusCode(201)
   .putHeader("content-type", "application/json; charset=utf-8")
-  .end("Solicitud Enviada Coolicitud Enviada Correctamente..")
+  .end("Solicitud Enviada Correctamente.")
 }
 
 //Route para el servicio Web
