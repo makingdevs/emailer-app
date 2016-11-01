@@ -95,7 +95,6 @@ eb.consumer("com.makingdevs.emailer.update", { message ->
   mongoClient.update("email_storage", query, update, { res ->
     if (res.succeeded()) {
       message.reply("[ok]")
-      println "Updated·"
     } else {
       res.cause().printStackTrace()
     }
@@ -110,7 +109,6 @@ eb.consumer("com.makingdevs.emailer.send", { message ->
   //Buscando email
   mongoClient.find("email_storage", query, { res ->
     if (res.succeeded()) {
-      println "Email encontrado :D"
       res.result().each { json ->
         def jsonEmail =groovy.json.JsonOutput.toJson(json)
         //message.reply(jsonEmail)
@@ -120,5 +118,30 @@ eb.consumer("com.makingdevs.emailer.send", { message ->
       res.cause().printStackTrace()
     }
   })
-
 })
+
+//Service
+eb.consumer("com.makingdevs.emailer.service", { message ->
+  def query=["_id":message.body().id]
+  //Buscar el id
+  mongoClient.find("email_storage", query, { res ->
+    if (res.succeeded()) {
+      res.result().each { json ->
+        def jsonEmail =groovy.json.JsonOutput.toJson(json)
+        //message.reply(jsonEmail)
+       //Enviar los datos del email encontrado, más los datos del servicio
+        vertx.eventBus().publish("com.makingdevs.emailer.send.service",
+        [
+         content:json["content"],
+         subject:message.body().subject,
+         to: message.body().to,
+         params: message.body().params
+        ])
+      }
+    } else {
+      res.cause().printStackTrace()
+    }
+  })
+})
+
+
