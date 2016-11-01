@@ -35,7 +35,7 @@ eb.consumer("com.makingdevs.emailer.send.service", { message ->
   def mail=[:]
 
   if(message.body().cc) mail.cc=message.body().cc
-  if(message.body().cco) mail.cc=message.body().cco
+  if(message.body().cco) mail.bcc=message.body().cco
 
   mail.from="Emailer@app.com"
   mail.to=message.body().to

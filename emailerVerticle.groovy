@@ -123,9 +123,7 @@ eb.consumer("com.makingdevs.emailer.send", { message ->
 
 //Service
 eb.consumer("com.makingdevs.emailer.service", { message ->
-  println "El mensaje integro es: "+message.body()
   def query=["_id":message.body().id]
-
   def email=[
 //  content:json["content"],
   subject:message.body().subject,
@@ -136,8 +134,6 @@ eb.consumer("com.makingdevs.emailer.service", { message ->
   //Validaciones
   if(message.body().cc) email.cc=message.body().cc
   if(message.body().cco) email.cco=message.body().cco
-
-  println "El otro mensaje: "+email
 
   //Buscar el id
   mongoClient.find("email_storage", query, { res ->
