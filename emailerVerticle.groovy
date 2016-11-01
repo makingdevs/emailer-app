@@ -82,15 +82,17 @@ eb.consumer("com.makingdevs.emailer.show.set", { message ->
 //Update an email
 eb.consumer("com.makingdevs.emailer.update", { message ->
   //Armando variables con los datos del mensaje
-  def query=["_id": message.body().getAt(0)]//id del email
   def update=[
     $set:[
-       subject:message.body().getAt(1),
-       content:message.body().getAt(2),
-       version:message.body().getAt(3),
-       lastUpdate:message.body().getAt(4),
+       subject:message.body().subject,
+       content:message.body().content,
+       version:message.body().version,
+       lastUpdate:message.body().update,
     ]
   ]
+  def query=["_id":message.body().id]
+
+
   //Haciendo el update
   mongoClient.update("email_storage", query, update, { res ->
     if (res.succeeded()) {
@@ -103,16 +105,15 @@ eb.consumer("com.makingdevs.emailer.update", { message ->
 
 //Send Email Preview
 eb.consumer("com.makingdevs.emailer.send", { message ->
-  def query=["_id":message.body().getAt(0)]
-  def receiver=message.body().getAt(1)
-
+  def query=["_id": message.body().id]
+  def receiver=message.body().email
   //Buscando email
   mongoClient.find("email_storage", query, { res ->
     if (res.succeeded()) {
       res.result().each { json ->
         def jsonEmail =groovy.json.JsonOutput.toJson(json)
-        //message.reply(jsonEmail)
-        vertx.eventBus().publish("com.makingdevs.emailer.send.email", [to:receiver, subject:json["subject"], content:json["content"]])
+        vertx.eventBus().publish("com.makingdevs.emailer.send.email",
+        [to:receiver, subject:json["subject"], content:json["content"]])
       }
     } else {
       res.cause().printStackTrace()

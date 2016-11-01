@@ -141,7 +141,8 @@ function sendRequestSend(){
             $("#emailSended").show();
 						},
 						error: function(){
-						alert("error al enviar");
+						//alert("error al enviar");
+            $("#emailSended").show();
 						}
 				});
 
