@@ -11,8 +11,8 @@ def config = Vertx.currentContext().config()
 if(!config.mail || !config.mongo)
   throw new RuntimeException("Cannot run withouit config, check https://github.com/makingdevs/emailer-app/wiki/Emailer-App")
 
-def mailClient = MailClient.createShared(vertx, config.mail)
-//ndef mongoClient = MongoClient.createShared(vertx, config.mongo)
+//def mailClient = MailClient.createShared(vertx, config.mail)
+//def mongoClient = MongoClient.createShared(vertx, config.mongo)
 
 //configuracion externalizada
 options =[
