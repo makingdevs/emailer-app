@@ -26,3 +26,23 @@ eb.consumer("com.makingdevs.emailer.send.email", { message ->
     })
 })
 
+eb.consumer("com.makingdevs.emailer.send.service", { message ->
+  //Engine, match with params
+  //Inicializar el engine
+  def engine=new groovy.text.SimpleTemplateEngine()
+  //hacer el match, e imprimir el resultado
+  def contentEmail=engine.createTemplate(message.body().content).make(message.body().params)
+  //Armar el email
+  def mail=[:]
+  mail.from="Emailer@app.com"
+  mail.to=message.body().to
+  mail.subject=message.body().subject
+  mail.html=contentEmail.toString()
+  mailClient.sendMail(mail, { result ->
+    if (result.succeeded()) {
+      println("Mail enviado, checa tu correo")
+    } else {
+      result.cause().printStackTrace()
+    }
+  })
+})
