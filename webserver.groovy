@@ -165,6 +165,7 @@ router.post("/update").handler { routingContext ->
 
     //Obtener datos del update
     def paramsUpdate=routingContext.request().params()
+    /*
     def query = ["_id":paramsUpdate.email_id]
     def update = [
 		$set:[
@@ -173,13 +174,22 @@ router.post("/update").handler { routingContext ->
           version:paramsUpdate.versionEmail.toInteger() +1,
           lastUpdate:new Date().time
 	    	]
+		]*/
+    def update = [
+          subject:paramsUpdate.subjectEmail,
+          content:paramsUpdate.contentEmail,
+          version:paramsUpdate.versionEmail.toInteger() +1,
+          lastUpdate:new Date().time
 		]
 
-    //message
+    //mensaje que actualizará los datos, seguir el orden
     def message=[
-      query:query,
-      dataUpdate:update
-    ]
+        paramsUpdate.email_id,//id del email a actualizar
+        paramsUpdate.subjectEmail,//subject
+        paramsUpdate.contentEmail,//contenido
+        paramsUpdate.versionEmail.toInteger()+1,//Version
+        new Date().time//fecha nueva en que esta siendo actualizado
+        ]
 
     //eventBus
     vertx.eventBus().send("com.makingdevs.emailer.update", message, { reply ->
