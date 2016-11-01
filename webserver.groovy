@@ -2,9 +2,7 @@ import io.vertx.groovy.ext.web.handler.StaticHandler
 import io.vertx.groovy.ext.web.Router
 import io.vertx.groovy.ext.web.handler.BodyHandler
 import io.vertx.core.json.Json
-
 import io.vertx.groovy.core.Vertx
-
 //for use mail
 import io.vertx.ext.mail.StartTLSOptions
 import io.vertx.groovy.ext.mail.MailClient
@@ -20,7 +18,6 @@ def mailClient = MailClient.createShared(vertx, config.mail)
 options =[
   "config":config
 ]
-
 
 //routers
 def server = vertx.createHttpServer()
@@ -161,38 +158,20 @@ router.post("/showSet").handler { routingContext ->
   })
 }
 
+//Actualizar un email
 router.post("/update").handler { routingContext ->
+  //Obtener datos del update
+  def paramsUpdate=routingContext.request().params()
+  //mensaje que actualizará los datos, seguir el orden
+  def message=[
+  paramsUpdate.email_id,//id del email a actualizar
+  paramsUpdate.subjectEmail,//subject
+  paramsUpdate.contentEmail,//contenido
+  paramsUpdate.versionEmail.toInteger()+1,//Version
+  new Date().time//fecha nueva en que esta siendo actualizado
+  ]
 
-    //Obtener datos del update
-    def paramsUpdate=routingContext.request().params()
-    /*
-    def query = ["_id":paramsUpdate.email_id]
-    def update = [
-		$set:[
-          subject:paramsUpdate.subjectEmail,
-          content:paramsUpdate.contentEmail,
-          version:paramsUpdate.versionEmail.toInteger() +1,
-          lastUpdate:new Date().time
-	    	]
-		]*/
-    def update = [
-          subject:paramsUpdate.subjectEmail,
-          content:paramsUpdate.contentEmail,
-          version:paramsUpdate.versionEmail.toInteger() +1,
-          lastUpdate:new Date().time
-		]
-
-    //mensaje que actualizará los datos, seguir el orden
-    def message=[
-        paramsUpdate.email_id,//id del email a actualizar
-        paramsUpdate.subjectEmail,//subject
-        paramsUpdate.contentEmail,//contenido
-        paramsUpdate.versionEmail.toInteger()+1,//Version
-        new Date().time//fecha nueva en que esta siendo actualizado
-        ]
-
-    //eventBus
-    vertx.eventBus().send("com.makingdevs.emailer.update", message, { reply ->
+  vertx.eventBus().send("com.makingdevs.emailer.update", message, { reply ->
     if (reply.succeeded()) {
       routingContext.response()
       .setStatusCode(201)
@@ -205,54 +184,36 @@ router.post("/update").handler { routingContext ->
       .putHeader("content-type", "text/html; charset=utf-8")
       .end("Problema para actualizar")
     }
-    })
-
-    /*
-		mongoClient.update("email_storage", query, update, { res ->
-				if (res.succeeded()) {
-						routingContext.response()
-						.setStatusCode(201)
-						.putHeader("content-type", "text/html; charset=utf-8")
-						.end("Update!")
-				} else {
-				res.cause().printStackTrace()
-				}
-		})
-    */
-}
-/*
-router.post("/update").handler { routingContext ->
-
-  vertx.eventBus().publish("com.makingdevs.emailer.update", [ msg: "Actualizando  un  email", timestamp: new Date().time])
-
-    def paramsUpdate=routingContext.request().params()
-    def query = ["_id":paramsUpdate.email_id]
-    def update = [
-		$set:[
-          subject:paramsUpdate.subjectEmail,
-          content:paramsUpdate.contentEmail,
-          version:paramsUpdate.versionEmail.toInteger() +1,
-          lastUpdate:new Date().time
-	    	]
-		]
-		mongoClient.update("email_storage", query, update, { res ->
-				if (res.succeeded()) {
-						routingContext.response()
-						.setStatusCode(201)
-						.putHeader("content-type", "text/html; charset=utf-8")
-						.end("Update!")
-				} else {
-				res.cause().printStackTrace()
-				}
-		})
+  })
 }
 
-
-
+//Mandar el preview a un email
 router.post("/send").handler { routingContext ->
 
 	  def idTemplate= routingContext.request().getParam("email_id")
 	  def emailToSend= routingContext.request().getParam("emailPreview")
+
+    def message=[
+        idTemplate,//id del email a enviar
+        emailToSend//Email receiver
+    ]
+
+    vertx.eventBus().send("com.makingdevs.emailer.send", message, { reply ->
+      if (reply.succeeded()) {
+        routingContext.response()
+        .setStatusCode(201)
+        .putHeader("content-type", "application/json; charset=utf-8")
+      .end("Sended. [ok]")
+    }
+    else {
+      routingContext.response()
+      .setStatusCode(400)
+      .putHeader("content-type", "text/html; charset=utf-8")
+      .end("Problema para enviar")
+    }
+    })
+
+    /*
     def query = ["_id":idTemplate]
 		mongoClient.find("email_storage", query, { res ->
 				if (res.succeeded()) {
@@ -280,8 +241,10 @@ router.post("/send").handler { routingContext ->
 				res.cause().printStackTrace()
 				}
 				})
+     */
 }
 
+/*
 //router por post
 router.post("/serviceEmail").handler { routingContext ->
 
@@ -354,4 +317,4 @@ server.requestHandler(router.&accept).listen(8080)
 
 //deploy verticles
 vertx.deployVerticle("emailerVerticle.groovy", options)
-vertx.deployVerticle("senderVerticle.groovy")
+vertx.deployVerticle("senderVerticle.groovy", options)
