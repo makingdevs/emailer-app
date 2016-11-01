@@ -81,7 +81,6 @@ eb.consumer("com.makingdevs.emailer.show.set", { message ->
 
 //Update an email
 eb.consumer("com.makingdevs.emailer.update", { message ->
-  println "El mensaje1 recibido es: "+message.body()
   //Armando variables con los datos del mensaje
   def query=["_id": message.body().getAt(0)]//id del email
   def update=[
@@ -92,7 +91,6 @@ eb.consumer("com.makingdevs.emailer.update", { message ->
        lastUpdate:message.body().getAt(4),
     ]
   ]
-
   //Haciendo el update
   mongoClient.update("email_storage", query, update, { res ->
     if (res.succeeded()) {
@@ -102,8 +100,26 @@ eb.consumer("com.makingdevs.emailer.update", { message ->
       res.cause().printStackTrace()
     }
   })
+})
 
+//Send Email Preview
+eb.consumer("com.makingdevs.emailer.send", { message ->
+  def query=["_id":message.body().getAt(0)]
+  def receiver=message.body().getAt(1)
+
+  //Buscando email
+  mongoClient.find("email_storage", query, { res ->
+    if (res.succeeded()) {
+      println "Email encontrado :D"
+      res.result().each { json ->
+        def jsonEmail =groovy.json.JsonOutput.toJson(json)
+        message.reply(jsonEmail)
+        vertx.eventBus().send("com.makingdevs.emailer.send.email", "Hola, mandame un email no? a me@hi.com")
+       //Mandando a otro verticle
+      }
+    } else {
+      res.cause().printStackTrace()
+    }
   })
 
-
-
+})
