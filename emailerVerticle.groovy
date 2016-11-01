@@ -123,21 +123,31 @@ eb.consumer("com.makingdevs.emailer.send", { message ->
 
 //Service
 eb.consumer("com.makingdevs.emailer.service", { message ->
+  println "El mensaje integro es: "+message.body()
   def query=["_id":message.body().id]
+
+  def email=[
+//  content:json["content"],
+  subject:message.body().subject,
+  to: message.body().to,
+  params: message.body().params
+  ]
+
+  //Validaciones
+  if(message.body().cc) email.cc=message.body().cc
+  if(message.body().cco) email.cco=message.body().cco
+
+  println "El otro mensaje: "+email
+
   //Buscar el id
   mongoClient.find("email_storage", query, { res ->
     if (res.succeeded()) {
       res.result().each { json ->
         def jsonEmail =groovy.json.JsonOutput.toJson(json)
-        //message.reply(jsonEmail)
-       //Enviar los datos del email encontrado, más los datos del servicio
-        vertx.eventBus().publish("com.makingdevs.emailer.send.service",
-        [
-         content:json["content"],
-         subject:message.body().subject,
-         to: message.body().to,
-         params: message.body().params
-        ])
+        //Agregar el content
+        email.content=json["content"]
+        //Enviar los datos del email encontrado, más los datos del servicio
+        vertx.eventBus().publish("com.makingdevs.emailer.send.service",email)
       }
     } else {
       res.cause().printStackTrace()

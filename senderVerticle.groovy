@@ -33,6 +33,10 @@ eb.consumer("com.makingdevs.emailer.send.service", { message ->
   def contentEmail=engine.createTemplate(message.body().content).make(message.body().params)
   //Armar el email
   def mail=[:]
+
+  if(message.body().cc) mail.cc=message.body().cc
+  if(message.body().cco) mail.cc=message.body().cco
+
   mail.from="Emailer@app.com"
   mail.to=message.body().to
   mail.subject=message.body().subject
