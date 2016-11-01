@@ -81,8 +81,27 @@ eb.consumer("com.makingdevs.emailer.show.set", { message ->
 
 //Update an email
 eb.consumer("com.makingdevs.emailer.update", { message ->
+  println "El mensaje1 recibido es: "+message.body()
+  //Armando variables con los datos del mensaje
+  def query=["_id": message.body().getAt(0)]//id del email
+  def update=[
+    $set:[
+       subject:message.body().getAt(1),
+       content:message.body().getAt(2),
+       version:message.body().getAt(3),
+       lastUpdate:message.body().getAt(4),
+    ]
+  ]
 
-  println "El mensaje recibido es: "+message.body()
+  //Haciendo el update
+  mongoClient.update("email_storage", query, update, { res ->
+    if (res.succeeded()) {
+      message.reply("[ok]")
+      println "Updated·"
+    } else {
+      res.cause().printStackTrace()
+    }
+  })
 
   })
 
