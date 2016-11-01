@@ -122,11 +122,11 @@ router.post("/update").handler { routingContext ->
   def paramsUpdate=routingContext.request().params()
   //mensaje que actualizará los datos, seguir el orden
   def message=[
-  paramsUpdate.email_id,//id del email a actualizar
-  paramsUpdate.subjectEmail,//subject
-  paramsUpdate.contentEmail,//contenido
-  paramsUpdate.versionEmail.toInteger()+1,//Version
-  new Date().time//fecha nueva en que esta siendo actualizado
+  id:paramsUpdate.email_id,//id del email a actualizar
+  subject:paramsUpdate.subjectEmail,//subject
+  content:paramsUpdate.contentEmail,//contenido
+  version:paramsUpdate.versionEmail.toInteger()+1,//Version
+  update:new Date().time//fecha nueva en que esta siendo actualizado
   ]
 
   vertx.eventBus().send("com.makingdevs.emailer.update", message, { reply ->
