@@ -103,16 +103,15 @@ eb.consumer("com.makingdevs.emailer.update", { message ->
 
 //Send Email Preview
 eb.consumer("com.makingdevs.emailer.send", { message ->
-  def query=["_id":message.body().getAt(0)]
-  def receiver=message.body().getAt(1)
-
+  def query=["_id": message.body().id]
+  def receiver=message.body().email
   //Buscando email
   mongoClient.find("email_storage", query, { res ->
     if (res.succeeded()) {
       res.result().each { json ->
         def jsonEmail =groovy.json.JsonOutput.toJson(json)
-        //message.reply(jsonEmail)
-        vertx.eventBus().publish("com.makingdevs.emailer.send.email", [to:receiver, subject:json["subject"], content:json["content"]])
+        vertx.eventBus().publish("com.makingdevs.emailer.send.email",
+        [to:receiver, subject:json["subject"], content:json["content"]])
       }
     } else {
       res.cause().printStackTrace()
