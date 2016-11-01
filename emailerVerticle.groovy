@@ -113,9 +113,8 @@ eb.consumer("com.makingdevs.emailer.send", { message ->
       println "Email encontrado :D"
       res.result().each { json ->
         def jsonEmail =groovy.json.JsonOutput.toJson(json)
-        message.reply(jsonEmail)
-        vertx.eventBus().send("com.makingdevs.emailer.send.email", "Hola, mandame un email no? a me@hi.com")
-       //Mandando a otro verticle
+        //message.reply(jsonEmail)
+        vertx.eventBus().publish("com.makingdevs.emailer.send.email", [to:receiver, subject:json["subject"], content:json["content"]])
       }
     } else {
       res.cause().printStackTrace()
