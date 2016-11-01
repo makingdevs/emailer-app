@@ -15,11 +15,10 @@ eb.consumer("com.makingdevs.emailer.send.email", { message ->
     mail.to=message.body().to
     mail.subject=message.body().subject
     mail.html=message.body().content
-    println "Esto es el mail a mandar"+mail
     //Mandar email
     mailClient.sendMail(mail, { result ->
       if (result.succeeded()) {
-        println("Mail enviado, checa tu correo")
+        println("Preview enviado, checa tu correo")
       } else {
         result.cause().printStackTrace()
       }
