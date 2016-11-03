@@ -21,6 +21,7 @@
     "form.validation": "*",
     "moment": "^2.15.1",
     "vertx3-eventbus-client": "^3.3.3",
-    "sockjs-client": "^1.1.1"
+    "sockjs-client": "^1.1.1",
+    "notie": "^3.9.4"
   }
 }
