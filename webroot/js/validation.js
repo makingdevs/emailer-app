@@ -1,14 +1,3 @@
-$(document).ready(function() {
-
-			$("#start").show();
-			$("#preview").hide();
-			$("#formEmails").hide();
-			$("#readEmails").hide();
-      $("#emailAdded").hide();
-      $("#emailUpdated").hide();
-      $("#emailDeleted").hide();
-      validate();
-		});
 
 function validate(){
 

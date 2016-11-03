@@ -1,4 +1,19 @@
+$(document).ready(function() {
+
+			$("#start").show();
+			$("#preview").hide();
+			$("#formEmails").hide();
+			$("#readEmails").hide();
+      $("#emailAdded").hide();
+      $("#emailUpdated").hide();
+      $("#emailDeleted").hide();
+      validate();
+		});
+
 //JS for all routes
+
+//Form requets sended by validate() function
+
 // static route-->read Emails
 var readEmails=function(){
 	//show and hide divs
