@@ -19,7 +19,7 @@ if(!config.mail || !config.mongo)
   def opts = [
   outboundPermitteds:[
       [
-       address:"chat.to.client"
+       address:"com.makingdevs.email.success"
       ]
     ]
   ]
@@ -116,7 +116,6 @@ router.post("/showEmail").handler { routingContext ->
 //Show set of emails
 router.post("/showSet").handler { routingContext ->
 
-  vertx.eventBus().send("chat.to.client", "Te mando un mensajito :D")
   def setValue=0
   setValue= routingContext.request().getParam("setValue")
   def options=[
