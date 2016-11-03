@@ -3,6 +3,8 @@ import io.vertx.groovy.ext.web.Router
 import io.vertx.groovy.ext.web.handler.BodyHandler
 import io.vertx.core.json.Json
 import io.vertx.groovy.core.Vertx
+import io.vertx.groovy.ext.web.handler.sockjs.SockJSHandler
+import io.vertx.groovy.ext.web.handler.StaticHandler
 
 def config = Vertx.currentContext().config()
 if(!config.mail || !config.mongo)
@@ -13,21 +15,36 @@ if(!config.mail || !config.mongo)
   "config":config
   ]
 
+  //Config for permissons
+  def opts = [
+  outboundPermitteds:[
+      [
+       address:"chat.to.client"
+      ]
+    ]
+  ]
+
+
   //routers
   def server = vertx.createHttpServer()
   def router = Router.router(vertx)
-router.route().handler(BodyHandler.create())
+  router.route().handler(BodyHandler.create())
 
-//Route to Index
-router.route("/static/*").handler(
-  StaticHandler.create().setCachingEnabled(false)
-)
+ // Create the event bus bridge and add it to the router.
+  def ebHandler = SockJSHandler.create(vertx).bridge(opts)
+  router.route("/eventbus/*").handler(ebHandler)
 
-//Add new Email
-router.post("/newEmail").handler { routingContext ->
-  def params = routingContext.request().params()
-  def email = [
-  subject:params.subjectEmail,
+
+  //Route to Index
+  router.route("/static/*").handler(
+    StaticHandler.create().setCachingEnabled(false)
+  )
+
+  //Add new Email
+  router.post("/newEmail").handler { routingContext ->
+    def params = routingContext.request().params()
+    def email = [
+    subject:params.subjectEmail,
   content:params.contentEmail,
   dateCreated:new Date().time,
   lastUpdate:new Date().time,
@@ -99,6 +116,7 @@ router.post("/showEmail").handler { routingContext ->
 //Show set of emails
 router.post("/showSet").handler { routingContext ->
 
+  vertx.eventBus().send("chat.to.client", "Te mando un mensajito :D")
   def setValue=0
   setValue= routingContext.request().getParam("setValue")
   def options=[
