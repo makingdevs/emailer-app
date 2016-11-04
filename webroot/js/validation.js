@@ -97,7 +97,7 @@ function tiny(){
           selector: 'textarea',
           menubar: false,
           height: 500,
-          width: 870,
+          width: 1000,
                 plugins: [
                       'autoresize advlist autolink lists link image charmap print preview hr anchor ',
                           'searchreplace wordcount visualblocks visualchars code fullscreen',
