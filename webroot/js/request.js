@@ -124,7 +124,7 @@ function paginate(){
           skip=skip+10;
         }
         html=html.concat("</ul>");
-        $("#reader").append(html);
+        $("#paginas").html(html);
         $("ul").addClass("pagination");
       }
   });

@@ -46,7 +46,8 @@
 							{{/each}}
 							</tbody>
 							</table>
-
+               <br>
+               <div id="paginas"></div>
 
 				</div>
 			</div>
@@ -271,10 +272,9 @@
 									<b>ID</b> de template existente, <b>Subject</b>, <b>To</b>, <b>CC</b>, <b>CCO</b>, y los <b>params</b> correspondientes al contenido del template.
                 <br><br>
                 Ejemplo de llamada al servicio:</p>
-                <p align="center">
-                <small>
-                  <b>curl -i -H "Content-Type: application/json" -X POST -d '{"id":"1ewf32rvf3evcf3f423", "subject":"saludos", "to":"carlo@me.com", "cc":"carlo@makingdevs.com", "cco":"carlogilmar12@gmail", "params":{ "organizacion":"MakingDevs" }}' localhost:8080/services</b>
-                </small>
+                <p>
+                <pre>curl -i -H "Content-Type: application/json" -X POST -d '{"id":"1ewf32rvf3evcf3f423", "subject":"saludos", "to":"carlo@me.com", "cc":"carlo@makingdevs.com", "cco":"carlogilmar12@gmail", "params":{ "organizacion":"MakingDevs" }}' localhost:8080/services
+                </pre>
                 </p>
 
               </div>
