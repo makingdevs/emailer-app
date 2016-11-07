@@ -25,7 +25,7 @@ eb.consumer("com.makingdevs.emailer.show.total", { message ->
     def query=[:]
     mongoClient.find("email_storage", query, { res ->
       if (res.succeeded()) {
-        message.reply(res.result())
+        message.reply(res.result().sort{it.dateCreated}.reverse())
       } else {
         res.cause().printStackTrace()
       }
@@ -72,7 +72,7 @@ eb.consumer("com.makingdevs.emailer.show.set", { message ->
   def query=[:]
   mongoClient.findWithOptions("email_storage", query, message.body(), { res ->
     if (res.succeeded()) {
-      message.reply(res.result().reverse())
+      message.reply(res.result().sort{it.dateCreated}.reverse())
     } else {
       res.cause().printStackTrace()
     }
@@ -91,8 +91,6 @@ eb.consumer("com.makingdevs.emailer.update", { message ->
     ]
   ]
   def query=["_id":message.body().id]
-
-
   //Haciendo el update
   mongoClient.update("email_storage", query, update, { res ->
     if (res.succeeded()) {
