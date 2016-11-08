@@ -2,54 +2,38 @@ import io.vertx.groovy.ext.unit.TestSuite
 import io.vertx.groovy.core.Vertx
 import io.vertx.groovy.core.http.HttpClient
 
-/************************************
-Please run as webserver...
-vertx run test.groovy -conf conf.json
-************************************/
-
-//Adaptar la configuración externalizada
-def config = Vertx.currentContext().config()
-  opt =[
-  "config":config
-  ]
-
-//Configuración para la TestSuite
 def options = [
-    reporters:
-    [
-       [ to:"console" ]
-    ]
+reporters:
+[
+[ to:"console" ]
+]
+]
+
+//Agregar la configuración externa
+def config = Vertx.currentContext().config()
+//configuracion externalizada
+config_ext =[
+"config":config
 ]
 
 //Create TestSuite
 def suite = TestSuite.create("the_test_suite")
 
-//Deploy webserver
 suite.before({ context ->
-  vertx.deployVerticle("webserver.groovy",opt)
-})
-
-suite.test("testCaseCountable", { context ->
-    def msg="hola"
-    context.assertEquals("hola", msg)
-})
-
-
-//--------------------------------- Start TestCase
-suite.test("countable_test", { context ->
-  // Send a request and get a response
-  def client = vertx.createHttpClient()
   def async = context.async()
-  client.getNow(8080, "localhost", "/", { resp ->
-    resp.bodyHandler({ body ->
-      context.assertEquals("No resources found", body.toString("UTF-8"))
-    })
-    client.close()
+  vertx.deployVerticle("emailerVerticle.groovy", config_ext){ ar ->
+    context.assertTrue(ar.succeeded())
     async.complete()
-  })
+  }
+}).test("my_test_case_1", { context ->
+  def async = context.async()
+  vertx.eventBus().send("com.makingdevs.emailer.count", "22") { response ->
+    context.assertEquals(22, response.result.body().toInteger())
+    async.complete()
+  }
+}).after({ context ->
+  println "After"
 })
 
+def completion = suite.run(options)
 
-
-//Run Suite
-suite.run(options)
