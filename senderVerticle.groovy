@@ -30,10 +30,13 @@ eb.consumer("com.makingdevs.emailer.send.email", { message ->
 
 eb.consumer("com.makingdevs.emailer.send.service", { message ->
   //Engine, match with params
+  println "Entrando al Consumer"
   //Inicializar el engine
   def engine=new groovy.text.SimpleTemplateEngine()
   //hacer el match, e imprimir el resultado
   def contentEmail=engine.createTemplate(message.body().content).make(message.body().params)
+  message.reply(contentEmail.toString())
+
   //Armar el email
   def mail=[:]
 
