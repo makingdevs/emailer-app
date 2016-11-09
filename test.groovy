@@ -20,12 +20,9 @@ suite.before({ context ->
     context.assertTrue(ar.succeeded())
     async.complete()
   }
-}).test("sendEmail_TestCase", { context ->
+}).test("buildEmail_TestCase", { context ->
   def async = context.async()
-  //Mandar un mensaje al verticle send.service
-  //Preparar los datos
   def emailContent='''Hola ${name}, te quiero decir:${msg}, saludos ${ami}'''
-
   def testService=[
     content:emailContent,
     params:[
@@ -34,12 +31,25 @@ suite.before({ context ->
       ami:"karlosins"
     ]
   ]
-
   def resultService='''Hola MakingDevs, te quiero decir:buenos dias, saludos karlosins'''
-
-
-  vertx.eventBus().send("com.makingdevs.emailer.send.service", testService) { response ->
+  vertx.eventBus().send("com.makingdevs.emailer.buildEmail", testService) { response ->
     context.assertEquals(resultService, response.result.body())
+    async.complete()
+  }
+}).test("sendEmailService_TestCase",{ context ->
+  def async = context.async()
+  def testSender=[
+    id:"0000-id-prueba",
+    from:"emailer@app.com",
+    to:"carlo@makingdevs.com",
+    cco:"carlogilmar@gmail.com",
+    subject:"Unit Test",
+    html:"Esta es una prueba unitaria del servicio Sender"
+  ]
+  def testResponse="Hemos enviado lo siguiente:\n ID:0000-id-prueba.\n DESTINATARIO: carlo@makingdevs.com\n SUBJECT: Unit Test \n CCO: carlogilmar@gmail.com"
+
+  vertx.eventBus().send("com.makingdevs.emailer.sender", testSender) { response ->
+    context.assertEquals(testResponse, response.result.body())
     async.complete()
   }
 }).after({ context ->
