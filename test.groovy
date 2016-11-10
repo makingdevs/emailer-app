@@ -52,6 +52,25 @@ suite.before({ context ->
     context.assertEquals(testResponse, response.result.body())
     async.complete()
   }
+}).test("integration_TestCase",{ context ->
+  def async = context.async()
+  def testSender=[
+    id:"0000-id-verticleIntegracion",
+    from:"emailer@app.com",
+    to:"carlo@makingdevs.com",
+    cco:"carlogilmar@gmail.com",
+    subject:"Unit Test for Integration Verticle Vertx Run",
+    content:'''Esta es una prueba unitaria del servicio ${sender}, con el mensaje:${msg}''',
+    params:[
+      sender:"MakingDevs Emailer",
+      msg:" Saludo2 "
+    ]
+  ]
+  vertx.eventBus().send("com.makingdevs.emailer.serviceEmail", testSender) { response ->
+    context.assertEquals("Solicitud Enviada", response.result.body())
+    async.complete()
+  }
+
 }).after({ context ->
   println "Terminando las pruebas"
 })
