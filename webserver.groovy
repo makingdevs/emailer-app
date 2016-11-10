@@ -178,24 +178,23 @@ router.post("/serviceEmail").handler { routingContext ->
 
   if(routingContext.getBody().length()){
     def jsonResponse=routingContext.getBodyAsJson()
-    if(jsonResponse["id"] && jsonResponse["to"] && jsonResponse["subject"] && jsonResponse["params"] ){
+    println "Tiene datos"
+  vertx.eventBus().send("com.makingdevs.emailer.check", jsonResponse){ reply ->
+    if(reply.result.body() == "ok" ){
+      println "Exitoso"
       vertx.eventBus().send("com.makingdevs.emailer.service", jsonResponse)
       routingContext.response()
       .setStatusCode(201)
       .putHeader("Content-Type", "text/html; charset=utf-8")
-      .end("Solicitud enviada correctamente. Espere felizmente.")
-    }
-    else{
-      def error=[:]
-      if(!jsonResponse["id"]) {error.id="[empty]"}
-      if(!jsonResponse["subject"]) {error.subject="[empty]"}
-      if(!jsonResponse["to"]) {error.to="[empty]"}
-      if(!jsonResponse["params"]) {error.subject="[empty]"}
+      .end("Solicitud enviada correctamente.")
+    }else{
+      println "errores"
       routingContext.response()
       .setStatusCode(400)
       .putHeader("Content-Type", "text/html; charset=utf-8")
-      .end("I can't do my job. You have the follow errors:\n"+error)
+      .end("I can't do my job. You have the follow errors:\n"+reply.result.body())
     }
+  }
   }else{
     //response
     routingContext.response()
