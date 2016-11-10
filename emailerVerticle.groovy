@@ -48,7 +48,8 @@ eb.consumer("com.makingdevs.emailer.count", { message ->
   def query=[:]
   mongoClient.count("email_storage",query,{res ->
     if(res.succeeded()){
-      message.reply(res.result())
+     def counter =groovy.json.JsonOutput.toJson(res.result())
+      message.reply(counter)
     }
   })
 })

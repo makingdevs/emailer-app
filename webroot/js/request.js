@@ -115,10 +115,10 @@ function paginate(){
   $.ajax({
     url:"http://localhost:8080/countTotal",
     type:'GET',
-    dataType: 'json',
     success:
       function(response){
-        count=response;
+			  var counter=$.parseJSON(response);
+        var count=counter.count;
         var pages= (count%10==0)? parseInt(count/10) : parseInt((count/10)+1);
         var html="<ul>";
         var i;
@@ -130,6 +130,7 @@ function paginate(){
         html=html.concat("</ul>");
         $("#paginas").html(html);
         $("ul").addClass("pagination");
+        $("li").addClass("marker");
       }
   });
 }

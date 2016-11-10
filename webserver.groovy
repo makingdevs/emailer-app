@@ -93,8 +93,8 @@ router.route("/countTotal").handler({ routingContext ->
     if (reply.succeeded()) {
       routingContext.response()
       .setStatusCode(201)
-      .putHeader("content-type", "application/json; charset=utf-8")
-      .end(Json.encodePrettily(reply.result().body()))
+      .putHeader("content-type", "text/html; charset=utf-8")
+      .end(Json.encodePrettily([count:reply.result().body()]))
     }
   })
 })
