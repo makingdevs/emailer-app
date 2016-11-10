@@ -9,6 +9,25 @@ def mailClient = MailClient.createShared(vertx, config.mail)
 
 def eb = vertx.eventBus()
 
+//Verify Params at service call
+eb.consumer("com.makingdevs.emailer.check", { message ->
+  def serviceParams=message.body()
+  def errores=[:]
+
+  if(!serviceParams.id) errores.id="Empty"
+  if(!serviceParams.to) errores.to="Empty"
+  if(!serviceParams.params) errores.params="Empty"
+  if(!serviceParams.subject) errores.subject="Empty"
+
+  if(!errores){
+    message.reply("ok")
+  }
+  else{
+    message.reply(errores)
+  }
+})
+
+
 //Consumer para encargarse de armar y mandar el correo
 //Recibe: [:] con valores del email encontrado
 //Salida: Llama a los otros dos verticles para realizar el servicio
