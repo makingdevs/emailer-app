@@ -110,8 +110,9 @@ eb.consumer("com.makingdevs.emailer.send", { message ->
     if (res.succeeded()) {
       res.result().each { json ->
         def jsonEmail =groovy.json.JsonOutput.toJson(json)
-        vertx.eventBus().publish("com.makingdevs.emailer.send.email",
-        [id:json["_id"],to:receiver, subject:json["subject"], content:json["content"]])
+         vertx.eventBus().publish("com.makingdevs.emailer.sender",
+        [id:json["_id"], to:receiver, subject:json["subject"], from:"emailer@app.com", html:json["content"]])
+
       }
     } else {
       res.cause().printStackTrace()
@@ -123,10 +124,10 @@ eb.consumer("com.makingdevs.emailer.send", { message ->
 eb.consumer("com.makingdevs.emailer.service", { message ->
   def query=["_id":message.body().id]
   def email=[
-//  content:json["content"],
   id:message.body().id,
   subject:message.body().subject,
   to: message.body().to,
+  from: "emailer@app.com",
   params: message.body().params
   ]
 
@@ -142,7 +143,7 @@ eb.consumer("com.makingdevs.emailer.service", { message ->
         //Agregar el content
         email.content=json["content"]
         //Enviar los datos del email encontrado, más los datos del servicio
-        vertx.eventBus().publish("com.makingdevs.emailer.send.service",email)
+        vertx.eventBus().publish("com.makingdevs.emailer.serviceEmail", email)
       }
     } else {
       res.cause().printStackTrace()
