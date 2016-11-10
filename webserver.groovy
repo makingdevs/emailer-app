@@ -191,16 +191,21 @@ router.post("/serviceEmail").handler { routingContext ->
       println "errores"
       routingContext.response()
       .setStatusCode(400)
-      .putHeader("Content-Type", "text/html; charset=utf-8")
-      .end("I can't do my job. You have the follow errors:\n"+reply.result.body())
+      .putHeader("content-type", "application/json; charset=utf-8")
+      .end(Json.encodePrettily([
+        message:"I can't do my job. You have the follow errors",
+        errors : reply.result().body()
+      ]))
     }
   }
   }else{
     //response
     routingContext.response()
     .setStatusCode(400)
-    .putHeader("Content-Type", "text/html; charset=utf-8")
-    .end("I can't do my job, please send me something please.")
+    .putHeader("content-type", "application/json; charset=utf-8")
+    .end(Json.encodePrettily([
+      message:"I can't do my job, please send me something please."
+    ]))
   }
 }
 
