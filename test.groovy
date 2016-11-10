@@ -71,6 +71,24 @@ suite.before({ context ->
     async.complete()
   }
 
+}).test("verificationCheck_TestCase",{ context ->
+  def async=context.async()
+  println "Verification test"
+  def testCheck=[
+    id:"1111",
+    params:[
+      uno:"1"
+    ]
+  ]
+  vertx.eventBus().send("com.makingdevs.emailer.check", testCheck){ response ->
+    def errorTest=[
+      to:"Empty",
+      subject:"Empty"
+    ]
+    context.assertEquals(errorTest, response.result.body())
+    async.complete()
+  }
+
 }).after({ context ->
   println "Terminando las pruebas"
 })
