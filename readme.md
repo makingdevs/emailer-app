@@ -1,12 +1,27 @@
 # Emailer App
 
-Please run the project. Clone, and run with:
+#Before
+
+Please install Vertx 3.0.0, MongoDB and Bower.
+
+The next steps are:
+```
+1.- bower update
+2.- mongod
+```
+Please check that Mongo are Mode On.
+Check the directory third-party
+
+#Run the project
+
+Before you need to create your file conf.json
+Please go to https://github.com/makingdevs/emailer-app/wiki/Emailer-App and check how to create.
+
+Clone, and run with:
 
 ```
 vertx run webserver.groovy -conf conf.json
 ```
-Before you need to create your file conf.json
-Please go to Github and check.
 
 #For Use the Project
 
