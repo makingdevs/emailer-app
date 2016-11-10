@@ -95,7 +95,7 @@ function sendSetEmails(skip){
       function(response){
         var source = $("#entry-template").html();
         var template = Handlebars.compile(source);
-        var wrapper={emails:response};
+        var wrapper={emails:response, skip:skip};
         var html = template(wrapper);
         $("#readEmails").html(html);
         paginate();
@@ -104,6 +104,10 @@ function sendSetEmails(skip){
       function(){
         alert("error al procesar");
       }
+  });
+  Handlebars.registerHelper('currentIndex', function(idx) {
+    //debugger;
+    return parseInt(idx) + 1 + parseInt(skip);
   });
 }
 
