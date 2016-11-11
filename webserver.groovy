@@ -11,9 +11,13 @@ if(!config.mail || !config.mongo)
   throw new RuntimeException("Cannot run withouit config, check https://github.com/makingdevs/emailer-app/wiki/Emailer-App")
 
   //configuracion externalizada
-  options =[
+ options =[
   "config":config
   ]
+
+  //Configuración para hacer el worker
+  def senderOptions=options
+  senderOptions.worker=true
 
   //Config for permissons
   def opts = [
@@ -213,4 +217,5 @@ server.requestHandler(router.&accept).listen(8080)
 
 //deploy verticles
 vertx.deployVerticle("emailerVerticle.groovy", options)
-vertx.deployVerticle("senderVerticle.groovy", options)
+vertx.deployVerticle("senderVerticle.groovy", senderOptions)
+vertx.deployVerticle("helperVerticle.groovy")
