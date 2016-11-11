@@ -1,51 +1,61 @@
-# Emailer App
 
-#Before
+#Emailer App
 
-Please install Vertx 3.0.0, MongoDB and Bower.
+##Integration with Gradle##
 
-The next steps are:
+1.- First you need to create the file conf.json in this directory: src/main/groovy/
+
+The content is:
 ```
-1.- bower update
-2.- mongod
+{
+  "mail" : {
+    "hostname" : "smtp.gmail.com",
+    "port" : 587,
+    "starttls" : "REQUIRED",
+    "username" : "user@gmail.com",
+    "password" : "password"
+  },
+  "mongo" : {
+    "connection_string" : "mongodb://localhost:27017",
+    "db_name" : "emailerDevelop"
+  }
+}
 ```
-Please check that Mongo are Mode On.
-Check the directory third-party
+2.- Please do bower update in src/main/groovy/
+```
+bower update
+```
+Check your directory src/main/groovy/webroot/third-part, here will be contain the JS files.
 
-#Run the project
+3.- Run your mongo server
+```
+mongod
+```
 
-Before you need to create your file conf.json
-Please go to https://github.com/makingdevs/emailer-app/wiki/Emailer-App and check how to create.
+# Run the proyect in localhost
 
-Clone, and run with:
-
+Please go to your directory src/main/groovy/ and run vertx with:
 ```
 vertx run webserver.groovy -conf conf.json
 ```
 
-#For Use the Project
-
-+ Please go to your localhost:8080/static/
-+ Add new Email
-+ Write some like this:
+If you want to run the Unit Test of the project, please do:
 ```
-Prueba de mi emailer.
-
-Atentamente: ${name}
+vertx run test.groovy -conf conf.json
 ```
-+ Check your email added
 
-#Functions:
-+ You can send you a preview
-+ You can update your email
-+ You can delete your email
+#Run the project with Gradle
 
-#Service
-
-How to call the service:
+1.- In root, please do:
+```
+./gradlew shadowJar
+```
+2.- If you want yo run, please do:
+```
+java -jar build/libs/gradle-verticle-groovy-compiled-3.3.3-fat.jar -conf src/main/groovy/conf.json
 
 ```
-curl -i -H "Content-Type: application/json" -X POST -d '{"id":"58126387e3bce5edc834f6a1", "subject":"Pruebas del Dia Jueves Emailer", "to":"carlo@makingdevs.com", "params":{ "name":"MakingDevs" }}' localhost:8080/serviceEmail``
-```
+
+
 
 
