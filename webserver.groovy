@@ -182,17 +182,14 @@ router.post("/serviceEmail").handler { routingContext ->
 
   if(routingContext.getBody().length()){
     def jsonResponse=routingContext.getBodyAsJson()
-    println "Tiene datos"
   vertx.eventBus().send("com.makingdevs.emailer.check", jsonResponse){ reply ->
     if(reply.result.body() == "ok" ){
-      println "Exitoso"
       vertx.eventBus().send("com.makingdevs.emailer.service", jsonResponse)
       routingContext.response()
       .setStatusCode(201)
       .putHeader("Content-Type", "text/html; charset=utf-8")
       .end("Solicitud enviada correctamente.")
     }else{
-      println "errores"
       routingContext.response()
       .setStatusCode(400)
       .putHeader("content-type", "application/json; charset=utf-8")
