@@ -18,6 +18,7 @@ suite.before({ context ->
   def async = context.async()
   vertx.deployVerticle("senderVerticle.groovy", config_ext){ ar ->
     context.assertTrue(ar.succeeded())
+    vertx.deployVerticle("helperVerticle.groovy")
     async.complete()
   }
 }).test("buildEmail_TestCase", { context ->
