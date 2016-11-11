@@ -61,7 +61,7 @@
 
            <div class="row">
            <p class="custom text-center"><strong>{{subject}}</strong></p>
-					 <ul class="list-inline text-center">
+					 <ul class="list-inline menu text-center">
 				   <li><small>Id: {{_id}}</small></li>
 					 <li><small>Version: {{version}}</small></li>
 					 <li><small>Date Created:</small></li>
@@ -70,7 +70,7 @@
 					 <li id="updatedDate"></li>
 				   </ul>
            </div>
-
+           <br>
 							 <div class="row" id="modal">
                <div class="modal fade bs-example-modal-sm" id="deleteModal" data-backdrop="false" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
                  <div class="modal-dialog modal-sm" role="document">
@@ -96,27 +96,29 @@
                     </iframe>
               </div>
 
-							<div class="row">
+           <div>
 
-								<div class="col-xs-6 col-sm-4 text-center"><br>
-<a href="#/editEmail/{{_id}}" class="btn btn-primary btn-xs">Editar</a> &nbsp;
-								</div>
-							  <div class="col-xs-6 col-sm-4 text-center"><br>
-<button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target=".bs-example-modal-sm">Eliminar</button>
-								</div>
-							  <div class="clearfix visible-xs-block"></div>
-							  <div class="col-xs-6 col-sm-4">
-
-																		 <form name="previewForm" id="previewForm" method="post" class="navbar-form" action="#/sendEmail">
-																		 	 <div class="form-group">
-																		 	 <input type="hidden" required class="form-control" name="email_id" id="email_id" value="{{_id}}"/>
-																		 	 <input type="email" class="form-control input-sm" name="emailPreview" id="emailPreview" required placeholder="Anota tu email">
-																		 	 </div>
-																		 	 <a href="#/sendEmail" class="btn btn-success btn-xs">Mandar Preview</a>
-																		 	 </form>
-								</div>
-
-
+           <ul class="list-inline text-center">
+           <li>
+            <a href="#/" class="btn btn-warning btn-xs">Regresar</a> &nbsp;
+           </li>
+           <li>
+            <a href="#/editEmail/{{_id}}" class="btn btn-info btn-xs">Editar</a> &nbsp;
+           </li>
+           <li>
+            <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target=".bs-example-modal-sm">Eliminar</button>
+           </li>
+           <li>
+						 <form name="previewForm" id="previewForm" method="post" class="navbar-form" action="#/sendEmail">
+							<div class="form-group">
+						  <input type="hidden" required class="form-control" name="email_id" id="email_id" value="{{_id}}"/>
+						  <input type="email" class="form-control input-sm" name="emailPreview" id="emailPreview" required placeholder="Anota tu email">
+						  </div>
+							<a href="#/sendEmail" class="btn btn-success btn-xs">Mandar Preview</a>
+						  </form>
+           </li>
+           </ul>
+           </div>
 
 				 		 </div>
 
@@ -162,7 +164,7 @@
 <div class="row" id="emailUpdated" style="display:none;">
   <div class="alert alert-success fade in col-sm-10 col-md-offset-1">
    <a class="close" onclick="$('#emailUpdated').hide()">×</a>
-    <p><strong>Be happy: Email Updated!</strong></p>
+    <p><strong>El correo se ha actualizado exitosamente.</strong></p>
   </div>
 </div>
 

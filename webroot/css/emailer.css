@@ -57,3 +57,16 @@ a:visited {
 a:active {
     color: white;
 }
+
+ul.menu {
+  background: white;
+  border: 1px solid #7C7C7C;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  color: #333;
+  display: block;
+  padding: .3em;
+  text-decoration: none;
+}
+
