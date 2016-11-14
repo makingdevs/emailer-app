@@ -32,6 +32,13 @@ Check your directory src/main/groovy/webroot/third-part, here will be contain th
 mongod
 ```
 
+# Run the proyect with Gradle
+In root:
+
+```
+gradle runShadow
+```
+
 # Run the proyect in localhost
 
 Please go to your directory src/main/groovy/ and run vertx with:
@@ -44,7 +51,7 @@ If you want to run the Unit Test of the project, please do:
 vertx run test.groovy -conf conf.json
 ```
 
-#Run the project with Gradle
+#Create Jar
 
 1.- In root, please do:
 ```
