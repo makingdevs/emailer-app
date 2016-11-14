@@ -40,6 +40,9 @@ shadowJar {
     include 'META-INF/services/io.vertx.core.spi.VerticleFactory'
   }
 }
+runShadow{
+  args '-conf src/main/groovy/conf.json'
+}
 
 task wrapper(type: Wrapper) {
   gradleVersion = '2.8'
