@@ -52,7 +52,7 @@ vertx run test.groovy -conf conf.json
 ```
 2.- If you want yo run, please do:
 ```
-java -jar build/libs/gradle-verticle-groovy-compiled-3.3.3-fat.jar -conf src/main/groovy/conf.json
+java -jar build/libs/emailer-app-3.3.3-fat.jar -conf src/main/groovy/conf.json
 
 ```
 
