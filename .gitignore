@@ -1,2 +1,3 @@
 src/main/groovy/webroot/third-party
+build
 src/main/groovy/conf.json
