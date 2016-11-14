@@ -6,7 +6,7 @@ function sendNewEmail(){
   $.ajax({
 			data: $("#emailForm").serialize(),
 			type: 'post',
-			url: 'http://localhost:8080/newEmail',
+			url:  window.APP.url + '/newEmail',
 			success: function(){
 		  $("#emailAdded").show();
       router.setRoute('/');
@@ -18,7 +18,7 @@ function sendNewEmail(){
 function sendRemoveEmail(id){
 	$.ajax({
 			data: "idEmail="+id,
-			url: 'http://localhost:8080/remove',
+			url:  window.APP.url + '/remove',
 			type: 'post',
 			success: function (response) {
 		  $("#emailDeleted").show();
@@ -29,7 +29,7 @@ function sendRemoveEmail(id){
 function sendUpdateEmail(id){
 	$.ajax({
 			data: "idEmail="+id,
-			url: 'http://localhost:8080/showEmail',
+			url:  window.APP.url + '/showEmail',
 			type: 'post',
 			success: function (response) {
 						$("#formEmails").show();
@@ -53,7 +53,7 @@ function sendRefreshEmail(){
 	$.ajax({
 		data: $("#emailForm").serialize(), //+ " &contentEmail="+tiny,
 		type: 'post',
-		url: 'http://localhost:8080/update',
+		url:  window.APP.url + '/update',
 		success: function(){
 		  $("#emailUpdated").show();
 		}
@@ -63,7 +63,7 @@ function sendRefreshEmail(){
 function sendPreviewEmail(id){
 	$.ajax({
 			data: "idEmail="+id,
-			url: 'http://localhost:8080/showEmail',
+			url:  window.APP.url + '/showEmail',
 			type: 'post',
 			success: function (response) {
 					var json=$.parseJSON(response);
@@ -89,7 +89,7 @@ function sendPreviewEmail(id){
 function sendSetEmails(skip){
   $.ajax({
     data: "setValue="+skip,
-    url:"http://localhost:8080/showSet",
+    url: window.APP.url + '/showSet',
     type:'post',
     success:
       function(response){
@@ -113,7 +113,7 @@ function sendSetEmails(skip){
 
 function paginate(){
   $.ajax({
-    url:"http://localhost:8080/countTotal",
+    url: window.APP.url + '/countTotal',
     type:'GET',
     success:
       function(response){
@@ -140,7 +140,7 @@ function sendRequestSend(){
 				$.ajax({
 						data: $("#previewForm").serialize(),
 						type: 'post',
-						url: 'http://localhost:8080/send',
+						url:  window.APP.url + '/send',
 						success: function(){
 		        //$(".alert").show();
             $("#emailSended").show();

@@ -1,4 +1,4 @@
-var eb = new EventBus('http://localhost:8080/eventbus');
+var eb = new EventBus(window.APP.url + '/eventbus');
 eb.onopen = function() {
   eb.registerHandler('com.makingdevs.email.success', function(error, message) {
 
