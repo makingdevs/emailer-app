@@ -132,7 +132,7 @@
 
 <nav class="navbar">
   <div class = "navbar-header">
-    <p class ="navbar-brand">Emailer App</p>
+    <p class ="navbar-brand">&nbsp;&nbsp; Emailer App</p>
   </div>
 
   <div>
@@ -245,9 +245,6 @@
                 en HTML, puedes agregar imágenes, cambiar el estilo de letra y de párrafo.
                 <br><br>
                 Recuerda agregar los campos de la siguiente forma: <strong>${campo}</strong>. Estos campos serán los "params" del servicio web.
-                <br><br>
-                Al guardar un <strong>Emailer Template</strong> tendrás varias opciones disponibles, como <b>Previsualizar</b>, ver la <b>fecha de creación</b>,
-                la <b>última fecha de actualización</b>, podrás <b>editarlo</b>, <b>eliminarlo del almacén</b>, y mandar un <b>correo de prueba</b> del template.
                 </p>
               </div>
             </div>
@@ -259,8 +256,8 @@
               <div class="caption">
                 <h3 class="text-center">Almacén de Emailers</h3>
                 <p align="justify">Aquí podrás encontrar la lista de todos los Emailers Templates que han sido guardados.<br><br>
-                Será posible ver el <b>ID</b>de cada uno, así con el <b>subject provisional</b> que se le ha añadido, y el número de <b>versiones</b> que ha sido actualizado.
-                <br><br>Desde esta opción podrás ver el <b>preview</b> de un Emailer Template.</p>
+                Será posible ver el <b>ID</b> de cada uno, así con el <b>subject provisional</b> que se le ha añadido, y el número de <b>versiones</b> que ha sido actualizado.
+                <br><br>Desde esta opción podrás ver el <b>preview</b> de un Emailer Template, donde además podrás ver la <b>última fecha de actualización</b>, <b>fecha de creación</b>, opciones para <b>editar</b>, <b>eliminar</b>, o <b>mandar una prueba.</b></p>
               </div>
             </div>
           </div>
@@ -273,15 +270,21 @@
                 <p align="justify">Este servicio consta de una llamada por consola, de contenido tipo JSON, por método POST, con los siguientes datos:
 									<b>ID</b> de template existente, <b>Subject</b>, <b>To</b>, <b>CC</b>, <b>CCO</b>, y los <b>params</b> correspondientes al contenido del template.
                 <br><br>
-                Ejemplo de llamada al servicio:</p>
-                <p>
-                <pre>curl -i -H "Content-Type: application/json" -X POST -d '{"id":"1ewf32rvf3evcf3f423", "subject":"saludos", "to":"carlo@me.com", "cc":"carlo@makingdevs.com", "cco":"carlogilmar12@gmail", "params":{ "organizacion":"MakingDevs" }}' localhost:8080/services
-                </pre>
                 </p>
 
               </div>
+
             </div>
           </div>
+        </div>
+        <div class="row">
+          <h3 class="text-center">Llamada al servicio</h3>
+          <p>
+          <pre>curl -i -H "Content-Type: application/json" -X POST -d '{"id":"1ewf32rvf3evcf3f423", "subject":"saludos", "to":"carlo@me.com",
+          "cc":"carlo@makingdevs.com", "cco":"carlogilmar12@gmail", "params":{ "organizacion":"MakingDevs" }}' localhost:8080/services
+          </pre>
+          </p>
+
         </div>
 
       </div>
