@@ -82,11 +82,6 @@ function validate(){
           $("#readEmails").show();
           $("#showEmails").hide();
           sendSetEmails(0);
-          new PNotify({
-            title: 'Actualizando Email',
-            text: 'Revisa los cambios que realizaste',
-          });
-
         }
     });
 }
