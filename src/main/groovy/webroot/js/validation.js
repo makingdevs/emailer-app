@@ -66,17 +66,14 @@ function validate(){
 				e.preventDefault();
 
         if($("#email_id").val() == "") {
-          //alert("Agregando correo nuevo");
           tinymce.remove();
           sendNewEmail();
           $('#emailForm').formValidation('resetForm', true);
           sendSetEmails(0);
-          $('#emailAdded').show();
           $("#readEmails").show();
           $("#formEmails").hide();
         }
         else{
-          //alert("Email Update");
           tinymce.remove();
           sendRefreshEmail();
           $('#emailForm').formValidation('resetForm', true);
@@ -85,8 +82,11 @@ function validate(){
           $("#readEmails").show();
           $("#showEmails").hide();
           sendSetEmails(0);
-          $('#emailUpdated').show();
-          //window.location.href = "http://localhost:8080/static/";
+          new PNotify({
+            title: 'Actualizando Email',
+            text: 'Revisa los cambios que realizaste',
+          });
+
         }
     });
 }

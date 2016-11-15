@@ -8,7 +8,10 @@ function sendNewEmail(){
 			type: 'post',
 			url:  window.APP.url + '/newEmail',
 			success: function(){
-		  $("#emailAdded").show();
+       new PNotify({
+          title: 'Email Agregado Correctamente.',
+          text: 'Haz agregado un nuevo Emailer Template al Almacén.',
+        });
       router.setRoute('/');
       }
 	});
@@ -21,9 +24,13 @@ function sendRemoveEmail(id){
 			url:  window.APP.url + '/remove',
 			type: 'post',
 			success: function (response) {
-		  $("#emailDeleted").show();
-			}
-	});
+        new PNotify({
+          title: 'Email Eliminado correctamente.',
+          text: 'Haz removido un registro del almacén de Templates.',
+        });
+
+      }
+  });
 }
 
 function sendUpdateEmail(id){
@@ -55,7 +62,13 @@ function sendRefreshEmail(){
 		type: 'post',
 		url:  window.APP.url + '/update',
 		success: function(){
-		  $("#emailUpdated").show();
+      //$("#emailUpdated").show();
+      new PNotify({
+        title: 'Actualización Exitosa',
+        text: 'El emailer template se actualizó correctamente',
+        type: 'success'
+      });
+
 		}
 	});
 }
@@ -143,11 +156,22 @@ function sendRequestSend(){
 						url:  window.APP.url + '/send',
 						success: function(){
 		        //$(".alert").show();
-            $("#emailSended").show();
+            //$("#emailSended").show();
+             new PNotify({
+                title: 'Solicitud mandada correctamente.',
+                text: 'Mensaje: Espera la siguiente notificación de que el correo fue mandado exitosamente.',
+                type: 'success'
+              });
+
 						},
 						error: function(){
 						//alert("error al enviar");
-            $("#emailSended").show();
+            //$("#emailSended").show();
+              new PNotify({
+                title: 'Error al mandar la solicitud.',
+                text: 'Mensaje: Hemos detectado un error, vuelve a intentar.',
+                type: 'error'
+              });
 						}
 				});
 
