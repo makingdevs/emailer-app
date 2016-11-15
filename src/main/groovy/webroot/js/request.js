@@ -61,15 +61,18 @@ function sendRefreshEmail(){
 		data: $("#emailForm").serialize(), //+ " &contentEmail="+tiny,
 		type: 'post',
 		url:  window.APP.url + '/update',
-		success: function(){
-      //$("#emailUpdated").show();
+    error: function(){
+      console.log("Error update")
+    },
+    complete: function(){
       new PNotify({
         title: 'Actualización Exitosa',
         text: 'El emailer template se actualizó correctamente',
         type: 'success'
       });
 
-		}
+    }
+
 	});
 }
 
@@ -155,24 +158,24 @@ function sendRequestSend(){
 						type: 'post',
 						url:  window.APP.url + '/send',
 						success: function(){
-		        //$(".alert").show();
-            //$("#emailSended").show();
              new PNotify({
                 title: 'Solicitud mandada correctamente.',
                 text: 'Mensaje: Espera la siguiente notificación de que el correo fue mandado exitosamente.',
                 type: 'success'
               });
-
 						},
 						error: function(){
-						//alert("error al enviar");
-            //$("#emailSended").show();
-              new PNotify({
-                title: 'Error al mandar la solicitud.',
-                text: 'Mensaje: Hemos detectado un error, vuelve a intentar.',
-                type: 'error'
+              console.log("Error al procesar la petición");
+						},
+           complete: function(){
+             new PNotify({
+               title: 'Solicitud mandada correctamente.',
+               text: 'Mensaje: Espera la siguiente notificación de que el correo fue mandado exitosamente.',
+                type: 'success'
               });
-						}
+
+           }
+
 				});
 
 
