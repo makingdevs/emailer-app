@@ -115,3 +115,32 @@ function tiny(){
       });
 
 }
+
+function validatePreview(){
+    $('#previewForm')
+        .formValidation({
+            framework: 'bootstrap',
+            excluded: [':disabled'],
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+
+								senderEmail: {
+								validators: {
+								notEmpty: {
+								message: 'The email address is required and can\'t be empty'
+													},
+								emailAddress: {
+								message: 'The input is not a valid email address'
+															}
+									}
+						 }
+            }
+        })
+	.on('success.form.fv', function(e) {
+				e.preventDefault();
+    });
+}

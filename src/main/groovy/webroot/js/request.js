@@ -94,7 +94,7 @@ function sendPreviewEmail(id){
           var updateCreate=moment(update).format('MMMM Do YYYY, h:mm:ss');
           $("#createdDate").html("<small>"+dateCreate+"</small>");
           $("#updatedDate").html("<small>"+updateCreate+"</small>");
-
+          validatePreview();
       }
 			});
 }
