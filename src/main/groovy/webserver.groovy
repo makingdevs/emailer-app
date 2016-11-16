@@ -85,8 +85,8 @@ router.post("/remove").handler { routingContext ->
     if (reply.succeeded()) {
       routingContext.response()
       .setStatusCode(201)
-      .putHeader("content-type", "text/html; charset=utf-8")
-      .end("Email Eliminado Exitosamente ${reply.result().body()}")
+      .putHeader("content-type", "application/json; charset=utf-8")
+      .end(Json.encodePrettily([msg:"Email Eliminado Correctamente ${reply.result().body()}"]))
     }
   })
 }
@@ -97,7 +97,7 @@ router.route("/countTotal").handler({ routingContext ->
     if (reply.succeeded()) {
       routingContext.response()
       .setStatusCode(201)
-      .putHeader("content-type", "text/html; charset=utf-8")
+      .putHeader("content-type", "application/json; charset=utf-8")
       .end(Json.encodePrettily([count:reply.result().body()]))
     }
   })
@@ -111,8 +111,8 @@ router.post("/showEmail").handler { routingContext ->
     if (reply.succeeded()) {
       routingContext.response()
       .setStatusCode(201)
-      .putHeader("content-type", "text/html; charset=utf-8")
-      .end(reply.result().body())
+      .putHeader("content-type", "application/json; charset=utf-8")
+      .end(Json.encodePrettily(reply.result().body()))
     }
   })
 }
@@ -187,8 +187,10 @@ router.post("/serviceEmail").handler { routingContext ->
       vertx.eventBus().send("com.makingdevs.emailer.service", jsonResponse)
       routingContext.response()
       .setStatusCode(201)
-      .putHeader("Content-Type", "text/html; charset=utf-8")
-      .end("Solicitud enviada correctamente.")
+      .putHeader("content-type", "application/json; charset=utf-8")
+      .end(Json.encodePrettily([
+        message:"Solicitud enviada correctamente.",
+      ]))
     }else{
       routingContext.response()
       .setStatusCode(400)
