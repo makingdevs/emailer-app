@@ -138,7 +138,7 @@ function paginate(){
     type:'GET',
     success:
       function(response){
-			  var counter=$.parseJSON(response);
+			  var counter=response;
         var count=counter.count;
         var pages= (count%10==0)? parseInt(count/10) : parseInt((count/10)+1);
         var html="<ul>";
