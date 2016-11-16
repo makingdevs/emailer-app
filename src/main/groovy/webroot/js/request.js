@@ -61,16 +61,21 @@ function sendRefreshEmail(){
 		data: $("#emailForm").serialize(), //+ " &contentEmail="+tiny,
 		type: 'post',
 		url:  window.APP.url + '/update',
-    error: function(){
-      console.log("Error update")
-    },
-    complete: function(){
-      new PNotify({
+    success:function(){
+       new PNotify({
         title: 'Actualización Exitosa',
         text: 'El emailer template se actualizó correctamente',
         type: 'success'
       });
-
+    },
+    error: function(){
+      console.log("Error update")
+    },
+    complete: function(){
+      /*new PNotify({
+        title: 'Actualización Completa',
+        text: 'El emailer template se actualizó',
+      });*/
     }
 
 	});
@@ -153,32 +158,26 @@ function paginate(){
 
 function sendRequestSend(){
 
-				$.ajax({
-						data: $("#previewForm").serialize(),
-						type: 'post',
-						url:  window.APP.url + '/send',
-						success: function(){
-             new PNotify({
-                title: 'Solicitud mandada correctamente.',
-                text: 'Mensaje: Espera la siguiente notificación de que el correo fue mandado exitosamente.',
-                type: 'success'
-              });
-						},
-						error: function(){
-              console.log("Error al procesar la petición");
-						},
-           complete: function(){
-             new PNotify({
-               title: 'Solicitud mandada correctamente.',
-               text: 'Mensaje: Espera la siguiente notificación de que el correo fue mandado exitosamente.',
-                type: 'success'
-              });
-
-           }
-
-				});
-
-
+  var request = $.ajax({
+    data: $("#previewForm").serialize(),
+    type: 'post',
+    url:  window.APP.url + '/send'})
+  request.done(function(msg) {
+    new PNotify({
+      title: 'Solicitud mandada correctamente.',
+      text: 'Mensaje: Espera la siguiente notificación de que el correo fue mandado exitosamente.'
+    });
+  });
+  request.fail(function(jqXHR, textStatus){
+    console.log("Error al procesar la petición");
+  });
+  request.always(function(){
+    //new PNotify({
+    //  title: 'Solicitud mandada correctamente.',
+    //  text: 'Mensaje: Espera la siguiente notificación de que el correo fue mandado exitosamente.',
+    //  type: 'success'
+    //});
+  });
 }
 
 
