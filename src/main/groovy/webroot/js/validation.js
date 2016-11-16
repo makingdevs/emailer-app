@@ -48,7 +48,7 @@ function validate(){
                 contentEmail: {
                     validators: {
                         callback: {
-                            message: 'The contentEmail must be between 5 and 200 characters long',
+                            message: 'The contentEmail need something.',
                             callback: function(value, validator, $field) {
                                 // Get the plain text without HTML
                                 var text = tinyMCE.activeEditor.getContent({
