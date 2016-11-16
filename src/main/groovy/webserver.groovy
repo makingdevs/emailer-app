@@ -58,8 +58,8 @@ if(!config.mail || !config.mongo)
     if (reply.succeeded()) {
       routingContext.response()
       .setStatusCode(201)
-      .putHeader("content-type", "text/html; charset=utf-8")
-      .end("Email Agregado Exitosamente.")
+      .putHeader("content-type", "application/json; charset=utf-8")
+      .end(Json.encodePrettily([msg:"Email Agregado Correctamente."]))
     }
   })
 }
@@ -155,7 +155,7 @@ router.post("/update").handler { routingContext ->
       routingContext.response()
       .setStatusCode(201)
       .putHeader("content-type", "application/json; charset=utf-8")
-      .end("Update [ok]")
+      .end(Json.encodePrettily([msg:"Solicitud Enviada Correctamente."]))
     }
   })
 }
@@ -174,7 +174,7 @@ router.post("/send").handler { routingContext ->
   routingContext.response()
   .setStatusCode(201)
   .putHeader("content-type", "application/json; charset=utf-8")
-  .end("Solicitud Enviada Correctamente.")
+  .end(Json.encodePrettily([msg:"Solicitud Enviada Correctamente."]))
 }
 
 //Route para el servicio Web
