@@ -6,22 +6,15 @@ import io.vertx.groovy.core.http.HttpClient
 
 def options = [ reporters: [[ to:"console" ]]]
 
-//Agregar la configuración externa
-def config = Vertx.currentContext().config()
-println config
-
-//configuracion externalizada
-config_ext =["config":config]
-
 //Create TestSuite
 def suite = TestSuite.create("the_test_suite")
 
 //Implement TestCase for senderVerticle consumers
 suite.before({ context ->
   def async = context.async()
-  vertx.deployVerticle("src/main/groovy/senderVerticle.groovy", config_ext){ ar ->
+  //Verticle de buildEmail y check
+  vertx.deployVerticle("src/main/groovy/com/makingdevs/HelperVerticle.groovy"){ ar ->
     context.assertTrue(ar.succeeded())
-    vertx.deployVerticle("src/main/groovy/com/makingdevs/helperVerticle.groovy")
     async.complete()
   }
 }).test("buildEmail_TestCase", { context ->
@@ -40,42 +33,7 @@ suite.before({ context ->
     context.assertEquals(resultService, response.result.body())
     async.complete()
   }
-}).test("sendEmailService_TestCase",{ context ->
-  def async = context.async()
-  def testSender=[
-    id:"0000-id-prueba",
-    from:"emailer@app.com",
-    to:"carlo@makingdevs.com",
-    cco:"carlogilmar@gmail.com",
-    subject:"Unit Test",
-    html:"Esta es una prueba unitaria del servicio Sender"
-  ]
-  def testResponse="Hemos enviado lo siguiente:\n ID:0000-id-prueba.\n DESTINATARIO: carlo@makingdevs.com\n SUBJECT: Unit Test \n CCO: carlogilmar@gmail.com"
-
-  vertx.eventBus().send("com.makingdevs.emailer.sender", testSender) { response ->
-    context.assertEquals(testResponse, response.result.body())
-    async.complete()
-  }
-}).test("integration_TestCase",{ context ->
-  def async = context.async()
-  def testSender=[
-    id:"0000-id-verticleIntegracion",
-    from:"emailer@app.com",
-    to:"carlo@makingdevs.com",
-    cco:"carlogilmar@gmail.com",
-    subject:"Unit Test for Integration Verticle Vertx Run",
-    content:'''Esta es una prueba unitaria del servicio ${sender}, con el mensaje:${msg}''',
-    params:[
-      sender:"MakingDevs Emailer",
-      msg:" Saludo2 "
-    ]
-  ]
-  vertx.eventBus().send("com.makingdevs.emailer.serviceEmail", testSender) { response ->
-    context.assertEquals("Solicitud Enviada", response.result.body())
-    async.complete()
-  }
-
-}).test("verificationCheck_TestCase",{ context ->
+}).test("verificationCheck_Error",{ context ->
   def async=context.async()
   println "Verification test"
   def testCheck=[
@@ -93,9 +51,24 @@ suite.before({ context ->
     async.complete()
   }
 
+}).test("verificationCheck_Ok", { context ->
+  def async = context.async()
+  def testService=[
+    id:"abc1234567890",
+    subject:"pruebas",
+    to:"develop@me.com",
+    content:"hi everyone",
+    params:[
+      name:"MakingDevs",
+    ]
+  ]
+  vertx.eventBus().send("com.makingdevs.emailer.check", testService) { response ->
+    def responseTest="ok"
+    context.assertEquals(responseTest, response.result.body())
+    async.complete()
+  }
 }).after({ context ->
   println "Terminando las pruebas"
-  vertx.close(context.asyncAssertSuccess())
 })
 
 def completion = suite.run(options)
