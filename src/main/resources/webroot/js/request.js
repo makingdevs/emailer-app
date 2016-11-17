@@ -11,7 +11,8 @@ function sendNewEmail(){
        new PNotify({
           title: 'Email Agregado Correctamente.',
           text: 'Haz agregado un nuevo Emailer Template al Almacén.',
-        });
+          type: 'success'
+       });
       router.setRoute('/');
       }
 	});
@@ -65,7 +66,7 @@ function sendRefreshEmail(){
        new PNotify({
         title: 'Actualización Exitosa',
         text: 'El emailer template se actualizó correctamente',
-        type: 'success'
+        type: 'info'
       });
     },
     error: function(){
