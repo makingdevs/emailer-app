@@ -1,3 +1,5 @@
+package com.makingdevs
+
 import io.vertx.groovy.ext.web.handler.StaticHandler
 import io.vertx.groovy.ext.web.Router
 import io.vertx.groovy.ext.web.handler.BodyHandler
@@ -208,6 +210,6 @@ router.post("/serviceEmail").handler { routingContext ->
 server.requestHandler(router.&accept).listen(8080)
 
 //deploy verticles
-vertx.deployVerticle("emailerVerticle.groovy", options)
-vertx.deployVerticle("senderVerticle.groovy", senderOptions)
-vertx.deployVerticle("helperVerticle.groovy")
+vertx.deployVerticle("src/main/groovy/com/makingdevs/EmailerVerticle.groovy", options)
+vertx.deployVerticle("src/main/groovy/com/makingdevs/SenderVerticle.groovy", senderOptions)
+vertx.deployVerticle("src/main/groovy/com/makingdevs/HelperVerticle.groovy")

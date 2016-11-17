@@ -1,3 +1,5 @@
+package com.makingdevs
+
 import io.vertx.core.json.Json
 import io.vertx.groovy.core.Vertx
 import io.vertx.groovy.ext.mongo.MongoClient

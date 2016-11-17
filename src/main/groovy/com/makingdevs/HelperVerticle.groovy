@@ -1,3 +1,4 @@
+package com.makingdevs
 
 def eb = vertx.eventBus()
 

@@ -1,3 +1,5 @@
+package com.makingdevs
+
 import io.vertx.ext.mail.StartTLSOptions
 import io.vertx.groovy.core.Vertx
 import io.vertx.groovy.ext.mail.MailClient
