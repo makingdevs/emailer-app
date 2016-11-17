@@ -7,48 +7,41 @@ import io.vertx.groovy.ext.web.handler.sockjs.SockJSHandler
 import io.vertx.groovy.ext.web.handler.StaticHandler
 
 def config = Vertx.currentContext().config()
-if(!config.mail || !config.mongo)
-  throw new RuntimeException("Cannot run withouit config, check https://github.com/makingdevs/emailer-app/wiki/Emailer-App")
 
-  //configuracion externalizada
- options =[
-  "config":config
-  ]
+//configuracion externalizada
+options = [ "config":config ]
 
-  //Configuración para hacer el worker
-  def senderOptions=options
-  senderOptions.worker=true
+//Configuración para hacer el worker
+def senderOptions=options
+senderOptions.worker=true
 
-  //Config for permissons
-  def opts = [
+//Config for permissons
+def opts = [
   outboundPermitteds:[
-      [
-       address:"com.makingdevs.email.success"
-      ]
-    ]
+    [ address:"com.makingdevs.email.success" ]
   ]
+]
+
+//routers
+def server = vertx.createHttpServer()
+def router = Router.router(vertx)
+router.route().handler(BodyHandler.create())
+
+// Create the event bus bridge and add it to the router.
+def ebHandler = SockJSHandler.create(vertx).bridge(opts)
+router.route("/eventbus/*").handler(ebHandler)
 
 
-  //routers
-  def server = vertx.createHttpServer()
-  def router = Router.router(vertx)
-  router.route().handler(BodyHandler.create())
+//Route to Index
+router.route("/static/*").handler(
+  StaticHandler.create().setCachingEnabled(false)
+)
 
- // Create the event bus bridge and add it to the router.
-  def ebHandler = SockJSHandler.create(vertx).bridge(opts)
-  router.route("/eventbus/*").handler(ebHandler)
-
-
-  //Route to Index
-  router.route("/static/*").handler(
-    StaticHandler.create().setCachingEnabled(false)
-  )
-
-  //Add new Email
-  router.post("/newEmail").handler { routingContext ->
-    def params = routingContext.request().params()
-    def email = [
-    subject:params.subjectEmail,
+//Add new Email
+router.post("/newEmail").handler { routingContext ->
+  def params = routingContext.request().params()
+  def email = [
+  subject:params.subjectEmail,
   content:params.contentEmail,
   dateCreated:new Date().time,
   lastUpdate:new Date().time,
