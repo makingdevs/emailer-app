@@ -166,7 +166,8 @@ function sendRequestSend(){
   request.done(function(msg) {
     new PNotify({
       title: 'Solicitud mandada correctamente.',
-      text: 'Mensaje: Espera la siguiente notificación de que el correo fue mandado exitosamente.'
+      text: 'Mensaje: Espera la siguiente notificación de que el correo fue mandado exitosamente.',
+        type: 'info'
     });
   });
   request.fail(function(jqXHR, textStatus){
