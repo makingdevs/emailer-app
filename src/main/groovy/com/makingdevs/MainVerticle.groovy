@@ -12,6 +12,6 @@ class MainVerticle extends AbstractVerticle {
       throw new RuntimeException("""\
       Cannot run withouit config, check https://github.com/makingdevs/emailer-app/wiki/Emailer-App
      """)
-    vertx.deployVerticle("webserver.groovy", options)
+    vertx.deployVerticle("src/main/groovy/com/makingdevs/Webserver.groovy", options)
   }
 }
