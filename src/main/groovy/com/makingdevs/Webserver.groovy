@@ -174,29 +174,28 @@ router.post("/send").handler { routingContext ->
 
 //Route para el servicio Web
 router.post("/serviceEmail").handler { routingContext ->
-
   if(routingContext.getBody().length()){
     def jsonResponse=routingContext.getBodyAsJson()
-  vertx.eventBus().send("com.makingdevs.emailer.check", jsonResponse){ reply ->
-    if(reply.result.body() == "ok" ){
-      vertx.eventBus().send("com.makingdevs.emailer.service", jsonResponse)
+    vertx.eventBus().send("com.makingdevs.emailer.check", jsonResponse){ reply ->
+      def status = 0
+      def response = [:]
+
+      if(reply.result.body() == "ok" ){
+        status = 201
+        vertx.eventBus().send("com.makingdevs.emailer.service", jsonResponse)
+        response.message = "Solicitud enviada correctamente."
+      }else{
+        status = 400
+        response.message = "I can't do my job. You have the follow errors"
+        response.errors = reply.result().body()
+      }
+
       routingContext.response()
-      .setStatusCode(201)
-      .putHeader("content-type", "application/json; charset=utf-8")
-      .end(Json.encodePrettily([
-        message:"Solicitud enviada correctamente.",
-      ]))
-    }else{
-      routingContext.response()
-      .setStatusCode(400)
-      .putHeader("content-type", "application/json; charset=utf-8")
-      .end(Json.encodePrettily([
-        message:"I can't do my job. You have the follow errors",
-        errors : reply.result().body()
-      ]))
+      .setStatusCode(status)
+      .putHeader("Content-Type", "application/json; charset=utf-8")
+      .end(Json.encodePrettily(response))
     }
-  }
-  }else{
+  } else {
     //response
     routingContext.response()
     .setStatusCode(400)
