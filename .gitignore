@@ -6,3 +6,4 @@ src/main/resources/webroot/third-party/
 .node-version
 .vertx/
 data/
+conf.json
