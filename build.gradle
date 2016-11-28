@@ -38,7 +38,7 @@ processResources {
 shadowJar {
   classifier = 'fat'
   manifest {
-    attributes 'Main-Verticle': 'groovy:webserver'
+    attributes 'Main-Verticle': 'groovy:com.makingdevs.Webserver'
   }
   mergeServiceFiles {
     include 'META-INF/services/io.vertx.core.spi.VerticleFactory'
