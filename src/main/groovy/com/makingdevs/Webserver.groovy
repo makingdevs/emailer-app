@@ -209,6 +209,6 @@ router.post("/serviceEmail").handler { routingContext ->
 server.requestHandler(router.&accept).listen(8000)
 
 //deploy verticles
-vertx.deployVerticle("src/main/groovy/com/makingdevs/EmailerVerticle.groovy", options)
-vertx.deployVerticle("src/main/groovy/com/makingdevs/SenderVerticle.groovy", senderOptions)
-vertx.deployVerticle("src/main/groovy/com/makingdevs/HelperVerticle.groovy")
+vertx.deployVerticle("com/makingdevs/EmailerVerticle.groovy", options)
+vertx.deployVerticle("com/makingdevs/SenderVerticle.groovy", senderOptions)
+vertx.deployVerticle("com/makingdevs/HelperVerticle.groovy")
