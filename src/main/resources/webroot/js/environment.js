@@ -1,3 +1,3 @@
 window.APP = {
-  url : "http://localhost:8000"
+  url : "http://emailerv2.modulusuno.com"
 };
