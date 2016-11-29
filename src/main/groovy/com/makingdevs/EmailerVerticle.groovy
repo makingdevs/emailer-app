@@ -6,6 +6,7 @@ import io.vertx.groovy.ext.mongo.MongoClient
 
 //Configuration of Mongo
 def config = Vertx.currentContext().config()
+println config.dump()
 def mongoClient = MongoClient.createShared(vertx, config.mongo)
 
 //Event Bus Born
