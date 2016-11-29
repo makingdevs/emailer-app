@@ -27,12 +27,15 @@ eb.consumer("com.makingdevs.emailer.sender", { message ->
     response=response+" \n CCO: "+mail.bcc
   }
 
+  println "*"*50
   mailClient.sendMail(mail, { result ->
     if (result.succeeded()) {
+      println "Email enviado: "+response
       message.reply(response)
       vertx.eventBus().send("com.makingdevs.email.success", response)
     } else {
       response="Error, no se logró mandar el envío correctamente"
+      println "Email no enviado: "+response
       vertx.eventBus().send("com.makingdevs.email.success", response)
       result.cause().printStackTrace()
     }
