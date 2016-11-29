@@ -1,4 +1,4 @@
-var eb = new EventBus(window.APP.url + '/eventbus');
+var eb = new EventBus('http://emailerv2.modulusuno.com/eventbus');
 eb.onopen = function() {
   eb.registerHandler('com.makingdevs.email.success', function(error, message) {
 
