@@ -11,6 +11,9 @@ repositories {
 //  }
 }
 
+tasks.withType(Compile) {
+  options.encoding = "UTF-8"
+}
 
 version = '1.0'
 sourceCompatibility = '1.8'
