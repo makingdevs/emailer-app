@@ -1,3 +1,3 @@
 window.APP = {
-  url : "http://emailerv2.modulusuno.com"
+  url : "http://emailerv2.modulusuno.com/"
 };
