@@ -31,7 +31,7 @@ eb.consumer("com.makingdevs.emailer.sender", { message ->
   println "*"*25
   println "SenderVerticle: Correo recibido, simulación de envío"
   println "Email enviado "+response
-
+  vertx.eventBus().send("com.makingdevs.email.success", response)
 //<---------------------------------------------------------------------pruebas
 /*
   mailClient.sendMail(mail, { result ->
