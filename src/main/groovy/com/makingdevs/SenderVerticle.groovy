@@ -27,6 +27,13 @@ eb.consumer("com.makingdevs.emailer.sender", { message ->
     response=response+" \n CCO: "+mail.bcc
   }
 
+
+  println "*"*25
+  println "SenderVerticle: Correo recibido, simulación de envío"
+  println "Email enviado "+response
+
+//<---------------------------------------------------------------------pruebas
+/*
   mailClient.sendMail(mail, { result ->
     if (result.succeeded()) {
       message.reply(response)
@@ -37,6 +44,9 @@ eb.consumer("com.makingdevs.emailer.sender", { message ->
       result.cause().printStackTrace()
     }
   })
+*/
+
+
 })
 
 
