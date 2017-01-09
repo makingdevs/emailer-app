@@ -27,15 +27,13 @@ bower update
 ```
 Check your directory src/main/groovy/webroot/third-part, here will be contain the JS files.
 
-3.- Run your mongo server. You don't create a Mongo Db before.
+3.- Run your mongo server. You don't need to create a Mongo Db before.
 ```
 mongod
 ```
 4.- The project runs on localhost:8000, so apply the follow changes:
 
-Change the url _http://emailerv2.modulusuno.com/static/_ for **http://localhost:8000/static/**
-
-__CHANGE 1: src/main/resources/webroot/index.html__
+CHANGE 1: __src/main/resources/webroot/index.html__ change the url _http://emailerv2.modulusuno.com/static/_ for **http://localhost:8000/static/**
 ```
 Line 138: <nav class="navbar">
   (...)
@@ -43,14 +41,14 @@ Line 138: <nav class="navbar">
    (...)
 ```
 
-__CHANGE 2: src/main/resources/webroot/js/enviroment.js__
+CHANGE 2: On __src/main/resources/webroot/js/enviroment.js__ change "http://emailerv2.modulusuno.com" for http://localhost:8000/
 ```
 window.APP = {
   url : "http://emailerv2.modulusuno.com"
 };
 ```
 
-# Run the proyect with Gradle
+# Finally run the proyect with Gradle
 In root:
 
 ```
@@ -77,14 +75,14 @@ gradle run
 
 2.- Please identify the ID on "Almacén de Emailers"
 
-3.- Plase identify the params on the template, this are identify with **${param}**
+3.- Please identify the params on the template, this are identify with **${param}**
 
 4.- Send a request to **http://localhost:8000/serviceEmail**
 
 ```
-POST request
+Request: POST 
 Url: http://localhost:8000/serviceEmail
-Json body:
+Body:
   {
   "id":"586d4944...",
   "to":"hi@me.com",
