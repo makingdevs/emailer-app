@@ -1,6 +1,13 @@
 
 #EMAILER APP Version 2
 
+```
+Vertx 3.3.3
+Gradle 2.10
+Groovy 2.4.7
+Bower 1.8.0
+```
+
 ##Local installation##
 
 1.- First you need to create the file conf.json on root
