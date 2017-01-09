@@ -62,16 +62,23 @@ gradle run
 
 ### Web App ###
 1.- Go to **http://localhost:8000/static/** and select "añadir template"
+
 2.- Please fill the emailer form, this going to be an emailer template, include params like **${i_am_groovy_param}**
+
 3.- Preview your template on "Almacén de Emailers", and send you an email preview.
+
 4.- Modify a template, check the last update, and the last version available.
+
 5.- Check the table on "Almacén de Emailers", it contains: #, ID, Subject, Version, and Preview Button.
 
 
 ### Web Service ###
 1.- If the web app have a template, you can use the webservice.
+
 2.- Please identify the ID on "Almacén de Emailers"
+
 3.- Plase identify the params on the template, this are identify with **${param}**
+
 4.- Send a request to **http://localhost:8000/serviceEmail**
 
 ```
