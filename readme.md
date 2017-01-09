@@ -3,7 +3,7 @@
 
 ##Local installation##
 
-1.- First you need to create the file conf.json in this directory: src/main/groovy/
+1.- First you need to create the file conf.json on root
 
 The content is:
 ```
