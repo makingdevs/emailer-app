@@ -32,20 +32,6 @@ eb.consumer("com.makingdevs.emailer.sender", { message ->
   println "SenderVerticle: Correo recibido, simulación de envío"
   println "Email enviado "+response
   vertx.eventBus().send("com.makingdevs.email.success", response)
-//<---------------------------------------------------------------------pruebas
-/*
-  mailClient.sendMail(mail, { result ->
-    if (result.succeeded()) {
-      message.reply(response)
-      vertx.eventBus().send("com.makingdevs.email.success", response)
-    } else {
-      response="Error, no se logró mandar el envío correctamente"
-      vertx.eventBus().send("com.makingdevs.email.success", response)
-      result.cause().printStackTrace()
-    }
-  })
-*/
-
 
 })
 
