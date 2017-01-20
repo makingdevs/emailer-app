@@ -7,3 +7,5 @@ src/main/resources/webroot/third-party/
 .vertx/
 data/
 conf.json
+src/main/resources/webroot/js/app.js
+src/main/resources/webroot/js/main.js
