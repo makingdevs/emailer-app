@@ -1,0 +1,18 @@
+nav ul li a{
+    color: black;
+  }
+
+.font{
+    font-family:'Poiret One';
+    font-size: 150%;
+  }
+
+.cursive{
+    font-family: 'Lobster Two', cursive;
+    font-size: 150%;
+  }
+
+.title{
+    font-family:'Poiret One';
+    font-size: 250%;
+  }
