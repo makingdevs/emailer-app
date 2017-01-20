@@ -1,301 +1,249 @@
 <!DOCTYPE html>
-<?xml version="1.0" encoding="utf-8"?>
-<html lang="es">
-
+<html>
   <head>
     <meta charset="UTF-8">
     <title>Emailer Web App</title>
-    <link href="third-party/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-    <link href="css/emailer.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lato:300" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
-    <link href="third-party/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet">
-    <link href="third-party/form.validation/dist/css/formValidation.css" rel="stylesheet">
-    <link href="third-party/pnotify/dist/pnotify.css" media="all" rel="stylesheet" type="text/css" />
-    <link href="third-party/pnotify/dist/pnotify.buttons.css" media="all" rel="stylesheet" type="text/css" />
-    <link href="third-party/pnotify/dist/pnotify.brighttheme.css" media="all" rel="stylesheet" type="text/css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Pacifico|Lobster+Two|Poiret+One" rel="stylesheet">
+    <link href="third-party/materialize/dist/css/materialize.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
   </head>
 
-<body>
-   <script id="entry-template" type="text/x-handlebars-template">
-		 <div class="container-fluid">
-			 <div class="row box">
-			<div class="col-sm-12 text-center">
+  <body>
+    <script id="new-emailer" type="text/x-handlebars-template">
+    <div class="container">
+      <div class="row">
+        <h1 class="center brand-logo red-text lighten-2 cursive">Nuevo Emailer</h1>
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <i class="material-icons prefix">email</i>
+              <input id="icon_prefix" type="text" class="validate">
+              <label for="icon_prefix">Título de Emailer</label>
+            </div>
+              <i class="material-icons prefix">mode_edit</i>
+              <label>* A continuación redacta el contenido del emailer, asignado un parámetro con la siguiente forma: $ { { param } }</label>
+              <br/>
+              <br/>
+              <textarea id="textarea1"></textarea>
+          </div>
+          <a class="center waves-effect waves-light btn">Añadir</a>
+        </form>
+      </div>
+     </div>
+    </script>
 
-							<p class="customButton">Almacén de Templates</p>
-
-							<table class="table table-hover" name="reader" id="reader">
-							<tr>
-							<th class="text-center">#</th>
-							<th class="text-center">ID</th>
-							<th class="text-center">Subject</th>
-							<th class="text-center">Version</th>
-							<th class="text-center"></th>
-							</tr>
-							<tbody>
-						  {{#each emails}}
-							<tr>
-							<td name="index">{{currentIndex @index }}</td>
-							<td>{{_id}}</td>
-							<td>{{subject}}</td>
-							<td>{{version}}</td>
-							<td>
-							<a href="#/previewEmail/{{_id}}" class="btn btn-success btn-xs">Preview</a> &nbsp;
-							</td>
-							</tr>
-							{{/each}}
-							</tbody>
-							</table>
-               <br>
-               <div id="paginas"></div>
-
-				</div>
-			</div>
-			</div>
-	</script>
-
-   <script id="previewTemplate" type="text/x-handlebars-template">
-		 <div class="container-fluid">
- 			<div class="row box">
-			<div class="col-sm-12">
-
-           <div class="row">
-           <p class="custom text-center"><strong>{{subject}}</strong></p>
-
-           <ul class="list-inline text-center">
-           <li>
-            <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#sendModal">Enviar Prueba</button>
-           </li>
-           <li>
-            <a href="#/editEmail/{{_id}}" class="btn btn-info btn-xs">Editar</a> &nbsp;
-           </li>
-           <li>
-            <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteModal">Eliminar</button>
-           </li>
-           <li>
-            <a href="#/" class="btn btn-warning btn-xs">Regresar</a> &nbsp;
-           </li>
-           </ul>
-					 <ul class="list-inline menu text-center">
-				   <li><small>Id: {{_id}}</small></li>
-					 <li><small>Version: {{version}}</small></li>
-					 <li><small>Date Created:</small></li>
-					 <li id="createdDate"></li>
-					 <li><small>Last Update:</small></li>
-					 <li id="updatedDate"></li>
-				   </ul>
-           </div>
-           <br>
-							 <div class="row" id="modal">
-               <div class="modal fade bs-example-modal-sm" id="deleteModal" data-backdrop="false" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-                 <div class="modal-dialog modal-sm" role="document">
-                     <div class="modal-content text-center">
-                          <br>
-                          <b>Aviso</b><br><br>
-                          Estas a punto de eliminar el correo <b>{{subject}}</b> con el id <b>{{_id}}</b><br>
-                          ¿Es correcto?<br><br>
-                          <a href="#/deleteEmail/{{_id}}" class="btn btn-danger btn-xs">Si quiero eliminarlo</a>
-                          <button type="button" class="btn btn-primary btn-xs" data-dismiss="modal">No quiero eso</button>
-                          <br><br>
-                      </div>
-
-               </div>
-               </div>
-               <div class="row" id="modal1">
-               <div class="modal fade bs-example-modal-sm" id="sendModal" data-backdrop="false" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-                 <div class="modal-dialog modal-sm" role="document">
-                     <div class="modal-content text-center">
-                     <div class="modal-header">
-                     <b>ENVIAR EMAIL PREVIEW</b>
-                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                     </div>
-                           <form name="previewForm" id="previewForm" method="post" class="navbar-form" action="#/sendEmail">
-						               <div class="form-group">
-						               <input type="hidden" required class="form-control" name="email_id" id="email_id" value="{{_id}}"/>
-						               <input type="email" class="form-control input-sm" name="emailPreview" id="emailPreview" required placeholder="Anota tu email">
-                           </div><br><br>
-							             <a href="#/sendEmail" class="btn btn-success btn-xs">Mandar Preview</a>
-						               </form>
-                           <br>
-                          </div>
-               </div>
-               </div>
-             </div>
-         </div>
-              <div class="row">
-                    <iframe id="iframeID" class="box" width="100%" height="550" frameborder="0">
-                    </iframe>
-              </div>
-				 		 </div>
+    <script id="read-emailer" type="text/x-handlebars-template">
+    <div id="centered" class="section scrollspy">
+      <div class="row">
+        <h1 class="center brand-logo red-text lighten-2 cursive">Almacén de Emailers</h1>
+       <div class="col s10 offset-s1">
+        <table class="centered highlight">
+        <thead>
+        <tr>
+        <th data-field="id">#</th>
+        <th data-field="name">ID</th>
+        <th data-field="price">Title</th>
+        <th data-field="price">Version</th>
+        <th data-field="price">Preview</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        <td>1</td>
+        <td>7625362853263</td>
+        <td>Emailer Version One</td>
+        <td>1</td>
+        <td><a class="btn-floating btn-small waves-effect waves-light red" href="#/previewEmailer/12"><i class="material-icons">visibility</i></a>
+        </td>
+        </tr>
+        </tbody>
+        </table>
        </div>
-   </div>
- </div>
- </div>
-   </script>
+     </div>
+
+    </script>
+
+    <script id="start-emailer" type="text/x-handlebars-template">
+        <div class="container">
+         <br><br>
+         <h1 class="header center red-text lighten-2">Emailer App</h1>
+         <div class="row center">
+          <h5 class="header col s12 light font">Cómo Funciona</h5>
+         </div>
+
+         <div class="row">
+           <div class="col s12 m4">
+             <div class="icon-block">
+               <h2 class="center light-blue-text darken-4"><i class="medium material-icons">markunread_mailbox</i></h2>
+               <h5 class="center font">Aplicación Web</h5>
+               <p class="light">Ingresa y agrega un emailer nuevo, consulta los emailers anteriores, y haz una prueba de envío. Para su implementación con otra aplicación consulte a su Web Master. </p>
+             </div>
+           </div>
+
+           <div class="col s12 m4">
+             <div class="icon-block">
+               <h2 class="center light-blue-text darken-4 "><i class="medium material-icons">import_export</i></h2>
+               <h5 class="center font">Servicio REST</h5>
+
+               <p class="light">El servicio alojado en <b> http://localhost:8000/serviceEmail </b> y requiere de una petición POST con los siguientes parámetros:</p>
+                 <div class="chip">Id</div> Identificador del emailer. REQUERIDO<br>
+                 <div class="chip">To</div> Email para enviar el correo. REQUERIDO<br>
+                 <div class="chip">CC</div> Email para enviar copia. OPCIONAL<br>
+                 <div class="chip">CCO</div> Email para enviar copia oculta. OPCIONAL<br>
+                 <div class="chip">Subject</div> Asunto del correo. REQUERIDO<br>
+                 <div class="chip">Params</div> Parámetros del emailer. REQUERIDO
+               </div>
+           </div>
+
+           <div class="col s12 m4">
+             <div class="icon-block">
+               <h2 class="center blue-text darken-4"><i class="medium material-icons">http</i></h2>
+               <h5 class="center font">Status</h5>
+
+               <p class="light">El servicio puede responder a las peticiones los siguientes mensajes, dependiendo el caso:</p>
+                 <div class="chip">201</div>Solicitud exitosa: "Solicitud enviada correctamente"<br>
+                 <div class="chip">400</div>Solicitud sin parámetros: "I can't do my job, please send me something please"<br>
+                 <div class="chip">400</div>Solicitud sin los parámetros necesarios: "I can't do my job. You have the follow errors"<br>
+             </div>
+           </div>
+         </div>
+
+         <div class="row center">
+          <h5 class="header col s12 light font">Ejemplo</h5>
+         </div>
+
+         <div class="row grey lighten-4">
+         <pre><code>
+         Request: /serviceEmail
+         Method: POST
+         Body: JSON
+         Content:
+         {
+          "id":"3eui3r2370yg32ryg08g",
+          "to":"emailer@app.com",
+          "cc":"emailer1@app.com",
+          "cco":"emailer2@app.com",
+          "subject":"envio con todos los parametros",
+          "params":{
+            "mensaje":"Hola a todos",
+            "despedida":"Adios",
+            "firma":"Making Devs, 2017"
+          }
+         }
+         </code></pre>
+         </div>
+         </div>
+    </script>
+
+    <script id="preview-emailer" type="text/x-handlebars-template">
+     <div class="row center">
+        <h1 class="center brand-logo red-text lighten-2 cursive">Preview de Emailer</h1>
+        <h2 class="title">Emailer Title</h1>
+        <div class="chip">ID: 2e32dh78f3g7</div>
+        <div class="chip">Version 1</div>
+        <div class="chip">Last Update 12/67/1992</div>
+        <div class="chip">Date Created 12/06/1994</div><br><br>
+        <a class="btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Enviar Correo de Prueba"><i class="small material-icons">call_made</i></a>
+        <a class="btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Editar"><i class="small material-icons">mode_edit</i></a>
+        <a class="btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Eliminar"><i class="small material-icons">delete</i></a>
+         <!-- Modal Trigger -->
+           <button data-target="modal1" class="btn">Modal</button>
 
 
-<nav class="navbar">
-  <div class = "navbar-header">
-    <p class ="navbar-brand">&nbsp;&nbsp; Emailer App</p>
-  </div>
-
-  <div>
-    <p class = "navbar-text navbar-right">
-    <a href="http://emailerv2.modulusuno.com/static/"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;Inicio</a>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    </p>
-  </div>
-
-  <div>
-    <p class = "navbar-text navbar-right">
-    <a href="#/"><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>&nbsp; Almacén de Emailers &nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		</p>
-  </div>
-
-  <div>
-    <p class = "navbar-text navbar-right">
-    <a href="#/newEmail"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span>&nbsp; Añadir Emailer Template &nbsp;&nbsp;</a>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		</p>
-  </div>
-</nav>
-
-<div class="container">
-
-<div class="col-sm-12">
-<div class="row" id="readEmails"></div>
-<div class="row" id="showEmails"></div>
-
-
-<div class="row text-center" id="formEmails" style="display:none;">
-	<div class="container-fluid">
-		<div class="row box">
-		<div class="col-sm-12">
-
-						<form method="post" role="form" id="emailForm" action="#/newEmail">
-						<p class="customButton">Emailer Template</p>
-            <div class="input-group">
-									<input type="hidden" class="form-control" name="email_id" id="email_id"/>
-									<input type="hidden" class="form-control" name="versionEmail" id="versionEmail"/>
-									<input type="hidden" class="form-control" name="createdEmail" id="createdEmail"/>
-									<input type="hidden" class="form-control" name="updatedEmail" id="updatedEmail"/>
-            </div>
-						<br>
-						<div class="input-group">
-									<span class="input-group-addon" id="basic-addon1">Subject&nbsp;&nbsp;</span>
-									<input type="text" class="form-control" required
-									placeholder=" Subject Here " aria-describedby="basic-addon1" id="subjectEmail" name="subjectEmail">
-						</div>
-						<br>
-						<div class="input-group">
-									<textarea class="form-control" rows="3" style="height: auto; width: auto;" placeholder="Contenido" id="contentEmail" name="contentEmail"></textarea>
-						</div>
-						<br>
-						<span class="input-group-btn">
-						 <button class="btn btn-default" type="submit">Save Email</button>
-						</span>
-						</form>
-
-		</div>
-	</div>
-</div>
-</div>
-
-
-<div id="start">
-  <div class="container-fluid">
-    <div class="row box">
-      <div class="col-md-12">
-        <h3 class="text-center text-uppercase">Bienvenidos a Emailer App</h3><br>
-        </p>
+             <!-- Modal Structure -->
+               <div id="modal1" class="modal">
+                   <div class="modal-content">
+                         <h4>Modal Header</h4>
+                               <p>A bunch of text</p>
+                                   </div>
+                                       <div class="modal-footer">
+                                             <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+                                                 </div>
+                                                   </div>
 
         <div class="row">
-          <div class="col-sm-6 col-md-4">
-            <div class="thumbnail"><br>
-              <img src="resources/correoNuevo.png" width="45%"/>
-              <div class="caption">
-                <h3 class="text-center">Añadir Emailer Template</h3>
-                <p align="justify">Aquí puedes ingresar un template, previsualizarlo, e inclusive poder ver el código fuente
-                en HTML, puedes agregar imágenes, cambiar el estilo de letra y de párrafo.
-                <br><br>
-                Recuerda agregar los campos de la siguiente forma: <strong>${campo}</strong>. Estos campos serán los "params" del servicio web.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-sm-6 col-md-4">
-            <div class="thumbnail"><br>
-              <img src="resources/buzon.png" width="45%"/>
-              <div class="caption">
-                <h3 class="text-center">Almacén de Emailers</h3>
-                <p align="justify">Aquí podrás encontrar la lista de todos los Emailers Templates que han sido guardados.<br><br>
-                Será posible ver el <b>ID</b> de cada uno, así con el <b>subject provisional</b> que se le ha añadido, y el número de <b>versiones</b> que ha sido actualizado.
-                <br><br>Desde esta opción podrás ver el <b>preview</b> de un Emailer Template, donde además podrás ver la <b>última fecha de actualización</b>, <b>fecha de creación</b>, opciones para <b>editar</b>, <b>eliminar</b>, o <b>mandar una prueba.</b></p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-sm-6 col-md-4">
-            <div class="thumbnail"><br>
-              <img src="resources/archivo.png" width="45%"/>
-              <div class="caption">
-                <h3 class="text-center">Servicio Web</h3>
-                <p align="justify">Este servicio consta de una llamada por consola, de contenido tipo JSON, por método POST, con los siguientes datos:
-									<b>ID</b> de template existente, <b>Subject</b>, <b>To</b>, <b>CC</b>, <b>CCO</b>, y los <b>params</b> correspondientes al contenido del template.
-                <br><br>
-                </p>
-
-              </div>
-
-            </div>
-          </div>
+         <iframe id="iframeID" class="box" width="100%" height="550" frameborder="0"></iframe>
         </div>
-        <div class="row">
-          <h3 class="text-center">Llamada al servicio</h3>
-          <p>
-          <pre>curl -i -H "Content-Type: application/json" -X POST -d '{"id":"1ewf32rvf3evcf3f423", "subject":"saludos", "to":"carlo@me.com",
-          "cc":"carlo@makingdevs.com", "cco":"carlogilmar12@gmail", "params":{ "organizacion":"MakingDevs" }}' localhost:8080/services
-          </pre>
-          </p>
+     </div>
+    </script>
 
-        </div>
+    <nav class="white" role="navigation">
+      <div class="nav-wrapper container">
+        <span class="brand-logo black-text cursive"><b>Emailer App</span>
+        <ul class="right black-text font">
+          <li><a href="#">Inicio</a></li>
+          <li><a href="#/newEmailer"><i class="material-icons right">mode_edit</i>Nuevo Emailer</a></li>
+          <li><a href="#/readEmailers"><i class="material-icons right">library_books</i>Almacén de Emailers</a></li>
+        </ul>
 
+        <ul id="nav-mobile" class="side-nav">
+          <li><a href="#">Navbar Link2</a></li>
+        </ul>
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+      </div>
+    </nav>
+   <div class="white" id="content-body">
+
+     <div class="section no-pad-bot" id="index-banner">
+       <div class="container">
+         <br><br>
+         <h1 class="header center red-text lighten-2">Emailer App</h1>
+         <div class="row center">
+          <h5 class="header col s12 light font">Versión 2 Enero,2017.</h5>
+         </div>
+         <div class="row">
+           <div class="col s12 m4">
+             <div class="icon-block">
+               <h2 class="center red-text lighten-2"><i class="medium material-icons">grade</i></h2>
+               <h5 class="center font">Aprende cómo funciona</h5>
+
+               <p class="light">We did most of the heavy lifting for you to provide a default stylings that incorporate our custom components. Additionally, we refined animations and transitions to provide a smoother experience for developers.</p>
+             </div>
+           </div>
+
+           <div class="col s12 m4">
+             <div class="icon-block">
+               <h2 class="center red-text lighten-2"><i class="medium material-icons">mode_edit</i></h2>
+               <h5 class="center font">Agrega un Emailer</h5>
+
+               <p class="light">By utilizing elements and principles of Material Design, we were able to create a framework that incorporates components and animations that provide more feedback to users. Additionally, a single underlying responsive system across all platforms allow for a more unified user experience.</p>
+             </div>
+           </div>
+
+           <div class="col s12 m4">
+             <div class="icon-block">
+               <h2 class="center red-text lighten-2"><i class="medium material-icons">library_books</i></h2>
+               <h5 class="center font">Revisa el Almacén de Emailers</h5>
+
+               <p class="light">We have provided detailed documentation as well as specific code examples to help new users get started. We are also always open to feedback and can answer any questions a user may have about Materialize.</p>
+             </div>
+           </div>
+         </div>
+
+        <br><br>
       </div>
     </div>
-  </div>
-</div>
-
-</div>
     </div>
 
-</div>
+    <footer class="page-footer light-blue darken-4">
+      <div class="container">
+        <p class="grey-text text-lighten-4 center">Making Devs, 2017</p><br>
+      </div>
+     </div>
+    </footer>
 
+   </div>
 
-<footer class="footer-zone text-center">
-  <p class="customButton">Making Devs</p>
-</footer>
+    <script type="text/javascript" src="third-party/director/build/director.min.js"></script>
+    <script type="text/javascript" src="third-party/handlebars/handlebars.js"></script>
+    <script type="text/javascript" src="third-party/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="third-party/materialize/dist/js/materialize.js"></script>
+    <script type="text/javascript" src="third-party/tinymce/tinymce.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/prueba.js"></script>
+  </body>
 
-
-<script type="text/javascript" src="third-party/jquery/dist/jquery.js"></script>
-<script type="text/javascript" src="third-party/handlebars/handlebars.js"></script>
-<script type="text/javascript" src="third-party/bootstrap/dist/js/bootstrap.js"></script>
-<script type="text/javascript" src="third-party/tinymce/tinymce.js"></script>
-<script type="text/javascript" src="third-party/moment/moment.js"></script>
-<script type="text/javascript" src="third-party/sockjs-client/dist/sockjs-0.3.4.js"></script>
-<script type="text/javascript" src="third-party/vertx3-eventbus-client/vertx-eventbus.js"></script>
-<script type="text/javascript" src="third-party/form.validation/dist/js/formValidation.js"></script>
-<script type="text/javascript" src="third-party/pnotify/dist/pnotify.js"></script>
-<script type="text/javascript" src="third-party/pnotify/dist/pnotify.buttons.js"></script>
-<script type="text/javascript" src="third-party/director/build/director.min.js"></script>
-<script type="text/javascript" src="third-party/form.validation/dist/js/framework/bootstrap.js"></script>
-<script type="text/javascript" src="js/environment.js"></script>
-<script type="text/javascript" src="js/validation.js"></script>
-<script type="text/javascript" src="js/request.js"></script>
-<script type="text/javascript" src="js/routes.js"></script>
-<script type="text/javascript" src="js/verticle.js"></script>
-
-</body>
 </html>
