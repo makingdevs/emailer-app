@@ -2,6 +2,7 @@ class @.App
   constructor: ->
     console.log '1.- Inicializando App Class'
     @manager= new UrlManager()
+    @tinymce = new Validator()
 
 class @.ViewResolver
   @mergeViewWithModel = (templateName, model) ->
@@ -57,3 +58,13 @@ class @.UrlManager
     html = ViewResolver.mergeViewWithModel "#preview-emailer", context
     $("#index-banner").html(html)
 
+class @.Validator
+  constructor: ->
+    console.log "Validator here, listo para validar el boton"
+    @formValidator()
+
+  formValidator: ->
+     $('#submitForm').on('click', @addingAlert)
+
+  addingAlert: ->
+    console.log "Validando cosas"
