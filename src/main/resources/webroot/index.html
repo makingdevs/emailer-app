@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Emailer Web App</title>
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Pacifico|Lobster+Two|Poiret+One" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Pacifico|Muli|Lobster+Two|Poiret+One" rel="stylesheet">
     <link href="third-party/materialize/dist/css/materialize.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
@@ -19,16 +19,20 @@
           <div class="row">
             <div class="input-field col s12">
               <i class="material-icons prefix">email</i>
-              <input id="icon_prefix" type="text" class="validate">
-              <label for="icon_prefix">Título de Emailer</label>
+              <input id="subjectEmail" placeholder="Título del Emailer" type="text" class="validate" value="{{subject}}">
             </div>
               <i class="material-icons prefix">mode_edit</i>
               <label>* A continuación redacta el contenido del emailer, asignado un parámetro con la siguiente forma: $ { { param } }</label>
               <br/>
+                <input type="hidden" name="email_id" id="email_id" value="{{_id}}"/>
+                <input type="hidden" name="versionEmail" id="versionEmail" value="{{version}}"/>
+                <input type="hidden" name="createdEmail" id="createdEmail" value="{{dateCreated}}"/>
+                <input type="hidden" name="updatedEmail" id="updatedEmail" value="{{lastUpdate}}"/>
               <br/>
-              <textarea id="textarea1"></textarea>
+              <textarea id="contentEmail">{{content}}</textarea>
           </div>
-          <a class="center waves-effect waves-light btn">Añadir</a>
+          <a class="btn waves-effect waves-light" id="submitEmailer">View Trello
+                    </a></br>
         </form>
       </div>
      </div>
@@ -46,20 +50,26 @@
         <th data-field="name">ID</th>
         <th data-field="price">Title</th>
         <th data-field="price">Version</th>
-        <th data-field="price">Preview</th>
+        <th data-field="price">Options</th>
         </tr>
         </thead>
         <tbody>
+        {{#each emails}}
         <tr>
         <td>1</td>
-        <td>7625362853263</td>
-        <td>Emailer Version One</td>
-        <td>1</td>
-        <td><a class="btn-floating btn-small waves-effect waves-light red" href="#/previewEmailer/12"><i class="material-icons">visibility</i></a>
+        <td>{{_id}}</td>
+        <td>{{subject}}</td>
+        <td>{{version}}</td>
+        <td><a class="btn-floating btn-small waves-effect waves-light green" href="#/sendEmailer/{{_id}}"><i class="material-icons">email</i></a>
+        <a class="btn-floating btn-small waves-effect waves-light blue" href="#/previewEmailer/{{_id}}"><i class="material-icons">visibility</i></a>
+        <a class="btn-floating btn-small waves-effect waves-light yellow" href="#/editEmailer/{{_id}}"><i class="material-icons">mode_edit</i></a>
+        <a class="btn-floating btn-small waves-effect waves-light red" id="deleteButton" href="#/deleteEmailer/{{_id}}"><i class="material-icons">delete</i></a>
         </td>
         </tr>
+        {{/each}}
         </tbody>
         </table>
+        <div id="paginas"></div>
        </div>
      </div>
 
@@ -140,33 +150,17 @@
     <script id="preview-emailer" type="text/x-handlebars-template">
      <div class="row center">
         <h1 class="center brand-logo red-text lighten-2 cursive">Preview de Emailer</h1>
-        <h2 class="title">Emailer Title</h1>
-        <div class="chip">ID: 2e32dh78f3g7</div>
-        <div class="chip">Version 1</div>
-        <div class="chip">Last Update 12/67/1992</div>
-        <div class="chip">Date Created 12/06/1994</div><br><br>
-        <a class="btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Enviar Correo de Prueba"><i class="small material-icons">call_made</i></a>
-        <a class="btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Editar"><i class="small material-icons">mode_edit</i></a>
-        <a class="btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Eliminar"><i class="small material-icons">delete</i></a>
-         <!-- Modal Trigger -->
-           <button data-target="modal1" class="btn">Modal</button>
-
-
-             <!-- Modal Structure -->
-               <div id="modal1" class="modal">
-                   <div class="modal-content">
-                         <h4>Modal Header</h4>
-                               <p>A bunch of text</p>
-                                   </div>
-                                       <div class="modal-footer">
-                                             <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
-                                                 </div>
-                                                   </div>
-
+        <h2 class="title">{{subject}}</h1>
+        <div class="chip">ID: {{_id}}</div>
+        <div class="chip">Version {{version}}</div>
+        <div class="chip" id="lastUpdate"></div>
+        <div class="chip" id="dateCreated"></div><br><br>
         <div class="row">
-         <iframe id="iframeID" class="box" width="100%" height="550" frameborder="0"></iframe>
+          <div class="col s12 m4 l2"></div>
+          <div class="col s12 m4 l8"> <iframe id="iframeID" class="box" width="100%" height="550" frameborder="0" style="border:1px solid gray;"></iframe></div>
+          <div class="col s12 m4 l2"></div>
         </div>
-     </div>
+       </div>
     </script>
 
     <nav class="white" role="navigation">
@@ -241,6 +235,9 @@
     <script type="text/javascript" src="third-party/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="third-party/materialize/dist/js/materialize.js"></script>
     <script type="text/javascript" src="third-party/tinymce/tinymce.js"></script>
+    <script type="text/javascript" src="third-party/pnotify/dist/pnotify.js"></script>
+    <script type="text/javascript" src="third-party/pnotify/dist/pnotify.buttons.js"></script>
+    <script type="text/javascript" src="js/manager.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript" src="js/prueba.js"></script>
