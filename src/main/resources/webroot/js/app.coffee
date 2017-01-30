@@ -2,7 +2,6 @@ class @.App
   constructor: ->
     console.log '1.- Inicializando App Class'
     @manager= new UrlManager()
-    @tinymce = new Validator()
 
 class @.ViewResolver
   @mergeViewWithModel = (templateName, model) ->
@@ -13,8 +12,8 @@ class @.ViewResolver
 class @.UrlManager
 
   constructor: ->
-    console.log '2.- Manager Class on'
     @start()
+    @emailer = new EmailerManager()
 
   start: ->
     console.log "Start on"
@@ -23,20 +22,17 @@ class @.UrlManager
       '/newEmailer': @newEmailer
       '/readEmailers': @readEmailers
       '/previewEmailer/:id': @previewEmailer
+      '/editEmailer/:id': @editEmailer
+      '/deleteEmailer/:id':@removeEmailer
     @urlMappings()
 
   urlMappings: ->
-    console.log "url mappings on"
     router = Router(@routes)
     router.init()
 
   infoEmailer: ->
-    context =
-       title: 'Raiz'
-       body: 'This is my first post!'
     html = ViewResolver.mergeViewWithModel "#start-emailer", context
     $("#index-banner").html(html)
-    console.log "prueba con handlebars"
 
   newEmailer: ->
     context =
@@ -46,25 +42,54 @@ class @.UrlManager
     $("#index-banner").html(html)
 
   readEmailers: ->
-    context =
-       title: 'Raiz'
-       body: 'This is my first post!'
-    html = ViewResolver.mergeViewWithModel "#read-emailer", context
-    $("#index-banner").html(html)
+    $.ajax
+      data: 'setValue=1'
+      url: 'http://localhost:8000/showSet'
+      type: 'post'
+      success: (response) ->
+       context =
+         emails: response
+       html = ViewResolver.mergeViewWithModel "#read-emailer", context
+       $("#index-banner").html(html)
+       $("#deleteButton").on('click', @write)
+      error: ->
+       alert 'error al procesar'
 
   previewEmailer: (id) ->
-    context =
-       id: id
-    html = ViewResolver.mergeViewWithModel "#preview-emailer", context
-    $("#index-banner").html(html)
+     console.log "Preview Emailer"
+     $.ajax
+       data: 'idEmail=' + id
+       url: 'http://localhost:8000/showEmail'
+       type: 'post'
+       success: (response) ->
+         json = $.parseJSON(response)
+         console.log json
+         html = ViewResolver.mergeViewWithModel "#preview-emailer", json
+         $("#index-banner").html(html)
+         $('#iframeID').contents().find("body").html(json.content)
+         $("#dateCreated").html("Fecha de Creación: "+json.dateCreated)
+         $("#lastUpdate").html("Última Actualización "+json.lastUpdate)
+       error: ->
+         console.log "Error al ir por el emailer"
 
-class @.Validator
-  constructor: ->
-    console.log "Validator here, listo para validar el boton"
-    @formValidator()
+  editEmailer:(id) ->
+     $.ajax
+       data: 'idEmail=' + id
+       url: 'http://localhost:8000/showEmail'
+       type: 'post'
+       success: (response) ->
+        # tinyMCE.remove()
+         json = $.parseJSON(response)
+         console.log json
+         html = ViewResolver.mergeViewWithModel "#new-emailer", json
+         $("#index-banner").html(html)
 
-  formValidator: ->
-     $('#submitForm').on('click', @addingAlert)
+  removeEmailer:(id) ->
+     console.log "Removiendo correo"
+     $.ajax
+       data: 'idEmail=' + id
+       url:'http://localhost:8000/remove'
+       type: 'post'
+       success: (response) ->
+         Materialize.toast '<b>Eliminando emailer<b>'+id, 4000
 
-  addingAlert: ->
-    console.log "Validando cosas"
