@@ -24,6 +24,14 @@ class @.Validator
       else
         EmailerManager.update()
 
+   @validateSendPreview: ->
+     $('#submitPreview').click ->
+       if $('#emailPreview').val() != ""
+         console.log "Enviando preview al emailer sender service"
+         EmailerManager.send()
+       else
+         Materialize.toast 'Agrega un email para enviar preview', 3000
+
 class @.EmailerManager
   baseUrl = "http://localhost:8000"
 
@@ -50,6 +58,18 @@ class @.EmailerManager
      error: ->
        console.log "Error al actualizar correo"
 
+  @send: ->
+    console.log $('#updateForm').serialize()
+    $.ajax
+     data: $('#previewForm').serialize()
+     type: 'post'
+     url: baseUrl + '/send'
+     success: ->
+       Materialize.toast 'Solicitud de envio de correo al Emailer API fue enviada correctamente.', 3000
+     error: ->
+       console.log "Error al enviar preview"
+
+
   index: ->
     html = ViewResolver.mergeViewWithModel "#start-emailer"
     $("#index-banner").html(html)
@@ -70,6 +90,9 @@ class @.EmailerManager
        html = ViewResolver.mergeViewWithModel "#read-emailer", context
        $("#index-banner").html(html)
        $('#modalDelete').modal()
+       $('#modalPreview').modal()
+       Validator.validateSendPreview()
+
       error: ->
         alert 'error al procesar'
 

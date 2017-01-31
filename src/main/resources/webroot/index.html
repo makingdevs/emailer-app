@@ -52,7 +52,7 @@
               <br/>
               <textarea id="contentEmail" name="contentEmail">{{content}}</textarea>
           </div>
-          <a class="btn waves-effect waves-light" type="submit" id="submitUpdate">Actualizar :P
+          <a class="btn waves-effect waves-light" type="submit" id="submitUpdate">Actualizar
          </a></br>
         </form>
       </div>
@@ -81,10 +81,26 @@
         <td>{{_id}}</td>
         <td>{{subject}}</td>
         <td>{{version}}</td>
-        <td><a class="btn-floating btn-small waves-effect waves-light green" href="#/sendEmailer/{{_id}}"><i class="material-icons">email</i></a>
+        <td><a class="btn-floating btn-small waves-effect waves-light green" href="#modalPreview"><i class="material-icons">email</i></a>
         <a class="btn-floating btn-small waves-effect waves-light blue" href="#/previewEmailer/{{_id}}"><i class="material-icons">visibility</i></a>
         <a class="btn-floating btn-small waves-effect waves-light yellow" href="#/editEmailer/{{_id}}"><i class="material-icons">mode_edit</i></a>
         <a class="btn-floating btn-small waves-effect waves-light red" id="deleteButton" href="#modalDelete"><i class="material-icons">delete</i></a>
+
+        <div id="modalPreview" class="modal">
+        <div class="modal-content">
+          <p class="font">Ingresa el correo para mandar el Emailer</p>
+        </div>
+          <form id="previewForm">
+          <div class="input-field col s6">
+          <input id="emailPreview" name="emailPreview" type="email"/><br>
+          <label>Email</label>
+          </div>
+          <input type="hidden" id="email_id" name="email_id" value="{{_id}}"/>
+          <a class="btn waves-effect waves-light btn-small" type="submit" id="submitPreview">Enviar Preview</a>
+          </form>
+          <br>
+        </div>
+
         <div id="modalDelete" class="modal">
         <div class="modal-content">
           <p class="font">¿En realidad quieres eliminar este emailer?</p>
@@ -93,7 +109,8 @@
           <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
           <a href="#/deleteEmailer/{{_id}}" class=" modal-action modal-close waves-effect waves-green btn-flat">Eliminar</a>
         </div>
-      </div>
+        </div>
+
         </td>
         </tr>
         {{/each}}
