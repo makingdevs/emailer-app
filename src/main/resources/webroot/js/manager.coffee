@@ -27,7 +27,6 @@ class @.Validator
    @validateSendPreview: ->
      $('#submitPreview').click ->
        if $('#emailPreview').val() != ""
-         console.log "Enviando preview al emailer sender service"
          EmailerManager.send()
        else
          Materialize.toast 'Agrega un email para enviar preview', 3000
@@ -36,7 +35,6 @@ class @.EmailerManager
   baseUrl = "http://localhost:8000"
 
   @add: ->
-    console.log
     $.ajax
      data: $('#newForm').serialize()
      type: 'post'
