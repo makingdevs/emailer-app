@@ -1,6 +1,5 @@
 class @.App
   constructor: ->
-    console.log '1.- Inicializando App Class'
     @manager= new UrlManager()
 
 
@@ -14,13 +13,17 @@ class @.UrlManager
     @routes =
       '/': @emailerManager.index
       '/newEmailer': @emailerManager.new
-      '/readEmailers': @emailerManager.read
-      '/previewEmailer/:id': @emailerManager.preview
-      '/editEmailer/:id': @emailerManager.edit
+      '/readEmailers': @emailerManager.readEmailers
+      '/previewEmailer/:id': @emailerManager.previewEmailer
+      '/editEmailer/:id': @emailerManager.editEmailer
       '/deleteEmailer/:id':@emailerManager.delete
     @urlMappings()
 
   urlMappings: ->
     router = Router(@routes)
     router.init()
+
+  @setRoute: ->
+    router = Router(@routes)
+    router.setRoute '/'
 

@@ -34,6 +34,7 @@ class @.EmailerManager
      type: 'post'
      url: baseUrl + '/newEmail'
      success: ->
+       UrlManager.setRoute()
        Materialize.toast 'Emailer Agregado', 4000
      error: ->
        console.log "Error al agregar"
@@ -44,6 +45,7 @@ class @.EmailerManager
      type: 'post'
      url: baseUrl + '/update'
      success: ->
+       UrlManager.setRoute()
        Materialize.toast 'Emailer Actualizado', 4000
      error: ->
        console.log "Error al actualizar correo"
@@ -57,7 +59,7 @@ class @.EmailerManager
     $("#index-banner").html(html)
     Validator.validateNewForm()
 
-  read: ->
+  readEmailers: ->
     $.ajax
       data: 'setValue=1'
       url: "#{baseUrl}/showSet"
@@ -71,7 +73,7 @@ class @.EmailerManager
       error: ->
         alert 'error al procesar'
 
-  preview: (id)->
+  previewEmailer: (id)->
     $.ajax
        data: 'idEmail=' + id
        url: "#{baseUrl}/showEmail"
@@ -86,7 +88,7 @@ class @.EmailerManager
        error: ->
          console.log "Error al ir por el emailer"
 
-  edit: (id)->
+  editEmailer: (id)->
     $.ajax
        data: 'idEmail=' + id
        url: "#{baseUrl}/showEmail"
@@ -105,5 +107,6 @@ class @.EmailerManager
        url:"#{baseUrl}/remove"
        type: 'post'
        success: (response) ->
+         UrlManager.setRoute()
          Materialize.toast 'Eliminando emailer '+id, 4000
 
