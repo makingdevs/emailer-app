@@ -34,7 +34,7 @@
     </script>
 
     <script id="update-emailer" type="text/x-handlebars-template">
-<div class="container">
+   <div class="container">
       <div class="row">
         <h1 class="center brand-logo red-text lighten-2 cursive">Actualizar Emailer</h1>
         <form class="col s12" id="updateForm" class="navbar-form">
@@ -81,25 +81,10 @@
         <td>{{_id}}</td>
         <td>{{subject}}</td>
         <td>{{version}}</td>
-        <td><a class="btn-floating btn-small waves-effect waves-light green" href="#modalPreview"><i class="material-icons">email</i></a>
+        <td>
         <a class="btn-floating btn-small waves-effect waves-light blue" href="#/previewEmailer/{{_id}}"><i class="material-icons">visibility</i></a>
         <a class="btn-floating btn-small waves-effect waves-light yellow" href="#/editEmailer/{{_id}}"><i class="material-icons">mode_edit</i></a>
         <a class="btn-floating btn-small waves-effect waves-light red" id="deleteButton" href="#modalDelete"><i class="material-icons">delete</i></a>
-
-        <div id="modalPreview" class="modal">
-        <div class="modal-content">
-          <p class="font">Ingresa el correo para mandar el Emailer</p>
-        </div>
-          <form id="previewForm">
-          <div class="input-field col s6">
-          <input id="emailPreview" name="emailPreview" type="email"/><br>
-          <label>Email</label>
-          </div>
-          <input type="hidden" id="email_id" name="email_id" value="{{_id}}"/>
-          <a class="btn waves-effect waves-light btn-small" type="submit" id="submitPreview">Enviar Preview</a>
-          </form>
-          <br>
-        </div>
 
         <div id="modalDelete" class="modal">
         <div class="modal-content">
@@ -124,7 +109,7 @@
     </script>
 
     <script id="start-emailer" type="text/x-handlebars-template">
-<div class="container">
+    <div class="container">
          <br><br>
          <h1 class="header center red-text lighten-2">Emailer App</h1>
          <div class="row center">
@@ -196,13 +181,45 @@
     </script>
 
     <script id="preview-emailer" type="text/x-handlebars-template">
-<div class="row center">
+    <div class="row center">
         <h1 class="center brand-logo red-text lighten-2 cursive">Preview de Emailer</h1>
         <h2 class="title">{{subject}}</h1>
         <div class="chip">ID: {{_id}}</div>
         <div class="chip">Version {{version}}</div>
         <div class="chip" id="lastUpdate"></div>
         <div class="chip" id="dateCreated"></div><br><br>
+        <div class="row">
+
+        <a class="btn-floating btn-small waves-effect waves-light green" href="#modalPreview"><i class="material-icons">email</i></a>
+        <a class="btn-floating btn-small waves-effect waves-light yellow" href="#/editEmailer/{{_id}}"><i class="material-icons">mode_edit</i></a>
+        <a class="btn-floating btn-small waves-effect waves-light red" id="deleteButton" href="#modalDelete"><i class="material-icons">delete</i></a>
+
+        <div id="modalPreview" class="modal">
+        <div class="modal-content">
+          <p class="font">Ingresa el correo para mandar el Emailer</p>
+        </div>
+          <form id="previewForm">
+          <div class="input-field col s6">
+          <input id="emailPreview" name="emailPreview" type="email"/><br>
+          <label>Email</label>
+          </div>
+          <input type="hidden" id="email_id" name="email_id" value="{{_id}}"/>
+          <a class="btn waves-effect waves-light btn-small" type="submit" id="submitPreview">Enviar Preview</a>
+          </form>
+          <br>
+        </div>
+
+        <div id="modalDelete" class="modal">
+        <div class="modal-content">
+          <p class="font">¿En realidad quieres eliminar este emailer?</p>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+          <a href="#/deleteEmailer/{{_id}}" class=" modal-action modal-close waves-effect waves-green btn-flat">Eliminar</a>
+        </div>
+        </div>
+
+        </div>
         <div class="row">
           <div class="col s12 m4 l2"></div>
           <div class="col s12 m4 l8"> <iframe id="iframeID" class="box" width="100%" height="550" frameborder="0" style="border:1px solid gray;"></iframe></div>

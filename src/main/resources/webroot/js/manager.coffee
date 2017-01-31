@@ -89,8 +89,6 @@ class @.EmailerManager
          emails: response
        html = ViewResolver.mergeViewWithModel "#read-emailer", context
        $("#index-banner").html(html)
-       $('#modalDelete').modal()
-       $('#modalPreview').modal()
        Validator.validateSendPreview()
 
       error: ->
@@ -108,6 +106,8 @@ class @.EmailerManager
          $('#iframeID').contents().find("body").html(json.content)
          $("#dateCreated").html("Fecha de Creación: "+json.dateCreated)
          $("#lastUpdate").html("Última Actualización "+json.lastUpdate)
+         $('#modalDelete').modal()
+         $('#modalPreview').modal()
        error: ->
          console.log "Error al ir por el emailer"
 
