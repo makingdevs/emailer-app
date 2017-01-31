@@ -4,6 +4,26 @@ class @.ViewResolver
     template = Handlebars.compile source
     template model
 
+class @.Validator
+  @validateNewForm: ->
+    $('#submitEmailer').click ->
+      if $('#subjectEmail').val() == ""
+        Materialize.toast 'Agrega un título al emailer', 4000
+      else if $('#contentEmail').val() == ""
+        Materialize.toast 'Agrega contenido al emailer', 4000
+      else
+        Materialize.toast 'Mandando correo', 4000
+
+  @validateUpdateForm: ->
+    $('#submitUpdate').click ->
+      if $('#subjectEmail').val() == ""
+        Materialize.toast 'Agrega un título al emailer', 4000
+      else if $('#contentEmail').val() == ""
+        Materialize.toast 'Agrega contenido al emailer', 4000
+      else
+        Materialize.toast 'Agregando actualizacion :D', 4000
+
+
 class @.EmailerManager
   baseUrl = "http://localhost:8000"
 
@@ -14,11 +34,13 @@ class @.EmailerManager
   new: ->
     html = ViewResolver.mergeViewWithModel "#new-emailer"
     $("#index-banner").html(html)
+    Validator.validateNewForm()
 
   read: ->
+    console.log "#{baseUrl}/showSet"
     $.ajax
       data: 'setValue=1'
-      url: '#{baseUrl}/showSet'
+      url: "#{baseUrl}/showSet"
       type: 'post'
       success: (response) ->
        context =
@@ -27,16 +49,15 @@ class @.EmailerManager
        $("#index-banner").html(html)
        $("#deleteButton").on('click', @write)
       error: ->
-       alert 'error al procesar'
+        alert 'error al procesar'
 
   preview: (id)->
     $.ajax
        data: 'idEmail=' + id
-       url: '#{baseUrl}/showEmail'
+       url: "#{baseUrl}/showEmail"
        type: 'post'
        success: (response) ->
          json = $.parseJSON(response)
-         console.log json
          html = ViewResolver.mergeViewWithModel "#preview-emailer", json
          $("#index-banner").html(html)
          $('#iframeID').contents().find("body").html(json.content)
@@ -48,20 +69,21 @@ class @.EmailerManager
   edit: (id)->
     $.ajax
        data: 'idEmail=' + id
-       url: '#{baseUrl}/showEmail'
+       url: "#{baseUrl}/showEmail"
        type: 'post'
        success: (response) ->
-        # tinyMCE.remove()
+         # tinyMCE.remove()
          json = $.parseJSON(response)
-         console.log json
-         html = ViewResolver.mergeViewWithModel "#new-emailer", json
+         html = ViewResolver.mergeViewWithModel "#update-emailer", json
          $("#index-banner").html(html)
+         Validator.validateUpdateForm()
+
 
   delete: (id)->
-     $.ajax
+    $.ajax
        data: 'idEmail=' + id
-       url:'#{baseUrl}/remove'
+       url:"#{baseUrl}/remove"
        type: 'post'
        success: (response) ->
-         Materialize.toast '<b>Eliminando emailer<b>'+id, 4000
+         Materialize.toast 'Eliminando emailer '+id, 4000
 
