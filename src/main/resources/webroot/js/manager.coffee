@@ -5,6 +5,7 @@ class @.ViewResolver
     template model
 
 class @.Validator
+
   @validateNewForm: ->
     $('#submitEmailer').click ->
       if $('#subjectEmail').val() == ""
@@ -12,7 +13,7 @@ class @.Validator
       else if $('#contentEmail').val() == ""
         Materialize.toast 'Agrega contenido al emailer', 4000
       else
-        Materialize.toast 'Mandando correo', 4000
+        EmailerManager.add()
 
   @validateUpdateForm: ->
     $('#submitUpdate').click ->
@@ -21,11 +22,31 @@ class @.Validator
       else if $('#contentEmail').val() == ""
         Materialize.toast 'Agrega contenido al emailer', 4000
       else
-        Materialize.toast 'Agregando actualizacion :D', 4000
-
+        EmailerManager.update()
 
 class @.EmailerManager
   baseUrl = "http://localhost:8000"
+
+  @add: ->
+    console.log
+    $.ajax
+     data: $('#newForm').serialize()
+     type: 'post'
+     url: baseUrl + '/newEmail'
+     success: ->
+       Materialize.toast 'Emailer Agregado', 4000
+     error: ->
+       console.log "Error al agregar"
+
+  @update: ->
+    $.ajax
+     data: $('#updateForm').serialize()
+     type: 'post'
+     url: baseUrl + '/update'
+     success: ->
+       Materialize.toast 'Emailer Actualizado', 4000
+     error: ->
+       console.log "Error al actualizar correo"
 
   index: ->
     html = ViewResolver.mergeViewWithModel "#start-emailer"
@@ -37,7 +58,6 @@ class @.EmailerManager
     Validator.validateNewForm()
 
   read: ->
-    console.log "#{baseUrl}/showSet"
     $.ajax
       data: 'setValue=1'
       url: "#{baseUrl}/showSet"
