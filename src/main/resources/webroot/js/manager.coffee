@@ -89,7 +89,6 @@ class @.EmailerManager
          emails: response
        html = ViewResolver.mergeViewWithModel "#read-emailer", context
        $("#index-banner").html(html)
-       Validator.validateSendPreview()
 
       error: ->
         alert 'error al procesar'
@@ -108,6 +107,7 @@ class @.EmailerManager
          $("#lastUpdate").html("Última Actualización "+json.lastUpdate)
          $('#modalDelete').modal()
          $('#modalPreview').modal()
+         Validator.validateSendPreview()
        error: ->
          console.log "Error al ir por el emailer"
 
