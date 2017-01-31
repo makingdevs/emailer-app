@@ -25,5 +25,6 @@ class @.UrlManager
 
   @setRoute: ->
     router = Router(@routes)
-    router.setRoute '/'
+    router.setRoute '/readEmailers'
+
 

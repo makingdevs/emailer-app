@@ -107,6 +107,6 @@ class @.EmailerManager
        url:"#{baseUrl}/remove"
        type: 'post'
        success: (response) ->
-         UrlManager.setRoute()
          Materialize.toast 'Eliminando emailer '+id, 4000
+         UrlManager.setRoute()
 
