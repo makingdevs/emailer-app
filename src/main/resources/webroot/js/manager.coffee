@@ -57,13 +57,13 @@ class @.EmailerManager
        console.log "Error al actualizar correo"
 
   @send: ->
-    console.log $('#updateForm').serialize()
     $.ajax
      data: $('#previewForm').serialize()
      type: 'post'
      url: baseUrl + '/send'
      success: ->
        Materialize.toast 'Solicitud de envio de correo al Emailer API fue enviada correctamente.', 3000
+       Verticle.init()
      error: ->
        console.log "Error al enviar preview"
 

@@ -1,6 +1,7 @@
 class @.App
   constructor: ->
     @manager= new UrlManager()
+    Verticle.init()
 
 class @.UrlManager
 
@@ -26,12 +27,10 @@ class @.UrlManager
     router = Router(@routes)
     router.setRoute '/readEmailers'
 
-###
 class @.Verticle
   baseUrl = "http://localhost:8000"
   @init: ->
-    eb = new EventBus(baseURL + '/eventbus')
+    eb = new EventBus('http://localhost:8000/eventbus')
     eb.onopen = ->
-    eb.registerHandler 'com.makingdevs.email.success', (error, message) ->
-      Materialize.toast 'Emailer Enviado: '+message.body, 3000
-      ###
+      eb.registerHandler 'com.makingdevs.email.success', (error, message) ->
+        Materialize.toast 'Email Enviado\n ' + message.body, 4000
