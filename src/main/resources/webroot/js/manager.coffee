@@ -87,6 +87,7 @@ class @.EmailerManager
          emails: response
        html = ViewResolver.mergeViewWithModel "#read-emailer", context
        $("#index-banner").html(html)
+       $('#modalDelete').modal()
 
       error: ->
         alert 'error al procesar'
@@ -101,8 +102,8 @@ class @.EmailerManager
          html = ViewResolver.mergeViewWithModel "#preview-emailer", json
          $("#index-banner").html(html)
          $('#iframeID').contents().find("body").html(json.content)
-         $("#dateCreated").html("Fecha de Creación: "+json.dateCreated)
-         $("#lastUpdate").html("Última Actualización "+json.lastUpdate)
+         $("#dateCreated").html("Fecha de Creación: "+moment(json.dateCreated).format('MMMM Do YYYY'))
+         $("#lastUpdate").html("Última Actualización: "+moment(json.lastUpdate).format('MMMM Do YYYY, h:mm:ss'))
          $('#modalDelete').modal()
          $('#modalPreview').modal()
          Validator.validateSendPreview()
