@@ -24,15 +24,36 @@
               <i class="material-icons prefix">mode_edit</i>
               <label>* A continuación redacta el contenido del emailer, asignado un parámetro con la siguiente forma: $ { { param } }</label>
               <br/>
+              <textarea id="contentEmail">{{content}}</textarea>
+          </div>
+          <a class="btn waves-effect waves-light" id="submitEmailer">Agregar Emailer
+                    </a></br>
+        </form>
+      </div>
+     </div>
+    </script>
+
+    <script id="update-emailer" type="text/x-handlebars-template">
+    <div class="container">
+      <div class="row">
+        <h1 class="center brand-logo red-text lighten-2 cursive">Actualizar Emailer</h1>
+        <form class="col s12" id="updateForm" method="post" class="navbar-form">
+          <div class="row">
+            <div class="input-field col s12">
+              <i class="material-icons prefix">email</i>
+              <input id="subjectEmail" placeholder="Título del Emailer" type="text" class="validate" value="{{subject}}">
+            </div>
+              <i class="material-icons prefix">mode_edit</i>
+              <label>* A continuación redacta el contenido del emailer, asignado un parámetro con la siguiente forma: $ { { param } }</label>
+              <br/>
                 <input type="hidden" name="email_id" id="email_id" value="{{_id}}"/>
                 <input type="hidden" name="versionEmail" id="versionEmail" value="{{version}}"/>
                 <input type="hidden" name="createdEmail" id="createdEmail" value="{{dateCreated}}"/>
-                <input type="hidden" name="updatedEmail" id="updatedEmail" value="{{lastUpdate}}"/>
               <br/>
               <textarea id="contentEmail">{{content}}</textarea>
           </div>
-          <a class="btn waves-effect waves-light" id="submitEmailer">View Trello
-                    </a></br>
+          <a class="btn waves-effect waves-light" type="submit" id="submitUpdate">Actualizar :P
+         </a></br>
         </form>
       </div>
      </div>
