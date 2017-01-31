@@ -69,7 +69,7 @@ class @.EmailerManager
          emails: response
        html = ViewResolver.mergeViewWithModel "#read-emailer", context
        $("#index-banner").html(html)
-       $("#deleteButton").on('click', @write)
+       $('#modalDelete').modal()
       error: ->
         alert 'error al procesar'
 
