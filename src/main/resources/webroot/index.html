@@ -15,16 +15,16 @@
     <div class="container">
       <div class="row">
         <h1 class="center brand-logo red-text lighten-2 cursive">Nuevo Emailer</h1>
-        <form class="col s12">
+        <form id="newForm" class="col s12">
           <div class="row">
             <div class="input-field col s12">
               <i class="material-icons prefix">email</i>
-              <input id="subjectEmail" placeholder="Título del Emailer" type="text" class="validate" value="{{subject}}">
+              <input id="subjectEmail" name="subjectEmail" placeholder="Título del Emailer" type="text" class="validate" value="{{subject}}">
             </div>
               <i class="material-icons prefix">mode_edit</i>
               <label>* A continuación redacta el contenido del emailer, asignado un parámetro con la siguiente forma: $ { { param } }</label>
               <br/>
-              <textarea id="contentEmail">{{content}}</textarea>
+              <textarea id="contentEmail" name="contentEmail">{{content}}</textarea>
           </div>
           <a class="btn waves-effect waves-light" id="submitEmailer">Agregar Emailer
                     </a></br>
@@ -37,11 +37,11 @@
     <div class="container">
       <div class="row">
         <h1 class="center brand-logo red-text lighten-2 cursive">Actualizar Emailer</h1>
-        <form class="col s12" id="updateForm" method="post" class="navbar-form">
+        <form class="col s12" id="updateForm" class="navbar-form">
           <div class="row">
             <div class="input-field col s12">
               <i class="material-icons prefix">email</i>
-              <input id="subjectEmail" placeholder="Título del Emailer" type="text" class="validate" value="{{subject}}">
+              <input id="subjectEmail" name="subjectEmail" placeholder="Título del Emailer" type="text" class="validate" value="{{subject}}">
             </div>
               <i class="material-icons prefix">mode_edit</i>
               <label>* A continuación redacta el contenido del emailer, asignado un parámetro con la siguiente forma: $ { { param } }</label>
@@ -50,7 +50,7 @@
                 <input type="hidden" name="versionEmail" id="versionEmail" value="{{version}}"/>
                 <input type="hidden" name="createdEmail" id="createdEmail" value="{{dateCreated}}"/>
               <br/>
-              <textarea id="contentEmail">{{content}}</textarea>
+              <textarea id="contentEmail" name="contentEmail">{{content}}</textarea>
           </div>
           <a class="btn waves-effect waves-light" type="submit" id="submitUpdate">Actualizar :P
          </a></br>
