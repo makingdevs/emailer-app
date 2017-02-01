@@ -14,6 +14,7 @@ class @.UrlManager
       '/': @emailerManager.index
       '/newEmailer': @emailerManager.new
       '/readEmailers': @emailerManager.readEmailers
+      '/setEmails/:id': @emailerManager.readSetEmailers
       '/previewEmailer/:id': @emailerManager.previewEmailer
       '/editEmailer/:id': @emailerManager.editEmailer
       '/deleteEmailer/:id':@emailerManager.delete
@@ -49,7 +50,7 @@ class @.Paginator
         skip = skip + 10
         i++
       html = html.concat('</ul>')
-      $('#paginas').html html 
+      $('#paginas').html html
       $('ul.paginator').addClass 'pagination'
       $('li.paginate').addClass 'waves-effect'
       $('#numberPage').html "Emailers: #{count}"

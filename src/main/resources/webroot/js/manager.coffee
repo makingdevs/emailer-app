@@ -79,7 +79,7 @@ class @.EmailerManager
 
   readEmailers: ->
     $.ajax
-      data: 'setValue=1'
+      data: 'setValue=0'
       url: "#{baseUrl}/showSet"
       type: 'post'
       success: (response) ->
@@ -89,9 +89,23 @@ class @.EmailerManager
        $("#index-banner").html(html)
        $('#modalDelete').modal()
        Paginator.paginate()
-
       error: ->
         alert 'error al procesar'
+
+   readSetEmailers: (id)->
+    $.ajax
+      data: 'setValue='+id
+      url: "#{baseUrl}/showSet"
+      type: 'post'
+      success: (response) ->
+       context =
+         emails: response
+       html = ViewResolver.mergeViewWithModel "#read-emailer", context
+       $("#index-banner").html(html)
+       $('#modalDelete').modal()
+       Paginator.paginate()
+      error: ->
+        alert 'error al procesar set de emailers'
 
   previewEmailer: (id)->
     $.ajax
