@@ -4,10 +4,24 @@ class @.ViewResolver
     template = Handlebars.compile source
     template model
 
+class @.TinyMce
+  @addingTextEditor: ->
+    tinymce.remove()
+    tinymce.init
+      selector: 'textarea'
+      menubar: false
+      plugins:['autoresize advlist autolink lists link image charmap print preview hr anchor '
+      'searchreplace wordcount visualblocks visualchars code fullscreen'
+      'insertdatetime media nonbreaking save table contextmenu directionality'
+      'textcolor colorpicker textpattern imagetools codesample']
+      toolbar1: 'formatselect fontsizeselect fontselect | code  preview forecolor bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image'
+      image_advtab: true
+
 class @.Validator
 
   @validateNewForm: ->
     $('#submitEmailer').click ->
+      tinyMCE.triggerSave()
       if $('#subjectEmail').val() == ""
         Materialize.toast 'Agrega un título al emailer', 4000
       else if $('#contentEmail').val() == ""
@@ -16,7 +30,9 @@ class @.Validator
         EmailerManager.add()
 
   @validateUpdateForm: ->
+    TinyMce.addingTextEditor()
     $('#submitUpdate').click ->
+      tinyMCE.triggerSave()
       if $('#subjectEmail').val() == ""
         Materialize.toast 'Agrega un título al emailer', 4000
       else if $('#contentEmail').val() == ""
@@ -76,6 +92,7 @@ class @.EmailerManager
     html = ViewResolver.mergeViewWithModel "#new-emailer"
     $("#index-banner").html(html)
     Validator.validateNewForm()
+    TinyMce.addingTextEditor()
 
   readEmailers: ->
     $.ajax
@@ -131,12 +148,11 @@ class @.EmailerManager
        url: "#{baseUrl}/showEmail"
        type: 'post'
        success: (response) ->
-         # tinyMCE.remove()
          json = $.parseJSON(response)
          html = ViewResolver.mergeViewWithModel "#update-emailer", json
          $("#index-banner").html(html)
          Validator.validateUpdateForm()
-
+         TinyMce.addingTextEditor()
 
   delete: (id)->
     $.ajax
