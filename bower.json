@@ -17,11 +17,9 @@
   "dependencies": {
     "tinymce": "^4.4.3",
     "handlebars": "^4.0.5",
-    "form.validation": "*",
     "moment": "^2.15.1",
     "vertx3-eventbus-client": "^3.3.3",
     "sockjs-client": "^1.1.1",
-    "pnotify": "^3.0.0",
     "director": "^1.2.8",
     "materialize": "^0.97.8"
   }
