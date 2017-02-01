@@ -2,6 +2,8 @@ class @.App
   constructor: ->
     @manager= new UrlManager()
     Verticle.init()
+    Paginator.paginate()
+    console.log "Mexican Debugger"
 
 class @.UrlManager
 
@@ -34,3 +36,14 @@ class @.Verticle
     eb.onopen = ->
       eb.registerHandler 'com.makingdevs.email.success', (error, message) ->
         Materialize.toast 'Email Enviado\n ' + message.body, 4000
+
+class @.Paginator
+  @paginate: ->
+    console.log "Paginate"
+    $.ajax
+      url: 'http://localhost:8000/countTotal'
+      type: 'GET'
+      success: (response) ->
+        console.log response 
+      error: ->
+	console.log "Error al consultar conteo"
