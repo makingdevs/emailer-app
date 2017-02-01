@@ -2,8 +2,6 @@ class @.App
   constructor: ->
     @manager= new UrlManager()
     Verticle.init()
-    Paginator.paginate()
-    console.log "Mexican Debugger"
 
 class @.UrlManager
 
@@ -39,11 +37,22 @@ class @.Verticle
 
 class @.Paginator
   @paginate: ->
-    console.log "Paginate"
-    $.ajax
-      url: 'http://localhost:8000/countTotal'
-      type: 'GET'
-      success: (response) ->
-        console.log response 
-      error: ->
-	console.log "Error al consultar conteo"
+    $.get('http://localhost:8000/countTotal').done((response)->
+      counter = response
+      count = counter.count
+      pages = if count % 10 == 0 then parseInt(count / 10) else parseInt(count / 10 + 1)
+      html = '<ul class=\'paginator\'>'
+      skip = 0
+      i = 1
+      while i <= pages
+        html = html.concat('<li class=\'paginate\'><a href=\'#/setEmails/' + skip + '\'>' + i + '</a></li>')
+        skip = skip + 10
+        i++
+      html = html.concat('</ul>')
+      $('#paginas').html html 
+      $('ul.paginator').addClass 'pagination'
+      $('li.paginate').addClass 'waves-effect'
+      $('#numberPage').html "Emailers: #{count}"
+    ).fail ->
+      console.log "Error al consultar conteo"
+
