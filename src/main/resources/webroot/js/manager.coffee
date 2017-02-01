@@ -88,6 +88,7 @@ class @.EmailerManager
        html = ViewResolver.mergeViewWithModel "#read-emailer", context
        $("#index-banner").html(html)
        $('#modalDelete').modal()
+       Paginator.paginate()
 
       error: ->
         alert 'error al procesar'
