@@ -13,7 +13,7 @@
   <body>
     <script id="new-emailer" type="text/x-handlebars-template">
 <div class="container">
-      <div class="row">
+      <div class="row center">
         <h1 class="center brand-logo red-text lighten-2 cursive">Nuevo Emailer</h1>
         <form id="newForm" class="col s12">
           <div class="row">
@@ -35,7 +35,7 @@
 
     <script id="update-emailer" type="text/x-handlebars-template">
    <div class="container">
-      <div class="row">
+      <div class="row center">
         <h1 class="center brand-logo red-text lighten-2 cursive">Actualizar Emailer</h1>
         <form class="col s12" id="updateForm" class="navbar-form">
           <div class="row">
@@ -91,9 +91,10 @@
 
         <div id="modalDelete" class="modal">
         <div class="modal-content">
-          <p class="font">¿En realidad quieres eliminar este emailer?</p>
+          <h4>Eliminando Emailer</h4>
         </div>
         <div class="modal-footer">
+          <p>¿En realidad quieres eliminar este emailer?</p>
           <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
           <a href="#/deleteEmailer/{{_id}}" class=" modal-action modal-close waves-effect waves-green btn-flat">Eliminar</a>
         </div>
@@ -199,13 +200,13 @@
 
         <div id="modalPreview" class="modal">
         <div class="modal-content">
-          <p class="font">Ingresa el correo para mandar el Emailer</p>
+          <h4>Enviando Prueba</h4>
+          <p>Ingresa un correo para enviar preview de emailer</p>
         </div>
           <form id="previewForm">
-          <div class="input-field col s6">
-          <input id="emailPreview" name="emailPreview" type="email"/><br>
-          <label>Email</label>
-          </div>
+          <div class="input-field col s12">
+          <input id="emailPreview" name="emailPreview" type="email" placeholder="Ingresa tu email" size="40"/><br>
+          </div><br>
           <input type="hidden" id="email_id" name="email_id" value="{{_id}}"/>
           <a class="btn waves-effect waves-light btn-small" type="submit" id="submitPreview">Enviar Preview</a>
           </form>
@@ -214,9 +215,10 @@
 
         <div id="modalDelete" class="modal">
         <div class="modal-content">
-          <p class="font">¿En realidad quieres eliminar este emailer?</p>
+          <h4>Eliminando Emailer</h4>
         </div>
         <div class="modal-footer">
+          <p>¿En realidad quieres eliminar este emailer?</p>
           <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
           <a href="#/deleteEmailer/{{_id}}" class=" modal-action modal-close waves-effect waves-green btn-flat">Eliminar</a>
         </div>
