@@ -6,18 +6,18 @@ class @.App
 class @.UrlManager
 
   constructor: ->
-    @emailerManager = new EmailerManager()
+    @emailerController = new EmailerController()
     @start()
 
   start: ->
     @routes =
-      '/': @emailerManager.index
-      '/newEmailer': @emailerManager.new
-      '/readEmailers': @emailerManager.readEmailers
-      '/setEmails/:id': @emailerManager.readSetEmailers
-      '/previewEmailer/:id': @emailerManager.previewEmailer
-      '/editEmailer/:id': @emailerManager.editEmailer
-      '/deleteEmailer/:id':@emailerManager.delete
+      '/': @emailerController.index
+      '/newEmailer': @emailerController.new
+      '/readEmailers': @emailerController.readEmailers
+      '/setEmails/:id': @emailerController.readSetEmailers
+      '/previewEmailer/:id': @emailerController.previewEmailer
+      '/editEmailer/:id': @emailerController.editEmailer
+      '/deleteEmailer/:id':@emailerController.delete
     @urlMappings()
 
   urlMappings: ->
@@ -36,24 +36,4 @@ class @.Verticle
       eb.registerHandler 'com.makingdevs.email.success', (error, message) ->
         Materialize.toast 'Email Enviado\n ' + message.body, 4000
 
-class @.Paginator
-  @paginate: ->
-    $.get('http://localhost:8000/countTotal').done((response)->
-      counter = response
-      count = counter.count
-      pages = if count % 10 == 0 then parseInt(count / 10) else parseInt(count / 10 + 1)
-      html = '<ul class=\'paginator\'>'
-      skip = 0
-      i = 1
-      while i <= pages
-        html = html.concat('<li class=\'paginate\'><a href=\'#/setEmails/' + skip + '\'>' + i + '</a></li>')
-        skip = skip + 10
-        i++
-      html = html.concat('</ul>')
-      $('#paginas').html html
-      $('ul.paginator').addClass 'pagination'
-      $('li.paginate').addClass 'waves-effect'
-      $('#numberPage').html "Emailers: #{count}"
-    ).fail ->
-      console.log "Error al consultar conteo"
 
