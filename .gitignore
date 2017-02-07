@@ -7,7 +7,5 @@ src/main/resources/webroot/third-party/
 .vertx/
 data/
 conf.json
-src/main/resources/webroot/js/app.js
-src/main/resources/webroot/js/main.js
-src/main/resources/webroot/js/manager.js
-src/main/resources/webroot/js/controller.js
+src/main/resources/webroot/js/
+*.DS_Store
