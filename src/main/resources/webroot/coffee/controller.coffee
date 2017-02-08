@@ -53,6 +53,7 @@ class @.EmailerController
       success: (response) ->
        context =
          emails: response
+         skip: 0
        html = ViewResolver.mergeViewWithModel "#read-emailer", context
        $("#index-banner").html(html)
        $('#modalDelete').modal()
@@ -68,6 +69,7 @@ class @.EmailerController
       success: (response) ->
        context =
          emails: response
+         skip: parseInt(id)
        html = ViewResolver.mergeViewWithModel "#read-emailer", context
        $("#index-banner").html(html)
        $('#modalDelete').modal()
