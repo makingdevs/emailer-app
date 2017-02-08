@@ -2,6 +2,11 @@ class @.App
   constructor: ->
     @manager= new UrlManager()
     Verticle.init()
+    @helper()
+
+  helper: ()->
+    Handlebars.registerHelper 'currentIndex', (index, skip) ->
+      parseInt(index) + 1 + parseInt(skip)
 
 class @.UrlManager
 
