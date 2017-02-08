@@ -7,5 +7,5 @@ src/main/resources/webroot/third-party/
 .vertx/
 data/
 conf.json
-src/main/resources/webroot/js/
+src/main/resources/webroot/coffee/*.js
 *.DS_Store
