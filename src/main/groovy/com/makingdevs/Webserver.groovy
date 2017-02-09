@@ -64,7 +64,7 @@ router.route("/show").handler({ routingContext ->
   vertx.eventBus().send("com.makingdevs.emailer.show.total", "Show me", { reply ->
     if (reply.succeeded()) {
       routingContext.response()
-      .setStatusCode(201)
+      .setStatusCode(200)
       .putHeader("content-type", "application/json; charset=utf-8")
       .end(Json.encodePrettily(reply.result().body()))
     }
@@ -79,7 +79,7 @@ router.post("/remove").handler { routingContext ->
   vertx.eventBus().send("com.makingdevs.emailer.remove", query, { reply ->
     if (reply.succeeded()) {
       routingContext.response()
-      .setStatusCode(201)
+      .setStatusCode(200)
       .putHeader("content-type", "application/json; charset=utf-8")
       .end(Json.encodePrettily([msg:"Email Eliminado Correctamente ${reply.result().body()}"]))
     }
@@ -91,7 +91,7 @@ router.route("/countTotal").handler({ routingContext ->
   vertx.eventBus().send("com.makingdevs.emailer.count", "Dame el conteo", { reply ->
     if (reply.succeeded()) {
       routingContext.response()
-      .setStatusCode(201)
+      .setStatusCode(200)
       .putHeader("content-type", "application/json; charset=utf-8")
       .end(Json.encodePrettily([count:reply.result().body()]))
     }
@@ -105,7 +105,7 @@ router.post("/showEmail").handler { routingContext ->
   vertx.eventBus().send("com.makingdevs.emailer.show.one", query, { reply ->
     if (reply.succeeded()) {
       routingContext.response()
-      .setStatusCode(201)
+      .setStatusCode(200)
       .putHeader("content-type", "application/json; charset=utf-8")
       .end(Json.encodePrettily(reply.result().body()))
     }
@@ -125,7 +125,7 @@ router.post("/showSet").handler { routingContext ->
   vertx.eventBus().send("com.makingdevs.emailer.show.set", options, { reply ->
     if (reply.succeeded()) {
       routingContext.response()
-      .setStatusCode(201)
+      .setStatusCode(200)
       .putHeader("content-type", "application/json; charset=utf-8")
       .end(Json.encodePrettily(reply.result().body()))
     }
@@ -148,7 +148,7 @@ router.post("/update").handler { routingContext ->
   vertx.eventBus().send("com.makingdevs.emailer.update", message, { reply ->
     if (reply.succeeded()) {
       routingContext.response()
-      .setStatusCode(201)
+      .setStatusCode(200)
       .putHeader("content-type", "application/json; charset=utf-8")
       .end(Json.encodePrettily([msg:"Solicitud Enviada Correctamente."]))
     }
@@ -167,7 +167,7 @@ router.post("/send").handler { routingContext ->
   vertx.eventBus().send("com.makingdevs.emailer.send", message)
 
   routingContext.response()
-  .setStatusCode(201)
+  .setStatusCode(200)
   .putHeader("content-type", "application/json; charset=utf-8")
   .end(Json.encodePrettily([msg:"Solicitud Enviada Correctamente."]))
 }
@@ -181,7 +181,7 @@ router.post("/serviceEmail").handler { routingContext ->
       def response = [:]
 
       if(reply.result.body() == "ok" ){
-        status = 201
+        status = 200
         vertx.eventBus().send("com.makingdevs.emailer.service", jsonResponse)
         response.message = "Solicitud enviada correctamente."
       }else{
