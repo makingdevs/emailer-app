@@ -38,24 +38,26 @@ def router = Router.router(vertx)
 router.route().handler(BodyHandler.create())
 
 //<-------------------------------------------------------------------------------------------------
-// We need cookies, sessions and request bodies
 router.route().handler(CookieHandler.create())
 router.route().handler(BodyHandler.create())
 router.route().handler(SessionHandler.create(LocalSessionStore.create(vertx)))
-// Simple auth service which uses a properties file for user/role info
 def authProvider = ShiroAuth.create(vertx, ShiroAuthRealmType.PROPERTIES, [:])
-// We need a user session handler too to make sure the user is stored in the session between requests
 router.route().handler(UserSessionHandler.create(authProvider))
-router.route("/private/*").handler(RedirectAuthHandler.create(authProvider, "/static/login.html"))
-router.route("/private/*").handler(StaticHandler.create().setCachingEnabled(false).setWebRoot("private"))
+router.route("/app/*").handler(RedirectAuthHandler.create(authProvider, "/authentification"))
+router.route("/app/*").handler(StaticHandler.create().setCachingEnabled(false).setWebRoot("app"))
 router.route("/loginhandler").handler(FormLoginHandler.create(authProvider))
+router.route("/logout").handler({ contextResponse ->
+    contextResponse.clearUser()
+    contextResponse.response().putHeader("location", "/authentification").setStatusCode(302).end()
+})
+//<-------------------------------------------------------------------------------------------------
 
 // Create the event bus bridge and add it to the router.
 def ebHandler = SockJSHandler.create(vertx).bridge(opts)
 router.route("/eventbus/*").handler(ebHandler)
 
 //Route to Index
-router.route("/static/*").handler(
+router.route("/authentification/*").handler(
   StaticHandler.create().setCachingEnabled(false)
 )
 
