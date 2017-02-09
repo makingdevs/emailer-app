@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Emailer Web App</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Pacifico|Muli|Lobster+Two|Poiret+One" rel="stylesheet">
+    <link href="third-party/materialize/dist/css/materialize.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <script id="new-emailer" type="text/x-handlebars-template">
+<div class="container">
+      <div class="row center">
+        <h1 class="center brand-logo red-text lighten-2 cursive">Nuevo Emailer</h1>
+        <form id="newForm" class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <i class="material-icons prefix">email</i>
+              <input id="subjectEmail" name="subjectEmail" placeholder="Título del Emailer" type="text" class="validate" value="{{subject}}">
+            </div>
+              <i class="material-icons prefix">mode_edit</i>
+              <label>* A continuación redacta el contenido del emailer, asignado un parámetro con la siguiente forma: $ { { param } }</label>
+              <br/>
+              <textarea id="contentEmail" name="contentEmail">{{content}}</textarea>
+          </div>
+          <a class="btn waves-effect waves-light" id="submitEmailer">Agregar Emailer
+                    </a></br>
+        </form>
+      </div>
+     </div>
+    </script>
+
+    <script id="update-emailer" type="text/x-handlebars-template">
+<div class="container">
+      <div class="row center">
+        <h1 class="center brand-logo red-text lighten-2 cursive">Actualizar Emailer</h1>
+        <form class="col s12" id="updateForm" class="navbar-form">
+          <div class="row">
+            <div class="input-field col s12">
+              <i class="material-icons prefix">email</i>
+              <input id="subjectEmail" name="subjectEmail" placeholder="Título del Emailer" type="text" class="validate" value="{{subject}}">
+            </div>
+              <i class="material-icons prefix">mode_edit</i>
+              <label>* A continuación redacta el contenido del emailer, asignado un parámetro con la siguiente forma: $ { { param } }</label>
+              <br/>
+                <input type="hidden" name="email_id" id="email_id" value="{{_id}}"/>
+                <input type="hidden" name="versionEmail" id="versionEmail" value="{{version}}"/>
+                <input type="hidden" name="createdEmail" id="createdEmail" value="{{dateCreated}}"/>
+              <br/>
+              <textarea id="contentEmail" name="contentEmail">{{content}}</textarea>
+          </div>
+          <a class="btn waves-effect waves-light" type="submit" id="submitUpdate">Actualizar
+         </a></br>
+        </form>
+      </div>
+     </div>
+    </script>
+
+    <script id="read-emailer" type="text/x-handlebars-template">
+<div id="centered" class="section scrollspy">
+      <div class="row">
+        <h1 class="center brand-logo red-text lighten-2 cursive">Almacén de Emailers</h1>
+        <div id="counter" class="center">
+        <div class="chip" id="numberPage"></div>
+        </div>
+       <div class="col s10 offset-s1">
+        <table class="centered highlight">
+        <thead>
+        <tr>
+        <th>#</th>
+        <th></th>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Version</th>
+        <th>Options</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each emails}}
+        <tr>
+        <td>{{currentIndex  @index ../skip}}<td>
+        <td>{{_id}}</td>
+        <td>{{subject}}</td>
+        <td>{{version}}</td>
+        <td>
+        <a class="btn-floating btn-small waves-effect waves-light blue" href="#/previewEmailer/{{_id}}"><i class="material-icons">visibility</i></a>
+        <a class="btn-floating btn-small waves-effect waves-light yellow" href="#/editEmailer/{{_id}}"><i class="material-icons">mode_edit</i></a>
+        <a class="btn-floating btn-small waves-effect waves-light red" id="deleteButton" href="#modalDelete"><i class="material-icons">delete</i></a>
+
+        <div id="modalDelete" class="modal">
+        <div class="modal-content">
+          <h4>Eliminando Emailer</h4>
+        </div>
+        <div class="modal-footer">
+          <p>¿En realidad quieres eliminar este emailer?</p>
+          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+          <a href="#/deleteEmailer/{{_id}}" class=" modal-action modal-close waves-effect waves-green btn-flat">Eliminar</a>
+        </div>
+        </div>
+
+        </td>
+        </tr>
+        {{/each}}
+        </tbody>
+        </table>
+        <div id="paginas" name="paginas" class="center"></div>
+        </div>
+
+     </div>
+
+    </script>
+
+    <script id="start-emailer" type="text/x-handlebars-template">
+<div class="container">
+         <br><br>
+         <h1 class="header center red-text lighten-2">Emailer App</h1>
+         <div class="row center">
+          <h5 class="header col s12 light font">Cómo Funciona</h5>
+         </div>
+
+         <div class="row">
+           <div class="col s12 m4">
+             <div class="icon-block">
+               <h2 class="center light-blue-text darken-4"><i class="medium material-icons">markunread_mailbox</i></h2>
+               <h5 class="center font">Aplicación Web</h5>
+               <p class="light">Ingresa y agrega un emailer nuevo, consulta los emailers anteriores, y haz una prueba de envío. Para su implementación con otra aplicación consulte a su Web Master. </p>
+             </div>
+           </div>
+
+           <div class="col s12 m4">
+             <div class="icon-block">
+               <h2 class="center light-blue-text darken-4 "><i class="medium material-icons">import_export</i></h2>
+               <h5 class="center font">Servicio REST</h5>
+
+               <p class="light">El servicio alojado en <b> http://localhost:8000/serviceEmail </b> y requiere de una petición POST con los siguientes parámetros:</p>
+                 <div class="chip">Id</div> Identificador del emailer. REQUERIDO<br>
+                 <div class="chip">To</div> Email para enviar el correo. REQUERIDO<br>
+                 <div class="chip">CC</div> Email para enviar copia. OPCIONAL<br>
+                 <div class="chip">CCO</div> Email para enviar copia oculta. OPCIONAL<br>
+                 <div class="chip">Subject</div> Asunto del correo. REQUERIDO<br>
+                 <div class="chip">Params</div> Parámetros del emailer. REQUERIDO
+               </div>
+           </div>
+
+           <div class="col s12 m4">
+             <div class="icon-block">
+               <h2 class="center blue-text darken-4"><i class="medium material-icons">http</i></h2>
+               <h5 class="center font">Status</h5>
+
+               <p class="light">El servicio puede responder a las peticiones los siguientes mensajes, dependiendo el caso:</p>
+                 <div class="chip">201</div>Solicitud exitosa: "Solicitud enviada correctamente"<br>
+                 <div class="chip">400</div>Solicitud sin parámetros: "I can't do my job, please send me something please"<br>
+                 <div class="chip">400</div>Solicitud sin los parámetros necesarios: "I can't do my job. You have the follow errors"<br>
+             </div>
+           </div>
+         </div>
+
+         <div class="row center">
+          <h5 class="header col s12 light font">Ejemplo</h5>
+         </div>
+
+         <div class="row grey lighten-4">
+         <pre><code>
+         Request: /serviceEmail
+         Method: POST
+         Body: JSON
+         Content:
+         {
+          "id":"3eui3r2370yg32ryg08g",
+          "to":"emailer@app.com",
+          "cc":"emailer1@app.com",
+          "cco":"emailer2@app.com",
+          "subject":"envio con todos los parametros",
+          "params":{
+            "mensaje":"Hola a todos",
+            "despedida":"Adios",
+            "firma":"Making Devs, 2017"
+          }
+         }
+         </code></pre>
+         </div>
+</div>
+    </script>
+
+    <script id="preview-emailer" type="text/x-handlebars-template">
+<div class="row center">
+        <h1 class="center brand-logo red-text lighten-2 cursive">Preview de Emailer</h1>
+        <h2 class="title">{{subject}}</h1>
+        <div class="chip">ID: {{_id}}</div>
+        <div class="chip">Version {{version}}</div>
+        <div class="chip" id="lastUpdate"></div>
+        <div class="chip" id="dateCreated"></div><br><br>
+        <div class="row">
+
+        <a class="btn-floating btn-small waves-effect waves-light green" href="#modalPreview"><i class="material-icons">email</i></a>
+        <a class="btn-floating btn-small waves-effect waves-light yellow" href="#/editEmailer/{{_id}}"><i class="material-icons">mode_edit</i></a>
+        <a class="btn-floating btn-small waves-effect waves-light red" id="deleteButton" href="#modalDelete"><i class="material-icons">delete</i></a>
+
+        <div id="modalPreview" class="modal">
+        <div class="modal-content">
+          <h4>Enviando Prueba</h4>
+          <p>Ingresa un correo para enviar preview de emailer</p>
+        </div>
+          <form id="previewForm">
+          <div class="input-field col s12">
+          <input id="emailPreview" name="emailPreview" type="email" placeholder="Ingresa tu email" size="40"/><br>
+          </div><br>
+          <input type="hidden" id="email_id" name="email_id" value="{{_id}}"/>
+          <a class="btn waves-effect waves-light btn-small" type="submit" id="submitPreview">Enviar Preview</a>
+          </form>
+          <br>
+        </div>
+
+        <div id="modalDelete" class="modal">
+        <div class="modal-content">
+          <h4>Eliminando Emailer</h4>
+        </div>
+        <div class="modal-footer">
+          <p>¿En realidad quieres eliminar este emailer?</p>
+          <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+          <a href="#/deleteEmailer/{{_id}}" class=" modal-action modal-close waves-effect waves-green btn-flat">Eliminar</a>
+        </div>
+        </div>
+
+        </div>
+        <div class="row">
+          <div class="col s12 m4 l2"></div>
+          <div class="col s12 m4 l8"> <iframe id="iframeID" class="box" width="100%" height="550" frameborder="0" style="border:1px solid gray;"></iframe></div>
+          <div class="col s12 m4 l2"></div>
+        </div>
+       </div>
+    </script>
+
+    <nav class="white" role="navigation">
+      <div class="nav-wrapper container">
+        <span class="brand-logo black-text cursive"><b>Emailer App</span>
+        <ul class="right black-text font">
+          <li><a href="#">Inicio</a></li>
+          <li><a href="#/newEmailer"><i class="material-icons right">mode_edit</i>Nuevo Emailer</a></li>
+          <li><a href="#/readEmailers"><i class="material-icons right">library_books</i>Almacén de Emailers</a></li>
+        </ul>
+
+        <ul id="nav-mobile" class="side-nav">
+          <li><a href="#">Navbar Link2</a></li>
+        </ul>
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+      </div>
+    </nav>
+    <div class="white" id="content-body">
+
+      <div class="section no-pad-bot" id="index-banner">
+        <div class="container">
+          <br><br>
+          <h1 class="header center red-text lighten-2">Bienvenido</h1>
+          <div class="row center">
+            <h5 class="header col s12 light">Inicia sesión para operar con la aplicación</h5>
+          </div>
+          <div class="row">
+            <div class="col s12 m4"></div>
+
+            <div class="col s12 m4 center grey lighten-4">
+              <p>Inicio de sesión</p>
+              <form class="col s12">
+                <div class="row center">
+                  <div class="input-field col s6">
+                    <input id="username" type="text" class="validate">
+                    <label for="username">Username</label>
+                  </div>
+                  <div class="row center">
+                  <div class="input-field col s6">
+                    <input id="password" type="password" class="validate">
+                    <label for="password">Password</label>
+                  </div>
+                </div>
+                <a class="waves-effect waves-light btn">Ingresar</a>
+              </form>
+            </div>
+
+            <div class="col s12 m4"></div>
+          </div>
+
+          <br><br>
+          <br><br>
+          <br><br>
+        </div>
+      </div>
+    </div>
+
+    <footer class="page-footer light-blue darken-4">
+      <div class="container">
+        <p class="grey-text text-lighten-4 center">Making Devs, 2017</p><br>
+      </div>
+</div>
+    </footer>
+
+    </div>
+
+    <script type="text/javascript" src="third-party/director/build/director.min.js"></script>
+    <script type="text/javascript" src="third-party/handlebars/handlebars.js"></script>
+    <script type="text/javascript" src="third-party/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="third-party/materialize/dist/js/materialize.js"></script>
+    <script type="text/javascript" src="third-party/tinymce/tinymce.js"></script>
+    <script type="text/javascript" src="third-party/moment/moment.js"></script>
+    <script type="text/javascript" src="third-party/sockjs-client/dist/sockjs.js"></script>
+    <script type="text/javascript" src="third-party/vertx3-eventbus-client/vertx-eventbus.js"></script>
+    <script type="text/javascript" src="coffee/controller.js"></script>
+    <script type="text/javascript" src="coffee/manager.js"></script>
+    <script type="text/javascript" src="coffee/app.js"></script>
+    <script type="text/javascript" src="coffee/main.js"></script>
+  </body>
+
+</html>
