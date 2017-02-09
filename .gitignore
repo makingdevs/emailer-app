@@ -1,11 +1,11 @@
-src/main/groovy/webroot/third-party
 .gradle/
 src/main/groovy/conf.json
 build/
-src/main/resources/webroot/third-party/
+src/main/resources/app/third-party/
 .node-version
 .vertx/
 data/
 conf.json
-src/main/resources/webroot/coffee/*.js
+src/main/resources/app/coffee/*.js
 *.DS_Store
+*.properties
