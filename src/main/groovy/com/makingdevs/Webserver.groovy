@@ -46,8 +46,9 @@ router.route().handler(SessionHandler.create(LocalSessionStore.create(vertx)))
 def authProvider = ShiroAuth.create(vertx, ShiroAuthRealmType.PROPERTIES, [:])
 // We need a user session handler too to make sure the user is stored in the session between requests
 router.route().handler(UserSessionHandler.create(authProvider))
-router.route("/private/*").handler(RedirectAuthHandler.create(authProvider, "/static/"))
+router.route("/private/*").handler(RedirectAuthHandler.create(authProvider, "/static/login.html"))
 router.route("/private/*").handler(StaticHandler.create().setCachingEnabled(false).setWebRoot("private"))
+router.route("/loginhandler").handler(FormLoginHandler.create(authProvider))
 
 // Create the event bus bridge and add it to the router.
 def ebHandler = SockJSHandler.create(vertx).bridge(opts)
