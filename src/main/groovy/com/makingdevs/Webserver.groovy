@@ -7,6 +7,14 @@ import io.vertx.core.json.Json
 import io.vertx.groovy.core.Vertx
 import io.vertx.groovy.ext.web.handler.sockjs.SockJSHandler
 import io.vertx.groovy.ext.web.handler.StaticHandler
+import io.vertx.groovy.ext.web.handler.CookieHandler
+import io.vertx.groovy.ext.web.handler.SessionHandler
+import io.vertx.groovy.ext.web.handler.UserSessionHandler
+import io.vertx.groovy.ext.web.handler.RedirectAuthHandler
+import io.vertx.groovy.ext.web.handler.FormLoginHandler
+import io.vertx.groovy.ext.web.sstore.LocalSessionStore
+import io.vertx.ext.auth.shiro.ShiroAuthRealmType
+import io.vertx.groovy.ext.auth.shiro.ShiroAuth
 
 def config = Vertx.currentContext().config()
 
@@ -29,10 +37,21 @@ def server = vertx.createHttpServer()
 def router = Router.router(vertx)
 router.route().handler(BodyHandler.create())
 
+//<-------------------------------------------------------------------------------------------------
+// We need cookies, sessions and request bodies
+router.route().handler(CookieHandler.create())
+router.route().handler(BodyHandler.create())
+router.route().handler(SessionHandler.create(LocalSessionStore.create(vertx)))
+// Simple auth service which uses a properties file for user/role info
+def authProvider = ShiroAuth.create(vertx, ShiroAuthRealmType.PROPERTIES, [:])
+// We need a user session handler too to make sure the user is stored in the session between requests
+router.route().handler(UserSessionHandler.create(authProvider))
+router.route("/private/*").handler(RedirectAuthHandler.create(authProvider, "/static/"))
+router.route("/private/*").handler(StaticHandler.create().setCachingEnabled(false).setWebRoot("private"))
+
 // Create the event bus bridge and add it to the router.
 def ebHandler = SockJSHandler.create(vertx).bridge(opts)
 router.route("/eventbus/*").handler(ebHandler)
-
 
 //Route to Index
 router.route("/static/*").handler(
