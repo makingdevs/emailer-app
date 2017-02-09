@@ -70,17 +70,18 @@
         <table class="centered highlight">
         <thead>
         <tr>
-        <th data-field="id">#</th>
-        <th data-field="name">ID</th>
-        <th data-field="price">Title</th>
-        <th data-field="price">Version</th>
-        <th data-field="price">Options</th>
+        <th>#</th>
+        <th></th>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Version</th>
+        <th>Options</th>
         </tr>
         </thead>
         <tbody>
         {{#each emails}}
         <tr>
-        <td>{{ currentIndex  @index ../skip}}<td>
+        <td>{{currentIndex  @index ../skip}}<td>
         <td>{{_id}}</td>
         <td>{{subject}}</td>
         <td>{{version}}</td>
