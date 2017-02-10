@@ -3,29 +3,49 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
     <meta http-equiv="Pragma" content="no-cache"/>
     <meta http-equiv="Expires" content="0"/>
-    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <style type="text/css">
     .font{
-      font-family: 'Lobster', cursive;
-      font-size: 150%;
+      font-family: 'Roboto', sans-serif;
+      font-size: 300%;
+      color:#FF0040
+     }
+    .common{
+      font-family: 'Roboto', sans-serif;
+      font-size: 100%;
+     }
+    .center {
+      margin: auto;
+      width: 20%;
+      background-color: #F6CED8;
+      padding: 10px;
+      text-align:center
+    }
+    .align {
+      margin: auto;
     }
     </style>
   </head>
   <body>
-    <h2 class="font" align="center">Please login</h2><br>
-
+    <br>
+    <h2 class="font" align="center">Emailer App</h2>
+    <h4 align="center">Por favor ingresa tu usuario y contraseña</h4>
+    <div class="center">
     <form action="/loginhandler" method="post">
-      <div>
-        <label class="font">Username:</label>
+      <div class="align">
+        <label class="common">Username</label><br>
         <input type="text" name="username"/>
       </div>
-      <div>
-        <label class="font">Password:</label>
+      <br>
+      <div class="align">
+        <label class="common">Password</label><br>
         <input type="password" name="password"/>
       </div>
       <div>
-        <input type="submit" value="Log In"/>
+        <br>
+        <input type="submit" value="Entrar"/>
       </div>
     </form>
+    </div>
   </body>
 </html>
