@@ -114,8 +114,8 @@
     </script>
 
     <script id="start-emailer" type="text/x-handlebars-template">
-<div class="container">
-         <br><br>
+    <div class="container">
+         <br>
          <h1 class="header center red-text lighten-2">Emailer App</h1>
          <div class="row center">
           <h5 class="header col s12 light font">Cómo Funciona</h5>
@@ -241,6 +241,7 @@
           <li><a href="#">Inicio</a></li>
           <li><a href="#/newEmailer"><i class="material-icons right">mode_edit</i>Nuevo Emailer</a></li>
           <li><a href="#/readEmailers"><i class="material-icons right">library_books</i>Almacén de Emailers</a></li>
+          <li><a href="/logout">Salir</a></li>
         </ul>
 
         <ul id="nav-mobile" class="side-nav">
@@ -253,34 +254,49 @@
 
       <div class="section no-pad-bot" id="index-banner">
         <div class="container">
-          <br><br>
-          <h1 class="header center red-text lighten-2">Bienvenido</h1>
-          <div class="row center">
-            <h5 class="header col s12 light">Inicia sesión para operar con la aplicación</h5>
-          </div>
-          <div class="row">
-            <div class="col s12 m4"></div>
+         <br>
+         <h1 class="header center red-text lighten-2">Emailer App</h1>
+         <div class="row center">
+          <h5 class="header col s12 light font">Cómo Funciona</h5>
+         </div>
 
-            <div class="col s12 m4 center grey lighten-4">
-              <p>Inicio de sesión</p>
-              <form class="col s12">
-                <div class="row center">
-                  <div class="input-field col s6">
-                    <input id="username" type="text" class="validate">
-                    <label for="username">Username</label>
-                  </div>
-                  <div class="row center">
-                  <div class="input-field col s6">
-                    <input id="password" type="password" class="validate">
-                    <label for="password">Password</label>
-                  </div>
-                </div>
-                <a class="waves-effect waves-light btn">Ingresar</a>
-              </form>
-            </div>
+         <div class="row">
+           <div class="col s12 m4">
+             <div class="icon-block">
+               <h2 class="center light-blue-text darken-4"><i class="medium material-icons">markunread_mailbox</i></h2>
+               <h5 class="center font">Aplicación Web</h5>
+               <p class="light">Ingresa y agrega un emailer nuevo, consulta los emailers anteriores, y haz una prueba de envío. Para su implementación con otra aplicación consulte a su Web Master. </p>
+             </div>
+           </div>
 
-            <div class="col s12 m4"></div>
-          </div>
+           <div class="col s12 m4">
+             <div class="icon-block">
+               <h2 class="center light-blue-text darken-4 "><i class="medium material-icons">import_export</i></h2>
+               <h5 class="center font">Servicio REST</h5>
+
+               <p class="light">El servicio alojado en <b> http://localhost:8000/serviceEmail </b> y requiere de una petición POST con los siguientes parámetros:</p>
+                 <div class="chip">Id</div> Identificador del emailer. REQUERIDO<br>
+                 <div class="chip">To</div> Email para enviar el correo. REQUERIDO<br>
+                 <div class="chip">CC</div> Email para enviar copia. OPCIONAL<br>
+                 <div class="chip">CCO</div> Email para enviar copia oculta. OPCIONAL<br>
+                 <div class="chip">Subject</div> Asunto del correo. REQUERIDO<br>
+                 <div class="chip">Params</div> Parámetros del emailer. REQUERIDO
+               </div>
+           </div>
+
+           <div class="col s12 m4">
+             <div class="icon-block">
+               <h2 class="center blue-text darken-4"><i class="medium material-icons">http</i></h2>
+               <h5 class="center font">Status</h5>
+
+               <p class="light">El servicio puede responder a las peticiones los siguientes mensajes, dependiendo el caso:</p>
+                 <div class="chip">201</div>Solicitud exitosa: "Solicitud enviada correctamente"<br>
+                 <div class="chip">400</div>Solicitud sin parámetros: "I can't do my job, please send me something please"<br>
+                 <div class="chip">400</div>Solicitud sin los parámetros necesarios: "I can't do my job. You have the follow errors"<br>
+             </div>
+           </div>
+         </div>
+
 
           <br><br>
           <br><br>
