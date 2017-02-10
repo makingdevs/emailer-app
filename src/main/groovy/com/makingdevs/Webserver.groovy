@@ -4,6 +4,7 @@ import io.vertx.groovy.ext.web.handler.StaticHandler
 import io.vertx.groovy.ext.web.Router
 import io.vertx.groovy.ext.web.handler.BodyHandler
 import io.vertx.core.json.Json
+import io.vertx.core.json.JsonObject
 import io.vertx.groovy.core.Vertx
 import io.vertx.groovy.ext.web.handler.sockjs.SockJSHandler
 import io.vertx.groovy.ext.web.handler.StaticHandler
@@ -46,9 +47,27 @@ def authProvider = ShiroAuth.create(vertx, ShiroAuthRealmType.PROPERTIES, [:])
 router.route().handler(UserSessionHandler.create(authProvider))
 
 router.route("/app/*").handler(RedirectAuthHandler.create(authProvider, "/authentification"))
+
 router.route("/app/*").handler(StaticHandler.create().setCachingEnabled(false).setWebRoot("app"))
 
-router.route("/loginhandler").handler(FormLoginHandler.create(authProvider))
+router.post("/loginhandler").handler { routingContext ->
+  def params = routingContext.request().params()
+  def authInfo = [
+    username:params.username,
+    password:params.password
+   ]
+
+  authProvider.authenticate(authInfo, { res ->
+    if (!res.failed()) {
+      routingContext.setUser(res.result())
+    }
+
+    routingContext.response()
+      .setStatusCode(302)
+      .putHeader("location", "/app/")
+      .end()
+  })
+}
 
 router.route("/logout").handler({ contextResponse ->
     contextResponse.clearUser()
