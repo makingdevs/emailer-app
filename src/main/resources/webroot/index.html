@@ -4,46 +4,26 @@
     <meta http-equiv="Pragma" content="no-cache"/>
     <meta http-equiv="Expires" content="0"/>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <style type="text/css">
-    .font{
-      font-family: 'Roboto', sans-serif;
-      font-size: 300%;
-      color:#FF0040
-     }
-    .common{
-      font-family: 'Roboto', sans-serif;
-      font-size: 100%;
-     }
-    .center {
-      margin: auto;
-      width: 20%;
-      background-color: #F6CED8;
-      padding: 10px;
-      text-align:center
-    }
-    .align {
-      margin: auto;
-    }
-    </style>
+    <link href="css/style.css" rel="stylesheet">
   </head>
   <body>
     <br>
     <h2 class="font" align="center">Emailer App</h2>
-    <h4 align="center">Por favor ingresa tu usuario y contraseña</h4>
+    <h4 align="center" class="common">Por favor ingresa tu usuario y contraseña</h4>
     <div class="center">
     <form action="/loginhandler" method="post">
       <div class="align">
         <label class="common">Username</label><br>
-        <input type="text" name="username" required/>
+        <input type="text" id="username" name="username" required/>
       </div>
       <br>
       <div class="align">
         <label class="common">Password</label><br>
-        <input type="password" name="password" required/>
+        <input type="password" id="username" name="password" required/>
       </div>
       <div>
         <br>
-        <input type="submit" value="Entrar"/>
+        <input type="submit" value="Entrar" id="submitLogin"/>
       </div>
     </form>
     </div>

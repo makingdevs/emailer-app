@@ -1,0 +1,20 @@
+.font{
+  font-family: 'Roboto', sans-serif;
+  font-size: 300%;
+  color:#FF0040
+}
+.common{
+  font-family: 'Roboto', sans-serif;
+  font-size: 100%;
+}
+.center {
+  margin: auto;
+  width: 20%;
+  background-color: #F6CED8;
+  padding: 10px;
+  text-align:center
+}
+.align {
+  margin: auto;
+}
+
