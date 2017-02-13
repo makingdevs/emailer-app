@@ -46,7 +46,7 @@ def authProvider = ShiroAuth.create(vertx, ShiroAuthRealmType.PROPERTIES, [:])
 
 router.route().handler(UserSessionHandler.create(authProvider))
 
-router.route("/app/*").handler(RedirectAuthHandler.create(authProvider, "/authentification"))
+router.route("/app/*").handler(RedirectAuthHandler.create(authProvider, "/static/"))
 
 router.route("/app/*").handler(StaticHandler.create().setCachingEnabled(false).setWebRoot("app"))
 
@@ -79,7 +79,7 @@ def ebHandler = SockJSHandler.create(vertx).bridge(opts)
 router.route("/eventbus/*").handler(ebHandler)
 
 //Route to Index
-router.route("/authentification/*").handler(
+router.route("/static/*").handler(
   StaticHandler.create().setCachingEnabled(false)
 )
 
