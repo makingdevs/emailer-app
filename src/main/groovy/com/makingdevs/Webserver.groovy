@@ -218,36 +218,67 @@ router.post("/send").handler { routingContext ->
 
 //Route para el servicio Web
 router.post("/serviceEmail").handler { routingContext ->
-  if(routingContext.getBody().length()){
-    def jsonResponse=routingContext.getBodyAsJson()
-    vertx.eventBus().send("com.makingdevs.emailer.check", jsonResponse){ reply ->
-      def status = 0
-      def response = [:]
 
-      if(reply.result.body() == "ok" ){
-        status = 200
-        vertx.eventBus().send("com.makingdevs.emailer.service", jsonResponse)
-        response.message = "Solicitud enviada correctamente."
-      }else{
-        status = 400
-        response.message = "I can't do my job. You have the follow errors"
-        response.errors = reply.result().body()
-      }
+  def arguments = routingContext.getBodyAsJson()
+  def authInfo = [
+    username:arguments.username,
+    password:arguments.password
+   ]
 
-      routingContext.response()
-      .setStatusCode(status)
-      .putHeader("Content-Type", "application/json; charset=utf-8")
-      .end(Json.encodePrettily(response))
-    }
-  } else {
+  //Creando Sesión
+  authProvider.authenticate(authInfo, { res ->
+    if (!res.failed()) {
+      routingContext.setUser(res.result())
+      def emailerParams=[
+        id:arguments.id,
+        to:arguments.to,
+        subject:arguments.subject,
+        params:arguments.params
+      ]
+
+      if(routingContext.getBody().length()){
+        def jsonResponse=routingContext.getBodyAsJson()
+        vertx.eventBus().send("com.makingdevs.emailer.check", jsonResponse){ reply ->
+        def status = 0
+        def response = [:]
+
+        if(reply.result.body() == "ok" ){
+          status = 200
+          vertx.eventBus().send("com.makingdevs.emailer.service", jsonResponse)
+          response.message = "Solicitud enviada correctamente."
+        }
+        else{
+          status = 400
+          response.message = "I can't do my job. You have the follow errors"
+          response.errors = reply.result().body()
+        }
+
+        routingContext.response()
+        .setStatusCode(status)
+        .putHeader("Content-Type", "application/json; charset=utf-8")
+        .end(Json.encodePrettily(response))
+        }
+     }
+    else {
     //response
-    routingContext.response()
-    .setStatusCode(400)
-    .putHeader("content-type", "application/json; charset=utf-8")
-    .end(Json.encodePrettily([
-      message:"I can't do my job, please send me something please."
-    ]))
-  }
+      routingContext.response()
+      .setStatusCode(400)
+      .putHeader("content-type", "application/json; charset=utf-8")
+      .end(Json.encodePrettily([
+        message:"Favor de envíar argumentos para envíar el emailer."
+        ]))
+    }
+    }
+    else{
+      routingContext.response()
+      .setStatusCode(400)
+      .putHeader("content-type", "application/json; charset=utf-8")
+      .end(Json.encodePrettily([
+        message:"Envíe un usuario y un password válido"
+      ]))
+    }
+  })
+
 }
 
 server.requestHandler(router.&accept).listen(8000)
