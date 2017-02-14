@@ -237,13 +237,13 @@ router.post("/serviceEmail").handler { routingContext ->
 
   if (!authHeader){
     routingContext.response()
-    .setStatusCode(400)
-    .putHeader("content-type", "application/json; charset=utf-8")
-    .end(Json.encodePrettily([
-      message:"Es necesario autentificarse para usar el servicio de Emailer"
-    ]))
-
-  }else{
+      .setStatusCode(400)
+      .putHeader("content-type", "application/json; charset=utf-8")
+      .end(Json.encodePrettily([
+        message:"Please login first. You have to include your username and password at Authentification Header"
+      ]))
+  }
+  else{
 
   vertx.eventBus().send("com.makingdevs.emailer.decode", authHeader){ auth ->
 
@@ -274,7 +274,7 @@ router.post("/serviceEmail").handler { routingContext ->
         if(reply.result.body() == "ok" ){
           status = 200
           vertx.eventBus().send("com.makingdevs.emailer.service", jsonResponse)
-          response.message = "Solicitud enviada correctamente."
+          response.message = "Request sent successfully"
         }
         else{
           status = 400
@@ -294,7 +294,7 @@ router.post("/serviceEmail").handler { routingContext ->
       .setStatusCode(400)
       .putHeader("content-type", "application/json; charset=utf-8")
       .end(Json.encodePrettily([
-        message:"Favor de envíar argumentos para envíar el emailer."
+        message:"Please send arguments to Emailer Service"
         ]))
     }
     }
@@ -303,11 +303,11 @@ router.post("/serviceEmail").handler { routingContext ->
       .setStatusCode(400)
       .putHeader("content-type", "application/json; charset=utf-8")
       .end(Json.encodePrettily([
-        message:"Envíe un usuario y un password válido"
+        message:"Please login with correct username and valid password."
       ]))
-    }
-  })
- }
+     }
+    })
+   }
   }
 }
 
