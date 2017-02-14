@@ -6,6 +6,7 @@ import io.vertx.groovy.ext.web.handler.BodyHandler
 import io.vertx.core.json.Json
 import io.vertx.core.json.JsonObject
 import io.vertx.groovy.core.Vertx
+import io.vertx.core.http.HttpHeaders
 import io.vertx.groovy.ext.web.handler.sockjs.SockJSHandler
 import io.vertx.groovy.ext.web.handler.StaticHandler
 import io.vertx.groovy.ext.web.handler.CookieHandler
@@ -232,7 +233,22 @@ router.post("/send").handler { routingContext ->
 //Route para el servicio Web
 router.post("/serviceEmail").handler { routingContext ->
 
-  def arguments = routingContext.getBodyAsJson()
+  def authHeader = routingContext.request().getHeader("Authorization")
+
+  if (!authHeader){
+    routingContext.response()
+    .setStatusCode(400)
+    .putHeader("content-type", "application/json; charset=utf-8")
+    .end(Json.encodePrettily([
+      message:"Es necesario autentificarse para usar el servicio de Emailer"
+    ]))
+
+  }else{
+
+  vertx.eventBus().send("com.makingdevs.emailer.decode", authHeader){ auth ->
+
+  def arguments = auth.result().body()
+
   def authInfo = [
     username:arguments.username,
     password:arguments.password
@@ -291,7 +307,8 @@ router.post("/serviceEmail").handler { routingContext ->
       ]))
     }
   })
-
+ }
+  }
 }
 
 server.requestHandler(router.&accept).listen(8000)
