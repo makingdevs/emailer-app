@@ -16,8 +16,13 @@ import io.vertx.groovy.ext.web.handler.FormLoginHandler
 import io.vertx.groovy.ext.web.sstore.LocalSessionStore
 import io.vertx.ext.auth.shiro.ShiroAuthRealmType
 import io.vertx.groovy.ext.auth.shiro.ShiroAuth
+import io.vertx.groovy.ext.mongo.MongoClient
+import io.vertx.groovy.ext.auth.mongo.MongoAuth
 
 def config = Vertx.currentContext().config()
+
+//Configuration of Mongo
+def mongoClient = MongoClient.createShared(vertx, config.mongo)
 
 //configuracion externalizada
 options = [ "config":config ]
@@ -42,7 +47,15 @@ router.route().handler(CookieHandler.create())
 router.route().handler(BodyHandler.create())
 router.route().handler(SessionHandler.create(LocalSessionStore.create(vertx)))
 
-def authProvider = ShiroAuth.create(vertx, ShiroAuthRealmType.PROPERTIES, [:])
+//def authProvider = ShiroAuth.create(vertx, ShiroAuthRealmType.PROPERTIES, [:])
+def authProvider = MongoAuth.create(mongoClient, [:])
+
+/*
+authProvider.insertUser("username","password", [],[]){ res ->
+  println "*"*100
+  println res.dump()
+}
+*/
 
 router.route().handler(UserSessionHandler.create(authProvider))
 
