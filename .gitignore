@@ -9,3 +9,4 @@ data/
 conf.json
 src/main/resources/webroot/coffee/*.js
 *.DS_Store
+mongo/
