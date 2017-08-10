@@ -1,4 +1,5 @@
 src/main/groovy/webroot/third-party
+src/main/resources/app/
 .gradle/
 src/main/groovy/conf.json
 build/
