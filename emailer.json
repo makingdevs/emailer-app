@@ -1,0 +1,12 @@
+{
+          "id":"5989ecd95c95c4513f84d724",
+          "to":"leovergara.dark@gmail.com",
+          "cc":"brandon@makingdevs.com",
+          "cco":"emailer2@app.com",
+          "subject":"envio con todos los parametros",
+          "params":{
+            "mensaje":"Hola a todos",
+            "despedida":"Adios",
+            "firma":"Making Devs, 2017"
+          }
+}
