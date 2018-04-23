@@ -1,5 +1,5 @@
 class @.EmailerController
-  baseUrl = "http://localhost:8000"
+  baseUrl = "http://35.193.189.157"
 
   @add: ->
     $.ajax

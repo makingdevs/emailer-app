@@ -34,9 +34,9 @@ class @.UrlManager
     router.setRoute '/readEmailers'
 
 class @.Verticle
-  baseUrl = "http://localhost:8000"
+  baseUrl = "http://35.193.189.157"
   @init: ->
-    eb = new EventBus('http://localhost:8000/eventbus')
+    eb = new EventBus('http://35.193.189.157/eventbus')
     eb.onopen = ->
       eb.registerHandler 'com.makingdevs.email.success', (error, message) ->
         Materialize.toast 'Email Enviado\n ' + message.body, 4000

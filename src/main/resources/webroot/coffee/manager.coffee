@@ -6,7 +6,7 @@ class @.ViewResolver
 
 class @.Paginator
   @paginate: ->
-    $.get('http://localhost:8000/countTotal').done((response)->
+    $.get('http://35.193.189.157/countTotal').done((response)->
       counter = response
       count = counter.count
       pages = if count % 10 == 0 then parseInt(count / 10) else parseInt(count / 10 + 1)
