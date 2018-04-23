@@ -5,6 +5,8 @@ import io.vertx.groovy.core.Vertx
 import io.vertx.groovy.ext.mongo.MongoClient
 
 //Configuration of Mongo
+System.setProperty("org.mongodb.async.type", "netty")
+
 def config = Vertx.currentContext().config()
 def mongoClient = MongoClient.createShared(vertx, config.mongo)
 
