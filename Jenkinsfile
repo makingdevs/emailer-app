@@ -55,7 +55,7 @@ pipeline {
             }
           }
           container('gradle') {
-            sh 'gradle clean build'
+            sh 'gradle clean build -x test'
 
             sh 'export VERSION=`cat VERSION` && skaffold run -f skaffold.yaml'
           }
