@@ -9,7 +9,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
-@RunWith(VertxUnitRunner.class)
+/*@RunWith(VertxUnitRunner.class)
 class MainVerticleTest {
 
   Vertx vertx
@@ -32,4 +32,4 @@ class MainVerticleTest {
     async.complete()
   }
 
-}
+}*/
