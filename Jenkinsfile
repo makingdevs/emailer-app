@@ -59,7 +59,7 @@ pipeline {
           }
           container('gradle') {
             sh 'gradle clean shadowJar'
-            sh "git clone http://gitea-gitea.jx.kubev5.makingdevs.com/ci-gitea/config-emailer.git"
+            sh "git clone git@bitbucket.org:techmindsmx/config-emailer.git"
             sh 'export VERSION=`cat VERSION` && skaffold run -f skaffold.yaml'
             sh "jx step validate --min-jx-version 1.2.36"
             sh "jx step post build --image \$JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST:\$JENKINS_X_DOCKER_REGISTRY_SERVICE_PORT/$ORG/$APP_NAME:\$(cat VERSION)"
