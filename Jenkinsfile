@@ -58,7 +58,8 @@ pipeline {
           }
           git branch: 'master',
               credentialsId: 'jx-pipeline-git-bitbucket-bitbucket',
-              url: 'https://cggg88jorge@bitbucket.org/techmindsmx/config-emailer.git'
+              //git clone https://cggg88jorge@bitbucket.org/cggg88jorge/flisol.git
+              url: 'https://cggg88jorge@bitbucket.org/cggg88jorge/flisol.git'
           container('gradle') {
             sh 'gradle clean shadowJar'
             sh 'export VERSION=`cat VERSION` && skaffold run -f skaffold.yaml'
