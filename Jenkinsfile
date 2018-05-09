@@ -57,8 +57,8 @@ pipeline {
             }
           }
           git branch: 'master',
-              credentialsId: 'jx-pipeline-git-bitbucket-bitbucket',
-              url: 'https://bitbucket.org/techmindsmx/config-emailer.git'
+              credentialsId: 'jx-pipeline-git-gitea-gitea',
+              url: 'http://gitea-gitea.jx.kubev5.makingdevs.com/ci-gitea/config-emailer.git'
           container('gradle') {
             sh 'gradle clean shadowJar'
             sh 'export VERSION=`cat VERSION` && skaffold run -f skaffold.yaml'
