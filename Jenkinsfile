@@ -78,6 +78,7 @@ pipeline {
               sh 'make release'
 
               // promote through all 'Auto' promotion Environments
+              sh 'echo "Aquiperrrrrrooooss" '
               sh 'jx promote -b --all-auto --timeout 1h --version \$(cat ../../VERSION)'
             }
           }
