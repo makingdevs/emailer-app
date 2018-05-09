@@ -22,7 +22,6 @@ pipeline {
             // TODO 
             //sh "mvn versions:set -DnewVersion=$PREVIEW_VERSION"
             sh "gradle clean shadowJar"
-            sh "git clone git@localhost:ci-gitea/config-emailer.git"
             sh 'export VERSION=$PREVIEW_VERSION && skaffold run -f skaffold.yaml'
             sh "jx step validate --min-jx-version 1.2.36"
             sh "jx step post build --image \$JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST:\$JENKINS_X_DOCKER_REGISTRY_SERVICE_PORT/$ORG/$APP_NAME:$PREVIEW_VERSION"
@@ -57,9 +56,11 @@ pipeline {
               sh "make tag"
             }
           }
+          git branch: 'master',
+              credentialsId: 'jx-pipeline-git-bitbucket-bitbucket',
+              url: 'ssh://git@bitbucket.org:techmindsmx/config-emailer.git'
           container('gradle') {
             sh 'gradle clean shadowJar'
-            sh "git clone git@bitbucket.org:techmindsmx/config-emailer.git"
             sh 'export VERSION=`cat VERSION` && skaffold run -f skaffold.yaml'
             sh "jx step validate --min-jx-version 1.2.36"
             sh "jx step post build --image \$JENKINS_X_DOCKER_REGISTRY_SERVICE_HOST:\$JENKINS_X_DOCKER_REGISTRY_SERVICE_PORT/$ORG/$APP_NAME:\$(cat VERSION)"
