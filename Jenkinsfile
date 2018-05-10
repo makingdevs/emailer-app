@@ -57,15 +57,10 @@ pipeline {
             }
           }
           dir ('./.config') {
-            git branch: 'master',
+            git branch: 'kube-stage',
                 credentialsId: 'jx-pipeline-git-bitbucket-bitbucket',
                 url: 'https://cggg88jorge@bitbucket.org/techmindsmx/config-emailer.git'
           }
-          sh "echo \$(ls -a)"
-          sh "echo \$(ls -a .config)"
-          //git branch: 'master',
-          //    credentialsId: 'jx-pipeline-git-bitbucket-bitbucket',
-          //    url: 'https://cggg88jorge@bitbucket.org/techmindsmx/config-emailer.git'
           container('gradle') {
             sh 'gradle clean shadowJar'
             sh 'export VERSION=`cat VERSION` && skaffold run -f skaffold.yaml'
