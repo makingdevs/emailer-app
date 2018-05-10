@@ -3,8 +3,8 @@
 # Declare variables to be passed into your templates.
 replicaCount: 1
 image:
-  repository: draft
-  tag: dev
+  repository: 100.66.15.130:5000/ci-makingdevs/emailer-app
+  tag: 0.0.52
   pullPolicy: IfNotPresent
 service:
   name: emailer-app
