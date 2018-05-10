@@ -56,7 +56,7 @@ pipeline {
               sh "make tag"
             }
           }
-          dir ('.config') {
+          dir ('./.config') {
             git branch: 'master',
                 credentialsId: 'jx-pipeline-git-bitbucket-bitbucket',
                 url: 'https://cggg88jorge@bitbucket.org/techmindsmx/config-emailer.git'
