@@ -62,6 +62,7 @@ pipeline {
                 url: 'https://cggg88jorge@bitbucket.org/techmindsmx/config-emailer.git'
           }
           sh "echo \$(ls -a)"
+          sh "echo \$(ls -a .config)"
           //git branch: 'master',
           //    credentialsId: 'jx-pipeline-git-bitbucket-bitbucket',
           //    url: 'https://cggg88jorge@bitbucket.org/techmindsmx/config-emailer.git'
