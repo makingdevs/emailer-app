@@ -22,6 +22,9 @@ resources:
     memory: 512Mi
 probePath: /actuator/health
 livenessProbe:
+  httpGet:
+    path: /static/
+    port: 8080
   initialDelaySeconds: 60
   periodSeconds: 10
   successThreshold: 1
