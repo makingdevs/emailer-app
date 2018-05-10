@@ -30,6 +30,9 @@ livenessProbe:
   successThreshold: 1
   timeoutSeconds: 1
 readinessProbe:
+  httpGet:
+    path: /static/
+    port: 8080
   periodSeconds: 10
   successThreshold: 1
   timeoutSeconds: 1
