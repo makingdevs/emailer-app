@@ -4,4 +4,4 @@ EXPOSE 8000
 COPY build/libs/*.jar /opt/app.jar
 COPY .config/conf.json /opt/
 WORKDIR /opt
-CMD ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "app.jar", "-conf", "conf.json"]
