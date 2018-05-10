@@ -10,7 +10,7 @@ service:
   name: emailer-app
   type: ClusterIP
   externalPort: 80
-  internalPort: 8000
+  internalPort: 8080
   annotations:
     fabric8.io/expose: "true"
 resources:
@@ -22,19 +22,11 @@ resources:
     memory: 512Mi
 probePath: /actuator/health
 livenessProbe:
-  httpGet:
-    path: /healthz
-    port: 8000
-    scheme: HTTP
   initialDelaySeconds: 60
   periodSeconds: 10
   successThreshold: 1
   timeoutSeconds: 1
 readinessProbe:
-  httpGet:
-    path: /healthz
-    port: 8000
-    scheme: HTTP
   periodSeconds: 10
   successThreshold: 1
   timeoutSeconds: 1

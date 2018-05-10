@@ -206,7 +206,7 @@ router.post("/serviceEmail").handler { routingContext ->
   }
 }
 
-server.requestHandler(router.&accept).listen(8000)
+server.requestHandler(router.&accept).listen(8080)
 
 //deploy verticles
 vertx.deployVerticle("com/makingdevs/EmailerVerticle.groovy", options)

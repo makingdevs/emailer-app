@@ -1,6 +1,6 @@
 FROM openjdk:8-jdk-alpine
-ENV PORT 8000
-EXPOSE 8000
+ENV PORT 8080
+EXPOSE 8080
 COPY build/libs/*.jar /opt/app.jar
 COPY .config/conf.json /opt/
 WORKDIR /opt
