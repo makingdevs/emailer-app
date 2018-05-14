@@ -7,6 +7,9 @@ pipeline {
         branch 'master'
       }
       steps{
+        nodejs(nodeJSInstallationName: 'Node 10.1.0') {
+          sh 'npm config ls'
+        }
         withNPM(npmrcConfig:'conf-npmrc') {
           echo 'Updating bower'
           sh 'npm install bower'
