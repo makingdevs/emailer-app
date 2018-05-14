@@ -7,7 +7,7 @@ pipeline {
         branch 'master'
       }
       steps{
-        withNPM() {
+        withNPM(npmrcConfig:'conf-npmrc') {
           echo 'Updating bower'
           sh 'npm install bower'
           echo $(ls -a)
