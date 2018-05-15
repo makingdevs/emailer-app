@@ -1,11 +1,11 @@
 pipeline {
   agent any
 
-  stages {
+  tools {
+    gradle "Gradle 2.10"
+  }
 
-    tools {
-      gradle "Gradle 2.10"
-    }
+  stages {
 
     stage('Build App') {
       when {
