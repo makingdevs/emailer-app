@@ -11,9 +11,6 @@ pipeline {
           echo 'Updating bower'
           sh 'bower install'
         }
-        container('gradle') {
-         echo 'B' 
-        }
       }
     }
     stage('Test App') {
