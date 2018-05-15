@@ -21,10 +21,8 @@ pipeline {
         branch 'master'
       }
       steps{
-        container('gradle') {
-         echo 'Testing app'
-         sh 'gradle clean test'
-        }
+        echo 'Testing app'
+        sh 'gradle clean test'
       }
     }
 
