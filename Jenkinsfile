@@ -6,7 +6,7 @@ pipeline {
   }
 
   environment {
-    VERSION = UUID.randomUUID().toString().replace('-','')[0..6]
+    VERSION = "${UUID.randomUUID().toString().replace('-','')[0..6]}"
   }
 
   stages {
