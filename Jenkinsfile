@@ -44,8 +44,17 @@ pipeline {
       }
       steps{
         echo 'Transferring the jar'
-        sh "ls ${env.WORKSPACE}/build/libs"
         sh "scp ${env.WORKSPACE}/build/libs/app.jar centos@54.210.224.219:/home/centos/wars/emailer/stage/app.jar"
+      }
+    }
+
+    stage('Deploy App'){
+      when {
+        branch 'master'
+      }
+      steps{
+        echo 'Execute sh to build and deploy in Kubernetes'
+        sh "ssh centos@54.210.224.219 sh /home/centos/deployEmailer.sh 0.0.0.4"
       }
     }
 
