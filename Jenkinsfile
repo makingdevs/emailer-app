@@ -9,8 +9,21 @@ pipeline {
       steps{
         nodejs(nodeJSInstallationName: 'Node 10.1.0') {
           echo 'Updating bower'
-          sh 'npm config ls'
           sh 'bower install'
+        }
+        container('gradle') {
+         echo 'B' 
+        }
+      }
+    }
+    stage('Test App') {
+      when {
+        branch 'master'
+      }
+      steps{
+        container('gradle') {
+         echo 'Testing app'
+         sh 'gradle clean test'
         }
       }
     }
