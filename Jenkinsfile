@@ -7,7 +7,7 @@ pipeline {
 
   stages {
 
-    stage('Build App') {
+    stage('Update Assets') {
       when {
         branch 'master'
       }
@@ -24,7 +24,17 @@ pipeline {
       }
       steps{
         echo 'Testing app'
-        sh 'gradle clean'
+        sh 'gradle clean test'
+      }
+    }
+
+    stage('Build App') {
+      when {
+        branch 'master'
+      }
+      steps{
+        echo 'Building app'
+        sh 'gradle clean build -x test'
       }
     }
 
