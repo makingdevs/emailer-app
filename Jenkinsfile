@@ -44,7 +44,8 @@ pipeline {
       }
       steps{
         echo 'Transferring the jar'
-        sh 'scp ${env.WORKSPACE}/build/libs/workspace-1.0-fat.jar centos@54.210.224.219:/home/centos/wars/emailer/stage/app.jar'
+        echo "${env.WORKSPACE}"
+        sh "scp ${env.WORKSPACE}/build/libs/workspace-1.0-fat.jar centos@54.210.224.219:/home/centos/wars/emailer/stage/app.jar"
       }
     }
 
