@@ -34,7 +34,7 @@ pipeline {
       }
       steps{
         echo 'Building app'
-        sh 'gradle clean build -x test'
+        sh 'gradle clean shadowJar -x test'
       }
     }
 
