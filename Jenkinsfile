@@ -5,6 +5,10 @@ pipeline {
     gradle "Gradle 2.10"
   }
 
+  environment {
+    VERSION = UUID.randomUUID().toString().replace('-','')[0..6]
+  }
+
   stages {
 
     stage('Update Assets') {
@@ -53,7 +57,6 @@ pipeline {
         branch 'master'
       }
       steps{
-        env.VERSION = UUID.randomUUID().toString().replace('-','')[0..6]
         echo 'Execute sh to build and deploy in Kubernetes'
         sh "ssh centos@54.210.224.219 sh /home/centos/deployEmailer.sh ${env.VERSION}"
       }
