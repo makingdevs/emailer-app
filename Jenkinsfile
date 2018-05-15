@@ -38,6 +38,16 @@ pipeline {
       }
     }
 
+    stage('Transfer Jar'){
+      when {
+        branch 'master'
+      }
+      steps{
+        echo 'Transferring the jar'
+        sh 'scp $WORKSPACE/build/libs/workspace-1.0-fat.jar centos@54.210.224.219:/home/centos/wars/emailer/stage/app.jar'
+      }
+    }
+
   }
 
   post {
