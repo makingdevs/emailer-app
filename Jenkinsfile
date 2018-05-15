@@ -2,6 +2,11 @@ pipeline {
   agent any
 
   stages {
+
+    tools {
+      gradle "Gradle 2.10"
+    }
+
     stage('Build App') {
       when {
         branch 'master'
@@ -19,7 +24,7 @@ pipeline {
       }
       steps{
         echo 'Testing app'
-        gradle('clean')
+        sh 'gradle clean'
       }
     }
 
