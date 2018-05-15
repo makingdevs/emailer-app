@@ -19,7 +19,7 @@ pipeline {
       }
       steps{
         echo 'Testing app'
-        sh 'gradle clean test'
+        gradle('clean')
       }
     }
 
