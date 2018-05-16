@@ -1,7 +1,4 @@
 pipeline {
-
-  def branch_list = ["master","stage"]
-
   agent any
 
   tools {
@@ -14,6 +11,8 @@ pipeline {
 
   stages {
 
+    def branch_list = ["master","stage"]
+    
     stage('Update Assets') {
       steps{
         nodejs(nodeJSInstallationName: 'Node 10.1.0') {
