@@ -1,4 +1,7 @@
 pipeline {
+
+  def branch_list = ["master","stage"]
+
   agent any
 
   tools {
@@ -7,7 +10,6 @@ pipeline {
 
   environment {
     VERSION = "${UUID.randomUUID().toString().replace('-','')[0..6]}"
-    BRANCH_LIST = ["master","stage"]
   }
 
   stages {
@@ -30,7 +32,7 @@ pipeline {
     stage('Build App') {
       when {
         expression {
-          env.BRANCH_NAME in env.BRANCH_LIST
+          env.BRANCH_NAME in branch_list
         }
       }
       steps{
