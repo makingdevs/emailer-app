@@ -29,7 +29,7 @@ pipeline {
     stage('Build App') {
       when {
         expression {
-          BRANCH == 'master' || BRANCH == "stage"
+          env.BRANCH == 'master' || env.BRANCH == "stage"
         }
       }
       steps{
