@@ -12,9 +12,6 @@ pipeline {
   stages {
 
     stage('Update Assets') {
-      when {
-        branch 'master'
-      }
       steps{
         nodejs(nodeJSInstallationName: 'Node 10.1.0') {
           echo 'Updating bower'
@@ -23,9 +20,6 @@ pipeline {
       }
     }
     stage('Test App') {
-      when {
-        branch 'master'
-      }
       steps{
         echo 'Testing app'
         sh 'gradle clean test'
@@ -34,7 +28,7 @@ pipeline {
 
     stage('Build App') {
       when {
-        branch 'master'
+        branch 'master || QA'
       }
       steps{
         echo 'Building app'
