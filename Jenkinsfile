@@ -57,7 +57,7 @@ pipeline {
         }
       }
       environment {
-        ENVIRONMENT = env.BRANCH_NAME == master ? "development" : env.BRANCH_NAME
+        ENVIRONMENT = "${env.BRANCH_NAME == 'master' ? 'development' : env.BRANCH_NAME}"
       }
       steps{
         echo 'Execute sh to build and deploy in Kubernetes'
