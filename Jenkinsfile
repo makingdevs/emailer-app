@@ -61,7 +61,7 @@ pipeline {
       }
       steps{
         echo 'Execute sh to build and deploy in Kubernetes'
-        sh "ssh centos@54.210.224.219 sh /home/centos/deployEmailer.sh ${env.VERSION}, ${env.ENVIRONMENT}"
+        sh "ssh centos@54.210.224.219 sh /home/centos/deployEmailer.sh ${env.BUILD_NUMBER}, ${env.ENVIRONMENT}"
       }
     }
 
