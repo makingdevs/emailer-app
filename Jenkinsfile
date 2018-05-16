@@ -6,7 +6,7 @@ pipeline {
   }
 
   environment {
-    VERSION = "${UUID.randomUUID().toString().replace('-','')[0..6]}"
+    VERSION = "${UUID.randomUUID().toString().replace('-','')[0..6]}" 
   }
 
   stages {
@@ -40,7 +40,9 @@ pipeline {
 
     stage('Transfer Jar'){
       when {
-        branch 'master'
+        expression {
+          env.BRANCH_NAME == 'master' || env.BRANCH_NAME == "stage"
+        }
       }
       steps{
         echo 'Transferring the jar'
@@ -50,11 +52,16 @@ pipeline {
 
     stage('Deploy App'){
       when {
-        branch 'master'
+        expression {
+          env.BRANCH_NAME == 'master' || env.BRANCH_NAME == "stage"
+        }
+      }
+      environment {
+        ENVIRONMENT = env.BRANCH_NAME == master ? "development" : env.BRANCH_NAME
       }
       steps{
         echo 'Execute sh to build and deploy in Kubernetes'
-        sh "ssh centos@54.210.224.219 sh /home/centos/deployEmailer.sh ${env.VERSION}"
+        sh "ssh centos@54.210.224.219 sh /home/centos/deployEmailer.sh ${env.VERSION}, ${env.ENVIRONMENT}"
       }
     }
 
