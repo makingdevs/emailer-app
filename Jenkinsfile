@@ -11,8 +11,6 @@ pipeline {
 
   stages {
 
-    def branch_list = ["master","stage"]
-    
     stage('Update Assets') {
       steps{
         nodejs(nodeJSInstallationName: 'Node 10.1.0') {
@@ -31,7 +29,7 @@ pipeline {
     stage('Build App') {
       when {
         expression {
-          env.BRANCH_NAME in branch_list
+          env.BRANCH_NAME == 'master' || env.BRANCH_NAME == "stage"
         }
       }
       steps{
