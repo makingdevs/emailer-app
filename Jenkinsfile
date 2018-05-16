@@ -7,6 +7,7 @@ pipeline {
 
   environment {
     VERSION = "${UUID.randomUUID().toString().replace('-','')[0..6]}"
+    BRANCH_LIST = ["master","stage"]
   }
 
   stages {
@@ -29,7 +30,7 @@ pipeline {
     stage('Build App') {
       when {
         expression {
-          env.BRANCH_NAME == 'master' || env.BRANCH_NAME == "stage"
+          env.BRANCH_NAME in env.BRANCH_LIST
         }
       }
       steps{
