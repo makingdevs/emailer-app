@@ -28,7 +28,7 @@ pipeline {
 
     stage('Build App') {
       when {
-        branch 'master || QA'
+        branch 'master || stage'
       }
       steps{
         echo 'Building app'
