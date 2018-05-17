@@ -41,7 +41,7 @@ pipeline {
     stage('Transfer Jar'){
       when {
         expression {
-          env.BRANCH_NAME == 'master' || env.BRANCH_NAME == "stage"
+          env.BRANCH_NAME in ["master", "stage", "production"]
         }
       }
       steps{
@@ -53,7 +53,7 @@ pipeline {
     stage('Deploy App'){
       when {
         expression {
-          env.BRANCH_NAME == 'master' || env.BRANCH_NAME == "stage"
+          env.BRANCH_NAME in ["master", "stage", "production"]
         }
       }
       environment {
