@@ -87,7 +87,7 @@ gradle run
 4.- Send a request to **http://localhost:8000/serviceEmail**
 
 ```
-Request: POST 
+Request: POST
 Url: http://localhost:8000/serviceEmail
 Body:
   {
@@ -124,4 +124,4 @@ Code: 400
 Message: "I can't do my job. You have the follow errors"
 ```
 
-
+jj
