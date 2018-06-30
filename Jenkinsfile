@@ -11,6 +11,14 @@ pipeline {
 
   stages {
 
+    stage('Download Config'){
+      steps{
+        dir("configFiles"){
+          sh "git clone git@bitbucket.org:techmindsmx/config-emailer.git"
+        }
+      }
+    }
+
     stage('Update Assets') {
       steps{
         nodejs(nodeJSInstallationName: 'Node 10.1.0') {
