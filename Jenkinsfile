@@ -1,5 +1,5 @@
 pipeline {
-  agent any
+  agent 'slave-1'
 
   tools {
     gradle "Gradle 2.10"
