@@ -35,11 +35,6 @@ pipeline {
     }
 
     stage('Build App') {
-      when {
-        expression {
-          env.BRANCH_NAME in ["master", "stage", "production"]
-        }
-      }
       steps{
         echo 'Building app'
         sh 'gradle clean shadowJar -x test'
@@ -47,22 +42,12 @@ pipeline {
     }
 
     stage('Preparing build Image Docker') {
-      when {
-        expression {
-          env.BRANCH_NAME in ["master", "stage", "production"]
-        }
-      }
       steps{
         sh 'cp /configFiles/conf.json .'
       }
     }
 
     stage('Transfer Jar'){
-      when {
-        expression {
-          env.BRANCH_NAME in ["master", "stage", "production"]
-        }
-      }
       steps{
         echo 'Transferring the jar'
         sh "scp ${env.WORKSPACE}/build/libs/app.jar centos@54.210.224.219:/home/centos/wars/emailer/stage/app.jar"
@@ -70,11 +55,6 @@ pipeline {
     }
 
     stage('Deploy App'){
-      when {
-        expression {
-          env.BRANCH_NAME in ["master", "stage", "production"]
-        }
-      }
       environment {
         ENVIRONMENT = "${env.BRANCH_NAME == 'master' ? 'development' : env.BRANCH_NAME}"
       }
