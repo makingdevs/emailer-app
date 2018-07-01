@@ -43,6 +43,8 @@ pipeline {
 
     stage('Preparing build Image Docker') {
       steps{
+        sh 'ls .'
+        sh 'ls configFiles' 
         sh 'cp /configFiles/conf.json .'
       }
     }
