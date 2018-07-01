@@ -44,25 +44,34 @@ pipeline {
     stage('Preparing build Image Docker') {
       steps{
         sh 'cp configFiles/conf.json .'
+        dir("folderDocker"){
+          sh "git clone git@github.com:makingdevs/Java-Jar-Docker.git ."
+        }
       }
     }
 
-    stage('Transfer Jar'){
+    stage('Build image docker') {
       steps{
-        echo 'Transferring the jar'
-        sh "scp ${env.WORKSPACE}/build/libs/app.jar centos@54.210.224.219:/home/centos/wars/emailer/stage/app.jar"
+        def customImage = docker.build("my-image:${env.BUILD_ID}")
       }
     }
 
-    stage('Deploy App'){
-      environment {
-        ENVIRONMENT = "${env.BRANCH_NAME == 'master' ? 'development' : env.BRANCH_NAME}"
-      }
-      steps{
-        echo 'Execute sh to build and deploy in Kubernetes'
-        sh "ssh centos@54.210.224.219 sh /home/centos/deployEmailer.sh ${env.VERSION} ${env.ENVIRONMENT}"
-      }
-    }
+    //stage('Transfer Jar'){
+    //  steps{
+    //    echo 'Transferring the jar'
+    //    sh "scp ${env.WORKSPACE}/build/libs/app.jar centos@54.210.224.219:/home/centos/wars/emailer/stage/app.jar"
+    //  }
+    //}
+
+    //stage('Deploy App'){
+    //  environment {
+    //    ENVIRONMENT = "${env.BRANCH_NAME == 'master' ? 'development' : env.BRANCH_NAME}"
+    //  }
+    //  steps{
+    //    echo 'Execute sh to build and deploy in Kubernetes'
+    //    sh "ssh centos@54.210.224.219 sh /home/centos/deployEmailer.sh ${env.VERSION} ${env.ENVIRONMENT}"
+    //  }
+    //}
 
   }
 
