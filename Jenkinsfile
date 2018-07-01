@@ -46,6 +46,17 @@ pipeline {
       }
     }
 
+    stage('Preparing build Image Docker') {
+      when {
+        expression {
+          env.BRANCH_NAME in ["master", "stage", "production"]
+        }
+      }
+      steps{
+        sh 'cp /configFiles/conf.json .'
+      }
+    }
+
     stage('Transfer Jar'){
       when {
         expression {
