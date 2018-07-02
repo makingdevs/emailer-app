@@ -52,8 +52,10 @@ pipeline {
 
     stage('Build image docker') {
       steps{
-        docker.withTool('docker') {
-          echo "Environment:"
+        script {
+          docker.withTool('default') {
+            echo "Environment:"
+          }
         }
       }
     }
