@@ -51,8 +51,10 @@ pipeline {
     }
 
     stage('Build image docker') {
-      docker.withTool('docker') {
-        echo "Environment:"
+      steps{
+        docker.withTool('docker') {
+          echo "Environment:"
+        }
       }
     }
     //  agent any
