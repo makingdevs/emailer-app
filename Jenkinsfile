@@ -1,5 +1,5 @@
 pipeline {
-  agent 'slave-1'
+  agent any
 
   tools {
     gradle "Gradle 2.10"
@@ -51,11 +51,15 @@ pipeline {
     }
 
     stage('Build image docker') {
-      agent any
-      steps {
-        sh 'docker build -t some/spring-petclinic:latest .'
+      docker.withTool('docker') {
+        echo "Environment:"
       }
     }
+    //  agent any
+    //  steps {
+    //    sh 'docker build -t shanem/spring-petclinic:latest .'
+    //  }
+    //}
 
     //stage('Transfer Jar'){
     //  steps{
