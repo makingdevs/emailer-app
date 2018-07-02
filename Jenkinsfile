@@ -54,16 +54,11 @@ pipeline {
       steps{
         script {
           docker.withTool('Docker') {
-            echo "Environment:"
+            docker.build('my-app:latest', 'folderDocker/')
           }
         }
       }
     }
-    //  agent any
-    //  steps {
-    //    sh 'docker build -t shanem/spring-petclinic:latest .'
-    //  }
-    //}
 
     //stage('Transfer Jar'){
     //  steps{
