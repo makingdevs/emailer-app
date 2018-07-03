@@ -56,8 +56,9 @@ pipeline {
         script {
           docker.withTool('Docker') {
             docker.withRegistry('166775549767.dkr.ecr.us-east-1.amazonaws.com/emailer', 'aws-credencials') {
-            def customImage = docker.build('emailer', '--build-arg URL_WAR=app.jar --build-arg FILE_NAME_CONFIGURATION=conf.json --build-arg PATH_NAME_CONFIGURATION=/root/emailer/ .')
-            customImage.push()
+              def customImage = docker.build('emailer', '--build-arg URL_WAR=app.jar --build-arg FILE_NAME_CONFIGURATION=conf.json --build-arg PATH_NAME_CONFIGURATION=/root/emailer/ .')
+              customImage.push()
+            }
           }
         }
       }
