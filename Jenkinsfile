@@ -54,7 +54,7 @@ pipeline {
       steps{
         script {
           docker.withTool('Docker') {
-            docker.build('my-app:latest', 'folderDocker/')
+            docker.build('emailer', '--build-arg URL_WAR=app.jar --build-arg FILE_NAME_CONFIGURATION=conf.json --build-arg PATH_NAME_CONFIGURATION=/root/emailer/ folderDocker/')
           }
         }
       }
