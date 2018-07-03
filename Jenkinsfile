@@ -47,6 +47,7 @@ pipeline {
         dir("folderDocker"){
           sh "git clone git@github.com:makingdevs/Java-Jar-Docker.git ."
         }
+        sh 'mv folderDocker/* .'
       }
     }
 
@@ -54,7 +55,7 @@ pipeline {
       steps{
         script {
           docker.withTool('Docker') {
-            docker.build('emailer', '--build-arg URL_WAR=app.jar --build-arg FILE_NAME_CONFIGURATION=conf.json --build-arg PATH_NAME_CONFIGURATION=/root/emailer/ folderDocker/')
+            docker.build('emailer', '--build-arg URL_WAR=app.jar --build-arg FILE_NAME_CONFIGURATION=conf.json --build-arg PATH_NAME_CONFIGURATION=/root/emailer/ .')
           }
         }
       }
