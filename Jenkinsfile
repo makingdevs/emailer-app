@@ -68,7 +68,7 @@ pipeline {
       steps{
         script {
           withKubeConfig([credentialsId: 'techminds_aws'  , serverUrl: 'https://api.kube.modulusuno.com']) {
-            sh 'kubectl get pods'
+            sh 'kubectl get nodes'
           }
         }
       }
