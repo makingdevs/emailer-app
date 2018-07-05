@@ -64,6 +64,16 @@ pipeline {
       }
     }
 
+    stage('Deploy Kube') {
+      steps{
+        script {
+          withKubeConfig([credentialsId: 'techminds_aws'  , serverUrl: 'kube.modulusuno.com']) {
+            sh 'kubectl get pods'
+          }
+        }
+      }
+    }
+
     //stage('Transfer Jar'){
     //  steps{
     //    echo 'Transferring the jar'
