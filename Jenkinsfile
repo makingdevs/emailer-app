@@ -55,8 +55,8 @@ pipeline {
       steps{
         script {
           docker.withTool('Docker') {
-            docker.withRegistry('https://166775549767.dkr.ecr.us-east-1.amazonaws.com', 'ecr:us-east-1:makingdevs-aws') {
-              def customImage = docker.build('emailer', '--build-arg URL_WAR=app.jar --build-arg FILE_NAME_CONFIGURATION=conf.json --build-arg PATH_NAME_CONFIGURATION=/root/emailer/ .')
+            docker.withRegistry('https://752822034914.dkr.ecr.us-east-1.amazonaws.com/emailer', 'ecr:us-east-1:techminds-aws') {
+              def customImage = docker.build('emailer:${env.VERSION}', '--build-arg URL_WAR=app.jar --build-arg FILE_NAME_CONFIGURATION=conf.json --build-arg PATH_NAME_CONFIGURATION=/root/emailer/ .')
               customImage.push()
             }
           }
@@ -65,31 +65,13 @@ pipeline {
     }
 
     stage('Deploy Kube') {
+      environment {
+        ENVIRONMENT = "${env.BRANCH_NAME == 'master' ? 'development' : env.BRANCH_NAME}"
+      }
       steps{
-        script {
-          withKubeConfig([credentialsId: 'techminds_aws'  , serverUrl: 'https://api.kube.modulusuno.com']) {
-            sh 'kubectl get nodes'
-          }
-        }
+        sh "ssh centos@54.210.224.219 sh /home/centos/deployEmailer.sh ${env.VERSION} ${env.ENVIRONMENT}"
       }
     }
-
-    //stage('Transfer Jar'){
-    //  steps{
-    //    echo 'Transferring the jar'
-    //    sh "scp ${env.WORKSPACE}/build/libs/app.jar centos@54.210.224.219:/home/centos/wars/emailer/stage/app.jar"
-    //  }
-    //}
-
-    //stage('Deploy App'){
-    //  environment {
-    //    ENVIRONMENT = "${env.BRANCH_NAME == 'master' ? 'development' : env.BRANCH_NAME}"
-    //  }
-    //  steps{
-    //    echo 'Execute sh to build and deploy in Kubernetes'
-    //    sh "ssh centos@54.210.224.219 sh /home/centos/deployEmailer.sh ${env.VERSION} ${env.ENVIRONMENT}"
-    //  }
-    //}
 
   }
 
