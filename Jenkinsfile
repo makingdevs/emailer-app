@@ -69,7 +69,7 @@ pipeline {
         ENVIRONMENT = "${env.BRANCH_NAME == 'master' ? 'development' : env.BRANCH_NAME}"
       }
       steps{
-        sh "ssh centos@54.210.224.219 sh /home/centos/deployEmailer.sh ${env.VERSION} ${env.ENVIRONMENT}"
+        sh "ssh ec2-user@34.200.152.121 sh /home/centos/deployEmailer.sh ${env.VERSION} ${env.ENVIRONMENT}"
       }
     }
 
