@@ -48,7 +48,7 @@ pipeline {
           sh "git clone git@github.com:makingdevs/Java-Jar-Docker.git ."
         }
         sh 'mv folderDocker/* .'
-        sh 'ls build/lib/'
+        sh 'mv build/libs/app.jar .'
       }
     }
 
