@@ -11,6 +11,14 @@ pipeline {
 
   stages {
 
+    stage('Download Config'){
+      steps{
+        dir("configFiles"){
+          sh "git clone git@bitbucket.org:techmindsmx/config-emailer.git ."
+        }
+      }
+    }
+
     stage('Update Assets') {
       steps{
         nodejs(nodeJSInstallationName: 'Node 10.1.0') {
@@ -27,41 +35,41 @@ pipeline {
     }
 
     stage('Build App') {
-      when {
-        expression {
-          env.BRANCH_NAME in ["master", "stage", "production"]
-        }
-      }
       steps{
         echo 'Building app'
         sh 'gradle clean shadowJar -x test'
       }
     }
 
-    stage('Transfer Jar'){
-      when {
-        expression {
-          env.BRANCH_NAME in ["master", "stage", "production"]
-        }
-      }
+    stage('Preparing build Image Docker') {
       steps{
-        echo 'Transferring the jar'
-        sh "scp ${env.WORKSPACE}/build/libs/app.jar centos@54.210.224.219:/home/centos/wars/emailer/stage/app.jar"
+        sh 'cp configFiles/conf.json .'
+        dir("folderDocker"){
+          sh "git clone git@github.com:makingdevs/Java-Jar-Docker.git ."
+        }
+        sh 'mv folderDocker/* .'
       }
     }
 
-    stage('Deploy App'){
-      when {
-        expression {
-          env.BRANCH_NAME in ["master", "stage", "production"]
+    stage('Build image docker') {
+      steps{
+        script {
+          docker.withTool('Docker') {
+            docker.withRegistry('https://752822034914.dkr.ecr.us-east-1.amazonaws.com/emailer', 'ecr:us-east-1:techminds-aws') {
+              def customImage = docker.build("emailer:${env.VERSION}", '--build-arg URL_WAR=app.jar --build-arg FILE_NAME_CONFIGURATION=conf.json --build-arg PATH_NAME_CONFIGURATION=/root/emailer/ .')
+              customImage.push()
+            }
+          }
         }
       }
+    }
+
+    stage('Deploy Kube') {
       environment {
         ENVIRONMENT = "${env.BRANCH_NAME == 'master' ? 'development' : env.BRANCH_NAME}"
       }
       steps{
-        echo 'Execute sh to build and deploy in Kubernetes'
-        sh "ssh centos@54.210.224.219 sh /home/centos/deployEmailer.sh ${env.VERSION} ${env.ENVIRONMENT}"
+        sh "ssh ec2-user@34.200.152.121 sh /home/ec2-user/deployApp.sh ${env.VERSION} ${env.ENVIRONMENT}"
       }
     }
 
