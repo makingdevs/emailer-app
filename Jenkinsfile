@@ -67,7 +67,7 @@ pipeline {
     stage('Deploy Kube') {
       steps{
         script {
-          withKubeConfig([credentialsId: 'techminds_aws'  , serverUrl: 'kube.modulusuno.com']) {
+          withKubeConfig([credentialsId: 'techminds_aws'  , serverUrl: 'https://api.kube.modulusuno.com']) {
             sh 'kubectl get pods'
           }
         }
