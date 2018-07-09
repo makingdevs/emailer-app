@@ -35,13 +35,23 @@ pipeline {
     }
 
     stage('Build App') {
+      when {
+        expression {
+          env.BRANCH_NAME in ["master","stage","production"]
+        }
+      }
       steps{
         echo 'Building app'
         sh 'gradle clean shadowJar -x test'
       }
     }
 
-    stage('Preparing build Image Docker') {
+    stage('Preparing build Image Docker'){
+      when {
+        expression {
+          env.BRANCH_NAME in ["master","stage","production"]
+        }
+      }
       steps{
         sh 'cp configFiles/conf.json .'
         dir("folderDocker"){
@@ -53,6 +63,11 @@ pipeline {
     }
 
     stage('Build image docker') {
+      when {
+        expression {
+          env.BRANCH_NAME in ["master","stage","production"]
+        }
+      }
       steps{
         script {
           docker.withTool('Docker') {
@@ -66,6 +81,11 @@ pipeline {
     }
 
     stage('Deploy Kube') {
+      when {
+        expression {
+          env.BRANCH_NAME in ["master","stage","production"]
+        }
+      }
       environment {
         ENVIRONMENT = "${env.BRANCH_NAME == 'master' ? 'development' : env.BRANCH_NAME}"
       }
