@@ -37,7 +37,7 @@ class @.Verticle
   getUrl = window.location;
   baseUrl = "#{getUrl.protocol}//#{getUrl.host}"
   @init: ->
-    eb = new EventBus('http://localhost:8000/eventbus')
+    eb = new EventBus("#{baseUrl}/eventbus")
     eb.onopen = ->
       eb.registerHandler 'com.makingdevs.email.success', (error, message) ->
         Materialize.toast 'Email Enviado\n ' + message.body, 4000
