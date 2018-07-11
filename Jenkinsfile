@@ -14,7 +14,7 @@ pipeline {
     stage('Download Config'){
       steps{
         dir("configFiles"){
-          sh "git clone git@bitbucket.org:techmindsmx/config-emailer.git ."
+          sh "git clone -b ${env.BRANCH_NAME} --single-branch git@bitbucket.org:techmindsmx/config-emailer.git ."
         }
       }
     }
