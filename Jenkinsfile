@@ -24,6 +24,7 @@ pipeline {
         nodejs(nodeJSInstallationName: 'Node 10.1.0') {
           echo 'Updating bower'
           sh 'bower install'
+          sh 'coffee --compile src/main/resources/webroot/coffee'
         }
       }
     }
