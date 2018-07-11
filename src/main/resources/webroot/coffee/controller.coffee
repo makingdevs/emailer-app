@@ -1,5 +1,6 @@
 class @.EmailerController
-  baseUrl = "http://localhost:8000"
+  getUrl = window.location;
+  baseUrl = "#{getUrl.protocol}//#{getUrl.host}"
 
   @add: ->
     $.ajax

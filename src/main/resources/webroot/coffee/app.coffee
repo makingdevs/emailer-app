@@ -34,7 +34,8 @@ class @.UrlManager
     router.setRoute '/readEmailers'
 
 class @.Verticle
-  baseUrl = "http://localhost:8000"
+  getUrl = window.location;
+  baseUrl = "#{getUrl.protocol}//#{getUrl.host}"
   @init: ->
     eb = new EventBus('http://localhost:8000/eventbus')
     eb.onopen = ->
