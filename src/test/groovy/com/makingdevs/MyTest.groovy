@@ -36,6 +36,8 @@ suite.before({ context ->
 }).test("verificationCheck_Error",{ context ->
   def async=context.async()
   println "Verification test"
+  println "TimeZone.getDefault()"
+  println "new Date()"
   def testCheck=[
     id:"1111",
     params:[
