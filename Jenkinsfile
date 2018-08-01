@@ -11,14 +11,6 @@ pipeline {
 
   stages {
 
-    stage('Download Config'){
-      steps{
-        dir("configFiles"){
-          sh "git clone -b ${env.BRANCH_NAME} --single-branch git@bitbucket.org:techmindsmx/config-emailer.git ."
-        }
-      }
-    }
-
     stage('Update Assets') {
       steps{
         nodejs(nodeJSInstallationName: 'Node 10.1.0') {
@@ -44,6 +36,19 @@ pipeline {
       steps{
         echo 'Building app'
         sh 'gradle clean shadowJar -x test'
+      }
+    }
+
+    stage('Download Config'){
+      when {
+        expression {
+          env.BRANCH_NAME in ["master","stage","production"]
+        }
+      }
+      steps{
+        dir("configFiles"){
+          sh "git clone -b ${env.BRANCH_NAME}-new --single-branch git@bitbucket.org:techmindsmx/config-emailer.git ."
+        }
       }
     }
 
