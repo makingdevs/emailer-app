@@ -1,8 +1,8 @@
 package com.makingdevs
 
 import io.vertx.ext.mail.StartTLSOptions
-import io.vertx.groovy.core.Vertx
-import io.vertx.groovy.ext.mail.MailClient
+import io.vertx.core.Vertx
+import io.vertx.ext.mail.MailClient
 import io.vertx.core.json.Json
 
 //configuracion del email

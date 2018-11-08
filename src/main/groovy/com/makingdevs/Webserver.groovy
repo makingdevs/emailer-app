@@ -1,12 +1,12 @@
 package com.makingdevs
 
-import io.vertx.groovy.ext.web.handler.StaticHandler
-import io.vertx.groovy.ext.web.Router
-import io.vertx.groovy.ext.web.handler.BodyHandler
+import io.vertx.ext.web.handler.StaticHandler
+import io.vertx.ext.web.Router
+import io.vertx.ext.web.handler.BodyHandler
 import io.vertx.core.json.Json
-import io.vertx.groovy.core.Vertx
-import io.vertx.groovy.ext.web.handler.sockjs.SockJSHandler
-import io.vertx.groovy.ext.web.handler.StaticHandler
+import io.vertx.core.Vertx
+import io.vertx.ext.web.handler.sockjs.SockJSHandler
+import io.vertx.ext.web.handler.StaticHandler
 
 def config = Vertx.currentContext().config()
 
