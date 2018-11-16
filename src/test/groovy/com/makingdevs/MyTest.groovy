@@ -1,8 +1,8 @@
 package com.makingdevs
 
-import io.vertx.groovy.ext.unit.TestSuite
-import io.vertx.groovy.core.Vertx
-import io.vertx.groovy.core.http.HttpClient
+import io.vertx.ext.unit.TestSuite
+import io.vertx.core.Vertx
+import io.vertx.core.http.HttpClient
 
 def options = [ reporters: [[ to:"console" ]]]
 
