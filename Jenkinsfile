@@ -86,17 +86,36 @@ pipeline {
       }
     }
 
-    stage('Deploy Kube') {
+    stage('Deploy Docker Machine development') {
       when {
         expression {
-          env.BRANCH_NAME in ["master","stage","production"]
+          env.BRANCH_NAME == "master"
         }
       }
-      environment {
-        ENVIRONMENT = "${env.BRANCH_NAME == 'master' ? 'development' : env.BRANCH_NAME}"
+      steps{
+        sh "ssh ec2-user@34.206.149.172 sh /home/ec2-user/deployApps.sh ${env.VERSION} development emailer 8081 8000"
+      }
+    }
+
+    stage('Deploy Docker Machine stage') {
+      when {
+        expression {
+          env.BRANCH_NAME == "stage"
+        }
       }
       steps{
-        sh "ssh ec2-user@34.200.152.121 sh /home/ec2-user/deployApp.sh ${env.VERSION} ${env.ENVIRONMENT} emailer"
+        sh "ssh ec2-user@34.206.149.172 sh /home/ec2-user/deployApps.sh ${env.VERSION} stage emailer 8082 8000"
+      }
+    }
+
+    stage('Deploy Docker Machine production') {
+      when {
+        expression {
+          env.BRANCH_NAME == "production"
+        }
+      }
+      steps{
+        sh "ssh ec2-user@34.206.149.172 sh /home/ec2-user/deployApps.sh ${env.VERSION} production emailer 8083 8000"
       }
     }
 
