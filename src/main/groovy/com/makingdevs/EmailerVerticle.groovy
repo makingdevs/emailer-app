@@ -116,7 +116,7 @@ eb.consumer("com.makingdevs.emailer.send", { message ->
       res.result().each { json ->
         def jsonEmail =groovy.json.JsonOutput.toJson(json)
          vertx.eventBus().publish("com.makingdevs.emailer.sender",
-        [id:json["_id"], to:receiver, subject:json["subject"], from:"contacto+m1@grupoaleol.com", html:json["content"]])
+        [id:json["_id"], to:receiver, subject:json["subject"], from:"contacto@grupoaleol.com", html:json["content"]])
 
       }
     } else {
@@ -132,7 +132,7 @@ eb.consumer("com.makingdevs.emailer.service", { message ->
   id:message.body().id,
   subject:message.body().subject,
   to: message.body().to,
-  from: "contacto+m1@grupoaleol.com",
+  from: "contacto@grupoaleol.com",
   params: message.body().params
   ]
 
