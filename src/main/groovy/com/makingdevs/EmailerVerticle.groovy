@@ -132,7 +132,7 @@ eb.consumer("com.makingdevs.emailer.service", { message ->
   id:message.body().id,
   subject:message.body().subject,
   to: message.body().to,
-  from: "contacto@grupoaleol.com",
+  from: "contacto+m1@grupoaleol.com",
   params: message.body().params
   ]
 
